@@ -1,49 +1,28 @@
 # Scoreforge
 
 ## Status
-MVP functional (local). Production-hardening and deployment in progress.
+MVP functional (local). Docker and deployment hardening in progress.
 
-Scoreforge is a multi-tenant leaderboard SaaS for games.  
-It provides a dashboard for developers to create projects and generate API keys, and a secure API that game clients can use to submit scores and retrieve leaderboards.
+Scoreforge is a multi-tenant leaderboard SaaS for games.
+It provides a dashboard to create projects and generate API keys, and an API that game clients can use to submit scores and retrieve leaderboards.
 
 ---
 
-## 🚀 Features
-
+## Features
 - JWT authentication for dashboard users
-- Stable per-project API keys (stored hashed)
-- Secure score submission via `X-API-Key`
+- Stable per-project API keys (stored hashed; shown once)
+- Score submission via `X-API-Key`
 - Leaderboard retrieval endpoint
-- Swagger documentation available
-- Clean multi-tenant architecture
+- Swagger docs (`/docs`)
 
 ---
 
-## 🏗 Tech Stack
-
-**Backend**
-- FastAPI
-- SQLAlchemy
-- PostgreSQL (Neon)
-- JWT (python-jose)
-- bcrypt (passlib)
-
-**Frontend**
-- React / Next.js
+## Tech Stack
+**Backend:** FastAPI, SQLAlchemy, PostgreSQL (Neon), JWT  
+**Frontend:** React / Next.js
 
 ---
 
-## 🔐 Authentication Model
-
-- Dashboard users authenticate via JWT.
-- Game clients authenticate via `X-API-Key`.
-- API keys are:
-  - Generated securely
-  - Stored hashed
-  - Shown only once
-  - Stable per project
-
----
 
 ## 🖥 Screenshots
 
@@ -53,10 +32,9 @@ It provides a dashboard for developers to create projects and generate API keys,
 
 ---
 
-## 📦 Quick Start (Local)
+## Quick Start (Local)
 
 ### Backend (Windows)
-
 ```bash
 cd backend
 python -m venv venv
