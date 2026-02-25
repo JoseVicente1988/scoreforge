@@ -1,3 +1,6 @@
+## Status
+MVP functional (local) – Production-ready improvements in progress.
+
 # Scoreforge
 
 Scoreforge is a multi-tenant leaderboard SaaS for games.  
