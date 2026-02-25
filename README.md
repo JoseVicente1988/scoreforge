@@ -25,10 +25,9 @@ It provides a dashboard to create projects and generate API keys, and an API tha
 
 
 ## 🖥 Screenshots
-
-<img width="1920" height="1080" alt="Screenshoot3" src="https://github.com/user-attachments/assets/62d7a6b5-4e32-4411-bc98-0c3f2879cafe" />
-<img width="1920" height="1080" alt="Screenshoot2" src="https://github.com/user-attachments/assets/d6724f48-e0cb-4162-94cf-a6f6511048e1" />
-<img width="1920" height="1080" alt="Screenshoot1" src="https://github.com/user-attachments/assets/723b8c7c-299f-4ce1-8fc3-5dbb8e2eb613" />
+![Dashboard](docs/screenshoots/dashboard.png)
+![Docs](docs/screenshoots/docs.png)
+![Login](docs/screenshoots/login.png)
 
 ---
 
