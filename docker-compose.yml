@@ -1,0 +1,51 @@
+services:
+  db:
+    image: postgres:16
+    container_name: scoreforge_db
+    environment:
+      POSTGRES_USER: scoreforge
+      POSTGRES_PASSWORD: scoreforge
+      POSTGRES_DB: scoreforge
+    ports:
+      - "5432:5432"
+    volumes:
+      - scoreforge_pgdata:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: scoreforge_backend
+    environment:
+      # Local compose DB
+      DATABASE_URL: postgresql+psycopg://scoreforge:scoreforge@db:5432/scoreforge
+      JWT_SECRET: "dev-change-me"
+      JWT_EXPIRES_MINUTES: "60"
+      CORS_ORIGINS: "http://localhost:3000,http://127.0.0.1:3000"
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+    volumes:
+      # Dev workflow: live reload (remove volumes section for pure production-like)
+      - ./backend:/app
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000", "--reload"]
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: scoreforge_frontend
+    environment:
+      NEXT_PUBLIC_API_BASE: "http://localhost:8000"
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    command: ["npm", "run", "dev", "--", "-p", "3000", "-H", "0.0.0.0"]
+
+volumes:
+  scoreforge_pgdata:

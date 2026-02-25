@@ -1,44 +1,124 @@
 # Scoreforge
 
-## Status
-MVP functional (local). Docker and deployment hardening in progress.
+**Scoreforge** is a multi-tenant leaderboard SaaS for games.
 
-Scoreforge is a multi-tenant leaderboard SaaS for games.
-It provides a dashboard to create projects and generate API keys, and an API that game clients can use to submit scores and retrieve leaderboards.
+It includes:
+- A **developer dashboard** (web) to register/login, create projects, and generate **API keys**.
+- A **public API** that game clients (e.g., **Godot**) can use to **submit scores** and **fetch leaderboards**.
+
+> Status: MVP functional (local). Production hardening is documented in `docs/`.
 
 ---
 
-## Features
-- JWT authentication for dashboard users
-- Stable per-project API keys (stored hashed; shown once)
-- Score submission via `X-API-Key`
-- Leaderboard retrieval endpoint
-- Swagger docs (`/docs`)
+## What you can do (MVP)
+
+- ✅ Register / Login (JWT for dashboard)
+- ✅ Create projects (multi-tenant boundary)
+- ✅ Generate a **stable** API key per project (shown once)
+- ✅ Submit scores with `X-API-Key`
+- ✅ Fetch a leaderboard (top N)
+
+---
+
+## Screenshots
+
+| Login | Dashboard | API Docs |
+|---|---|---|
+| ![Login](docs/images/login.png) | ![Dashboard](docs/images/dashboard.png) | ![API Docs](docs/images/api_docs.png) |
 
 ---
 
 ## Tech Stack
-**Backend:** FastAPI, SQLAlchemy, PostgreSQL (Neon), JWT  
-**Frontend:** React / Next.js
+
+- **Backend:** FastAPI, SQLAlchemy, PostgreSQL (Neon), JWT
+- **Frontend:** Next.js (React)
+- **Client:** Godot 4.x (HTTP)
 
 ---
 
+## Security model (important)
 
-## 🖥 Screenshots
+Scoreforge uses **two** auth mechanisms:
 
-<img width="1920" height="1080" alt="Screenshoot3" src="https://github.com/user-attachments/assets/62d7a6b5-4e32-4411-bc98-0c3f2879cafe" />
-<img width="1920" height="1080" alt="Screenshoot2" src="https://github.com/user-attachments/assets/d6724f48-e0cb-4162-94cf-a6f6511048e1" />
-<img width="1920" height="1080" alt="Screenshoot1" src="https://github.com/user-attachments/assets/723b8c7c-299f-4ce1-8fc3-5dbb8e2eb613" />
+1) **JWT (Authorization: Bearer <token>)**  
+   For **dashboard users**: create projects, generate API keys.
+
+2) **API key (X-API-Key: <key>)**  
+   For **game clients**: submit scores / read leaderboards.
+
+API keys are:
+- generated once and **returned once**
+- stored **hashed** in the database (server never stores plaintext keys)
 
 ---
 
-## Quick Start (Local)
+## Project structure
 
-### Backend (Windows)
-```bash
+```
+scoreforge/
+  backend/          FastAPI app
+  frontend/         Next.js app
+  docs/             API + architecture + deployment docs
+```
+
+---
+
+## Quick start (Local, without Docker)
+
+### 1) Backend
+
+```powershell
 cd backend
 python -m venv venv
-venv\Scripts\activate
+.\venv\Scripts\activate
 pip install -r requirements.txt
 copy .env.example .env
 python -m uvicorn app.main:app --reload
+```
+
+Backend runs at:
+- http://127.0.0.1:8000
+- http://127.0.0.1:8000/docs
+
+### 2) Frontend
+
+```powershell
+cd frontend
+copy .env.local.example .env.local
+npm install
+npm run dev
+```
+
+Frontend runs at:
+- http://127.0.0.1:3000
+
+---
+
+## Docker (optional)
+
+If you want **one command** to run everything locally (Postgres + API + Web):
+
+```bash
+docker compose up --build
+```
+
+See `docker-compose.yml` for details.
+
+---
+
+## Documentation
+
+- `docs/api.md` – Endpoints + request/response examples
+- `docs/architecture.md` – Components + auth model + data flow
+- `docs/deployment.md` – Neon + Render/Vercel deployment notes
+
+---
+
+## Roadmap (next professional steps)
+
+- [ ] Alembic migrations in CI (no `create_all` in production)
+- [ ] Rate limiting & abuse protection (API key endpoints)
+- [ ] Observability (structured logs + request IDs)
+- [ ] Per-project score rules (unique players, anti-cheat basics)
+- [ ] Godot client packaged as a small addon
+

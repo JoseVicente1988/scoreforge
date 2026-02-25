@@ -1,82 +1,153 @@
 # Scoreforge API
 
-## Base URL
-Local:
-- http://127.0.0.1:8000
+Base URL (local):
+- `http://127.0.0.1:8000`
 
-## Auth types
-
-### JWT (for dashboard users)
-Used for:
-- Create projects
-- Generate API keys
-
-Header:
-Authorization: Bearer <JWT_TOKEN>
-
-### API Key (for game clients)
-Used for:
-- Submit scores
-
-Header:
-X-API-Key: <PROJECT_API_KEY>
+> Tip: You can also use the interactive Swagger UI at `/docs`.
 
 ---
 
-## Endpoints
+## Authentication
+
+Scoreforge uses **two** auth mechanisms:
+
+### 1) JWT (Dashboard users)
+Used for:
+- Create projects
+- Generate API keys
+- List your projects
+
+Header:
+```
+Authorization: Bearer <JWT>
+```
+
+### 2) API Key (Game clients)
+Used for:
+- Submit scores
+- Read leaderboards (public)
+
+Header:
+```
+X-API-Key: <PROJECT_API_KEY>
+```
+
+API keys are returned **once** at creation time. The server stores only a **hash**.
+
+---
+
+## Endpoints (MVP)
+
+### Health
+`GET /health`
+
+Response:
+```json
+{ "status": "ok" }
+```
+
+---
+
+## Auth
 
 ### Register
-POST /auth/register
-Body (JSON):
+`POST /auth/register`
+
+Body:
+```json
 {
-  "email": "user@example.com",
-  "password": "securepassword"
+  "username": "test",
+  "email": "test@example.com",
+  "password": "MyStrongPassword123!"
 }
+```
 
 ### Login
-POST /auth/login
-Body (form-data):
-username=user@example.com
-password=securepassword
+`POST /auth/login`
+
+Body:
+```json
+{
+  "username": "test",
+  "password": "MyStrongPassword123!"
+}
+```
 
 Response:
+```json
 {
-  "access_token": "JWT_TOKEN",
+  "access_token": "<JWT>",
   "token_type": "bearer"
 }
+```
 
-### Create project (JWT)
-POST /projects
+---
+
+## Projects (JWT required)
+
+### List projects
+`GET /projects`
+
+### Create project
+`POST /projects`
+
 Header:
-Authorization: Bearer <JWT_TOKEN>
+```
+Authorization: Bearer <JWT>
+```
 
 Body:
-{
-  "name": "My Game"
-}
+```json
+{ "name": "MyGame - Production" }
+```
 
-### Generate API key (JWT)
-POST /projects/{project_id}/api-key
+---
+
+## API keys (JWT required)
+
+### Create API key for a project (shown once)
+`POST /projects/{project_id}/keys`
+
 Header:
-Authorization: Bearer <JWT_TOKEN>
+```
+Authorization: Bearer <JWT>
+```
 
 Response:
+```json
 {
-  "api_key": "KEY_SHOWN_ONCE"
+  "api_key": "sf_live_xxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "project_id": 1
 }
+```
 
-### Submit score (API key)
-POST /scores/submit
-Headers:
+---
+
+## Scores
+
+### Submit score (API key required)
+`POST /scores/submit`
+
+Header:
+```
 X-API-Key: <PROJECT_API_KEY>
-Content-Type: application/json
+```
 
 Body:
+```json
 {
   "project_id": 1,
-  "username": "Player1",
-  "value": 120
+  "player_name": "Jefe",
+  "score": 12345
 }
+```
 
-### Get leaderboard
-GET /scores/leaderboard/{project_id}?limit=10
+### Get leaderboard (public)
+`GET /scores/leaderboard/{project_id}?limit=10`
+
+Response:
+```json
+[
+  { "player_name": "Jefe", "score": 12345, "created_at": "2026-02-25T10:10:10Z" }
+]
+```
