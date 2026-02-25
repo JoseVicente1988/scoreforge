@@ -18,11 +18,10 @@ It provides a simple dashboard for developers to create projects and generate AP
 
 ## Quick Start (Local)
 
-### Backend
+### Backend (Windows)
 ```bash
 cd backend
 python -m venv venv
-# Windows:
 venv\Scripts\activate
 pip install -r requirements.txt
 copy .env.example .env
