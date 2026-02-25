@@ -1,25 +1,43 @@
 # Scoreforge
 
-Scoreforge is a multi-tenant leaderboard SaaS for games.  
-It provides a simple dashboard for developers to create projects and generate API keys, and a clean API that game clients (e.g., Godot) can use to submit scores and fetch leaderboards.
+## Status
+MVP functional (local). Docker and deployment hardening in progress.
+
+Scoreforge is a multi-tenant leaderboard SaaS for games.
+It provides a dashboard to create projects and generate API keys, and an API that game clients can use to submit scores and retrieve leaderboards.
+
+---
+
+## Features
+- JWT authentication for dashboard users
+- Stable per-project API keys (stored hashed; shown once)
+- Score submission via `X-API-Key`
+- Leaderboard retrieval endpoint
+- Swagger docs (`/docs`)
+
+---
 
 ## Tech Stack
-- Backend: FastAPI, SQLAlchemy, PostgreSQL (Neon), JWT
-- Frontend: React / Next.js
-- Client: Godot 4.x (HTTP-based)
+**Backend:** FastAPI, SQLAlchemy, PostgreSQL (Neon), JWT  
+**Frontend:** React / Next.js
 
-## Core Concepts
-- **JWT** is used for dashboard users (register/login, create projects, generate keys).
-- **API keys** are used by game clients to submit scores.
-- Each **project has a stable API key** (not regenerated unless explicitly requested).
+---
+
+
+## 🖥 Screenshots
+
+<img width="1920" height="1080" alt="Screenshoot3" src="https://github.com/user-attachments/assets/62d7a6b5-4e32-4411-bc98-0c3f2879cafe" />
+<img width="1920" height="1080" alt="Screenshoot2" src="https://github.com/user-attachments/assets/d6724f48-e0cb-4162-94cf-a6f6511048e1" />
+<img width="1920" height="1080" alt="Screenshoot1" src="https://github.com/user-attachments/assets/723b8c7c-299f-4ce1-8fc3-5dbb8e2eb613" />
+
+---
 
 ## Quick Start (Local)
 
-### Backend
+### Backend (Windows)
 ```bash
 cd backend
 python -m venv venv
-# Windows:
 venv\Scripts\activate
 pip install -r requirements.txt
 copy .env.example .env
