@@ -115,13 +115,15 @@ export default function Page() {
   return (
     <section className="hero-grid">
       <div className="hero-copy">
-        <span className="eyebrow">Game backend + web dashboard</span>
+        <span className="eyebrow">Add Leaderboard easy on your game</span>
 
-        <h1>Manage leaderboard projects with a cleaner frontend experience.</h1>
+        <h1>Manage a leaderboard for your game.</h1>
 
         <p className="hero-text">
-          Scoreforge is a multi-tenant leaderboard SaaS for games. Create projects,
-          generate API keys and connect your game clients to a simple score API.
+          Scoreforge is a multi-tenant leaderboard SaaS built for game developers.
+          Create and manage leaderboards for your games without the hassle of
+          building and maintaining your own backend. Focus on making great games
+          while we handle the leaderboard infrastructure.
         </p>
 
         <div className="feature-list">
