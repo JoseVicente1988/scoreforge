@@ -20,22 +20,29 @@ function authHeaders() {
 const styles = {
   page: {
     minHeight: "100vh",
-    background:
-      "linear-gradient(180deg, #0b1020 0%, #11182b 45%, #161f36 100%)",
+    position: "relative",
     color: "#f5f7fb",
     padding: "40px 20px",
+    backgroundImage:
+      "linear-gradient(rgba(8, 11, 20, 0.78), rgba(12, 16, 30, 0.88)), url('/backgrounds/scoreforge-bg.png')",
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    backgroundRepeat: "no-repeat",
+    backgroundAttachment: "fixed",
   },
   shell: {
     maxWidth: "1100px",
     margin: "0 auto",
+    position: "relative",
+    zIndex: 1,
   },
   headerCard: {
-    background: "rgba(255,255,255,0.06)",
-    border: "1px solid rgba(255,255,255,0.10)",
+    background: "rgba(255,255,255,0.08)",
+    border: "1px solid rgba(255,255,255,0.14)",
     borderRadius: "24px",
     padding: "24px",
-    boxShadow: "0 20px 50px rgba(0,0,0,0.25)",
-    backdropFilter: "blur(10px)",
+    boxShadow: "0 20px 50px rgba(0,0,0,0.30)",
+    backdropFilter: "blur(12px)",
   },
   topBar: {
     display: "flex",
@@ -56,9 +63,9 @@ const styles = {
     flexWrap: "wrap",
   },
   secondaryButton: {
-    background: "rgba(255,255,255,0.08)",
+    background: "rgba(255,255,255,0.10)",
     color: "#f5f7fb",
-    border: "1px solid rgba(255,255,255,0.12)",
+    border: "1px solid rgba(255,255,255,0.16)",
     borderRadius: "12px",
     padding: "10px 14px",
     textDecoration: "none",
@@ -87,7 +94,7 @@ const styles = {
   subtitle: {
     marginTop: "12px",
     marginBottom: 0,
-    color: "rgba(245,247,251,0.78)",
+    color: "rgba(245,247,251,0.82)",
     lineHeight: 1.6,
     maxWidth: "760px",
   },
@@ -98,12 +105,12 @@ const styles = {
     marginTop: "24px",
   },
   card: {
-    background: "rgba(255,255,255,0.06)",
-    border: "1px solid rgba(255,255,255,0.10)",
+    background: "rgba(255,255,255,0.08)",
+    border: "1px solid rgba(255,255,255,0.14)",
     borderRadius: "24px",
     padding: "24px",
-    boxShadow: "0 20px 50px rgba(0,0,0,0.20)",
-    backdropFilter: "blur(10px)",
+    boxShadow: "0 20px 50px rgba(0,0,0,0.25)",
+    backdropFilter: "blur(12px)",
   },
   cardTitle: {
     margin: 0,
@@ -114,7 +121,7 @@ const styles = {
   muted: {
     marginTop: "8px",
     marginBottom: 0,
-    color: "rgba(245,247,251,0.72)",
+    color: "rgba(245,247,251,0.76)",
     lineHeight: 1.6,
   },
   form: {
@@ -126,9 +133,9 @@ const styles = {
   input: {
     flex: 1,
     minWidth: "220px",
-    background: "rgba(255,255,255,0.08)",
+    background: "rgba(255,255,255,0.10)",
     color: "#ffffff",
-    border: "1px solid rgba(255,255,255,0.12)",
+    border: "1px solid rgba(255,255,255,0.16)",
     borderRadius: "14px",
     padding: "14px 16px",
     outline: "none",
@@ -137,7 +144,7 @@ const styles = {
     marginTop: "16px",
     padding: "14px 16px",
     borderRadius: "14px",
-    background: "rgba(255,93,115,0.12)",
+    background: "rgba(255,93,115,0.14)",
     border: "1px solid rgba(255,93,115,0.35)",
     color: "#ffd4da",
   },
@@ -145,12 +152,12 @@ const styles = {
     marginTop: "18px",
     padding: "18px",
     borderRadius: "18px",
-    background: "rgba(110,168,254,0.10)",
+    background: "rgba(110,168,254,0.12)",
     border: "1px solid rgba(110,168,254,0.30)",
   },
   keyLabel: {
     fontSize: "14px",
-    color: "rgba(245,247,251,0.78)",
+    color: "rgba(245,247,251,0.82)",
   },
   keyValue: {
     marginTop: "10px",
@@ -159,14 +166,14 @@ const styles = {
     lineHeight: 1.6,
     wordBreak: "break-all",
     color: "#dbe8ff",
-    background: "rgba(0,0,0,0.20)",
+    background: "rgba(0,0,0,0.24)",
     borderRadius: "12px",
     padding: "12px",
   },
   keyHint: {
     marginTop: "10px",
     fontSize: "13px",
-    color: "rgba(245,247,251,0.65)",
+    color: "rgba(245,247,251,0.68)",
   },
   projectList: {
     display: "grid",
@@ -174,8 +181,8 @@ const styles = {
     marginTop: "18px",
   },
   projectCard: {
-    background: "rgba(255,255,255,0.05)",
-    border: "1px solid rgba(255,255,255,0.10)",
+    background: "rgba(255,255,255,0.06)",
+    border: "1px solid rgba(255,255,255,0.12)",
     borderRadius: "18px",
     padding: "18px",
   },
@@ -193,15 +200,15 @@ const styles = {
   projectId: {
     marginTop: "6px",
     fontSize: "13px",
-    color: "rgba(245,247,251,0.62)",
+    color: "rgba(245,247,251,0.66)",
     wordBreak: "break-all",
   },
   empty: {
     padding: "18px",
     borderRadius: "16px",
-    background: "rgba(255,255,255,0.04)",
-    color: "rgba(245,247,251,0.68)",
-    border: "1px dashed rgba(255,255,255,0.15)",
+    background: "rgba(255,255,255,0.05)",
+    color: "rgba(245,247,251,0.72)",
+    border: "1px dashed rgba(255,255,255,0.16)",
   },
   statGrid: {
     display: "grid",
@@ -210,14 +217,14 @@ const styles = {
     marginTop: "18px",
   },
   statCard: {
-    background: "rgba(255,255,255,0.05)",
-    border: "1px solid rgba(255,255,255,0.10)",
+    background: "rgba(255,255,255,0.06)",
+    border: "1px solid rgba(255,255,255,0.12)",
     borderRadius: "18px",
     padding: "18px",
   },
   statLabel: {
     fontSize: "13px",
-    color: "rgba(245,247,251,0.62)",
+    color: "rgba(245,247,251,0.66)",
   },
   statValue: {
     marginTop: "8px",
