@@ -7,7 +7,7 @@ const API = process.env.NEXT_PUBLIC_API_BASE;
 const styles = {
   page: {
     minHeight: "100vh",
-    color: "#0f172a",
+    color: "#111827",
     padding: "40px 20px",
   },
   shell: {
