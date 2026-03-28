@@ -1,14 +1,34 @@
-export const metadata = { title: "Scoreforge" };
+import "./globals.css";
+
+export const metadata = {
+  title: "Scoreforge",
+  description: "Multi-tenant leaderboard SaaS for games",
+};
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body style={{ fontFamily: "system-ui, sans-serif", margin: 0 }}>
-        <div style={{ padding: 16, borderBottom: "1px solid #e5e5e5" }}>
-          <strong>Scoreforge</strong>
-          <span style={{ marginLeft: 12, color: "#666" }}>Scoreboard SaaS</span>
+      <body>
+        <div className="app-shell">
+          <header className="topbar">
+            <div className="topbar-inner">
+              <a href="/" className="brand">
+                <div className="brand-mark">S</div>
+                <div className="brand-copy">
+                  <strong>Scoreforge</strong>
+                  <span>Leaderboard SaaS for games</span>
+                </div>
+              </a>
+
+              <nav className="topbar-nav">
+                <a href="/">Home</a>
+                <a href="/dashboard">Dashboard</a>
+              </nav>
+            </div>
+          </header>
+
+          <main className="page-container">{children}</main>
         </div>
-        <div style={{ padding: 16, maxWidth: 900, margin: "0 auto" }}>{children}</div>
       </body>
     </html>
   );
