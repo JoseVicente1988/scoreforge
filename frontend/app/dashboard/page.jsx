@@ -20,15 +20,8 @@ function authHeaders() {
 const styles = {
   page: {
     minHeight: "100vh",
-    position: "relative",
-    color: "#f5f7fb",
+    color: "#0f172a",
     padding: "40px 20px",
-    backgroundImage:
-      "linear-gradient(rgba(8, 11, 20, 0.78), rgba(12, 16, 30, 0.88)), url('/backgrounds/scoreforge-bg.jpeg')",
-    backgroundSize: "cover",
-    backgroundPosition: "center",
-    backgroundRepeat: "no-repeat",
-    backgroundAttachment: "fixed",
   },
   shell: {
     maxWidth: "1100px",
