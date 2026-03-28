@@ -10,17 +10,21 @@ function getToken() {
 }
 
 function authHeaders() {
-  const t = getToken();
-  if (!t) return {};
+  const token = getToken();
+
+  if (!token) {
+    return {};
+  }
+
   return {
-    Authorization: `Bearer ${t}`,
+    Authorization: `Bearer ${token}`,
   };
 }
 
 const styles = {
   page: {
     minHeight: "100vh",
-    color: "#111827",
+    color: "#0f172a",
     padding: "40px 20px",
   },
   shell: {
@@ -30,12 +34,12 @@ const styles = {
     zIndex: 1,
   },
   headerCard: {
-    background: "rgba(255,255,255,0.08)",
-    border: "1px solid rgba(255,255,255,0.14)",
+    background: "rgba(255,255,255,0.82)",
+    border: "1px solid rgba(15,23,42,0.08)",
     borderRadius: "24px",
     padding: "24px",
-    boxShadow: "0 20px 50px rgba(0,0,0,0.30)",
-    backdropFilter: "blur(12px)",
+    boxShadow: "0 18px 45px rgba(15,23,42,0.08)",
+    backdropFilter: "blur(10px)",
   },
   topBar: {
     display: "flex",
@@ -48,6 +52,7 @@ const styles = {
     fontSize: "32px",
     fontWeight: 800,
     letterSpacing: "-0.02em",
+    color: "#0f172a",
   },
   topActions: {
     marginLeft: "auto",
@@ -56,9 +61,9 @@ const styles = {
     flexWrap: "wrap",
   },
   secondaryButton: {
-    background: "rgba(255,255,255,0.10)",
-    color: "#f5f7fb",
-    border: "1px solid rgba(255,255,255,0.16)",
+    background: "rgba(255,255,255,0.92)",
+    color: "#0f172a",
+    border: "1px solid #dbe3ee",
     borderRadius: "12px",
     padding: "10px 14px",
     textDecoration: "none",
@@ -66,17 +71,17 @@ const styles = {
     cursor: "pointer",
   },
   primaryButton: {
-    background: "linear-gradient(135deg, #6ea8fe 0%, #8b5cf6 100%)",
+    background: "linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)",
     color: "#ffffff",
     border: "none",
     borderRadius: "12px",
     padding: "12px 16px",
     fontWeight: 700,
     cursor: "pointer",
-    boxShadow: "0 10px 24px rgba(85, 105, 255, 0.35)",
+    boxShadow: "0 10px 24px rgba(37,99,235,0.18)",
   },
   dangerButton: {
-    background: "#ff5d73",
+    background: "#ef4444",
     color: "#ffffff",
     border: "none",
     borderRadius: "12px",
@@ -87,7 +92,7 @@ const styles = {
   subtitle: {
     marginTop: "12px",
     marginBottom: 0,
-    color: "rgba(245,247,251,0.82)",
+    color: "#334155",
     lineHeight: 1.6,
     maxWidth: "760px",
   },
@@ -98,23 +103,24 @@ const styles = {
     marginTop: "24px",
   },
   card: {
-    background: "rgba(255,255,255,0.08)",
-    border: "1px solid rgba(255,255,255,0.14)",
+    background: "rgba(255,255,255,0.84)",
+    border: "1px solid rgba(15,23,42,0.08)",
     borderRadius: "24px",
     padding: "24px",
-    boxShadow: "0 20px 50px rgba(0,0,0,0.25)",
-    backdropFilter: "blur(12px)",
+    boxShadow: "0 18px 45px rgba(15,23,42,0.06)",
+    backdropFilter: "blur(10px)",
   },
   cardTitle: {
     margin: 0,
     fontSize: "20px",
     fontWeight: 800,
     letterSpacing: "-0.01em",
+    color: "#0f172a",
   },
   muted: {
     marginTop: "8px",
     marginBottom: 0,
-    color: "rgba(245,247,251,0.76)",
+    color: "#475569",
     lineHeight: 1.6,
   },
   form: {
@@ -126,9 +132,9 @@ const styles = {
   input: {
     flex: 1,
     minWidth: "220px",
-    background: "rgba(255,255,255,0.10)",
-    color: "#ffffff",
-    border: "1px solid rgba(255,255,255,0.16)",
+    background: "rgba(255,255,255,0.94)",
+    color: "#0f172a",
+    border: "1px solid #dbe3ee",
     borderRadius: "14px",
     padding: "14px 16px",
     outline: "none",
@@ -137,20 +143,20 @@ const styles = {
     marginTop: "16px",
     padding: "14px 16px",
     borderRadius: "14px",
-    background: "rgba(255,93,115,0.14)",
-    border: "1px solid rgba(255,93,115,0.35)",
-    color: "#ffd4da",
+    background: "rgba(239,68,68,0.10)",
+    border: "1px solid rgba(239,68,68,0.20)",
+    color: "#991b1b",
   },
   keyBox: {
     marginTop: "18px",
     padding: "18px",
     borderRadius: "18px",
-    background: "rgba(110,168,254,0.12)",
-    border: "1px solid rgba(110,168,254,0.30)",
+    background: "rgba(37,99,235,0.08)",
+    border: "1px solid rgba(37,99,235,0.14)",
   },
   keyLabel: {
     fontSize: "14px",
-    color: "rgba(245,247,251,0.82)",
+    color: "#334155",
   },
   keyValue: {
     marginTop: "10px",
@@ -158,15 +164,16 @@ const styles = {
     fontSize: "14px",
     lineHeight: 1.6,
     wordBreak: "break-all",
-    color: "#dbe8ff",
-    background: "rgba(0,0,0,0.24)",
+    color: "#0f172a",
+    background: "rgba(255,255,255,0.9)",
+    border: "1px solid #dbe3ee",
     borderRadius: "12px",
     padding: "12px",
   },
   keyHint: {
     marginTop: "10px",
     fontSize: "13px",
-    color: "rgba(245,247,251,0.68)",
+    color: "#475569",
   },
   projectList: {
     display: "grid",
@@ -174,8 +181,8 @@ const styles = {
     marginTop: "18px",
   },
   projectCard: {
-    background: "rgba(255,255,255,0.06)",
-    border: "1px solid rgba(255,255,255,0.12)",
+    background: "rgba(255,255,255,0.72)",
+    border: "1px solid rgba(15,23,42,0.08)",
     borderRadius: "18px",
     padding: "18px",
   },
@@ -189,19 +196,20 @@ const styles = {
     fontSize: "18px",
     fontWeight: 800,
     margin: 0,
+    color: "#0f172a",
   },
   projectId: {
     marginTop: "6px",
     fontSize: "13px",
-    color: "rgba(245,247,251,0.66)",
+    color: "#475569",
     wordBreak: "break-all",
   },
   empty: {
     padding: "18px",
     borderRadius: "16px",
-    background: "rgba(255,255,255,0.05)",
-    color: "rgba(245,247,251,0.72)",
-    border: "1px dashed rgba(255,255,255,0.16)",
+    background: "rgba(255,255,255,0.64)",
+    color: "#475569",
+    border: "1px dashed #dbe3ee",
   },
   statGrid: {
     display: "grid",
@@ -210,24 +218,26 @@ const styles = {
     marginTop: "18px",
   },
   statCard: {
-    background: "rgba(255,255,255,0.06)",
-    border: "1px solid rgba(255,255,255,0.12)",
+    background: "rgba(255,255,255,0.72)",
+    border: "1px solid rgba(15,23,42,0.08)",
     borderRadius: "18px",
     padding: "18px",
   },
   statLabel: {
     fontSize: "13px",
-    color: "rgba(245,247,251,0.66)",
+    color: "#475569",
   },
   statValue: {
     marginTop: "8px",
     fontSize: "30px",
     fontWeight: 800,
+    color: "#0f172a",
   },
   statValueSmall: {
     marginTop: "8px",
     fontSize: "22px",
     fontWeight: 800,
+    color: "#0f172a",
   },
 };
 
@@ -250,15 +260,15 @@ export default function Dashboard() {
     setMsg("");
 
     try {
-      const r = await fetch(`${API}/projects`, {
+      const response = await fetch(`${API}/projects`, {
         headers: {
           ...authHeaders(),
         },
       });
 
-      const data = await r.json().catch(() => []);
+      const data = await response.json().catch(() => []);
 
-      if (!r.ok) {
+      if (!response.ok) {
         setMsg(data.detail || "Failed to load projects");
         return;
       }
@@ -275,18 +285,20 @@ export default function Dashboard() {
     setApiKey(null);
 
     try {
-      const r = await fetch(`${API}/projects`, {
+      const response = await fetch(`${API}/projects`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           ...authHeaders(),
         },
-        body: JSON.stringify({ name: newName }),
+        body: JSON.stringify({
+          name: newName,
+        }),
       });
 
-      const data = await r.json().catch(() => ({}));
+      const data = await response.json().catch(() => ({}));
 
-      if (!r.ok) {
+      if (!response.ok) {
         setMsg(data.detail || "Create project failed");
         return;
       }
@@ -303,17 +315,17 @@ export default function Dashboard() {
     setApiKey(null);
 
     try {
-      const r = await fetch(`${API}/projects/${projectId}/keys`, {
+      const response = await fetch(`${API}/projects/${projectId}/keys`, {
         method: "POST",
         headers: {
           ...authHeaders(),
         },
       });
 
-      const data = await r.json().catch(() => ({}));
+      const data = await response.json().catch(() => ({}));
 
-      if (!r.ok) {
-        if (r.status === 409) {
+      if (!response.ok) {
+        if (response.status === 409) {
           setMsg(data.detail || "API key already exists. Rotate it if you lost it.");
           return;
         }
@@ -418,16 +430,16 @@ export default function Dashboard() {
 
           <div style={styles.projectList}>
             {projects.length > 0 ? (
-              projects.map((p) => (
-                <div key={p.id} style={styles.projectCard}>
+              projects.map((project) => (
+                <div key={project.id} style={styles.projectCard}>
                   <div style={styles.projectHeader}>
                     <div>
-                      <p style={styles.projectName}>{p.name}</p>
-                      <div style={styles.projectId}>Project ID: {p.id}</div>
+                      <p style={styles.projectName}>{project.name}</p>
+                      <div style={styles.projectId}>Project ID: {project.id}</div>
                     </div>
 
                     <button
-                      onClick={() => createKey(p.id)}
+                      onClick={() => createKey(project.id)}
                       style={{ ...styles.primaryButton, marginLeft: "auto" }}
                     >
                       Generate API key

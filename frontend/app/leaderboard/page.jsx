@@ -7,7 +7,7 @@ const API = process.env.NEXT_PUBLIC_API_BASE;
 const styles = {
   page: {
     minHeight: "100vh",
-    color: "#111827",
+    color: "#0f172a",
     padding: "40px 20px",
   },
   shell: {
@@ -17,12 +17,12 @@ const styles = {
     zIndex: 1,
   },
   header: {
-    background: "rgba(255,255,255,0.08)",
-    border: "1px solid rgba(255,255,255,0.14)",
+    background: "rgba(255,255,255,0.82)",
+    border: "1px solid rgba(15,23,42,0.08)",
     borderRadius: "24px",
     padding: "24px",
-    boxShadow: "0 20px 50px rgba(0,0,0,0.30)",
-    backdropFilter: "blur(12px)",
+    boxShadow: "0 18px 45px rgba(15,23,42,0.08)",
+    backdropFilter: "blur(10px)",
   },
   topBar: {
     display: "flex",
@@ -35,13 +35,14 @@ const styles = {
     fontSize: "32px",
     fontWeight: 800,
     letterSpacing: "-0.02em",
+    color: "#0f172a",
   },
   backLink: {
     marginLeft: "auto",
     textDecoration: "none",
-    color: "#f5f7fb",
-    background: "rgba(255,255,255,0.10)",
-    border: "1px solid rgba(255,255,255,0.16)",
+    color: "#0f172a",
+    background: "rgba(255,255,255,0.92)",
+    border: "1px solid #dbe3ee",
     borderRadius: "12px",
     padding: "10px 14px",
     fontWeight: 600,
@@ -49,18 +50,18 @@ const styles = {
   subtitle: {
     marginTop: "12px",
     marginBottom: 0,
-    color: "rgba(245,247,251,0.80)",
+    color: "#334155",
     lineHeight: 1.6,
     maxWidth: "720px",
   },
   card: {
     marginTop: "22px",
-    background: "rgba(255,255,255,0.08)",
-    border: "1px solid rgba(255,255,255,0.14)",
+    background: "rgba(255,255,255,0.84)",
+    border: "1px solid rgba(15,23,42,0.08)",
     borderRadius: "24px",
     padding: "24px",
-    boxShadow: "0 20px 50px rgba(0,0,0,0.25)",
-    backdropFilter: "blur(12px)",
+    boxShadow: "0 18px 45px rgba(15,23,42,0.06)",
+    backdropFilter: "blur(10px)",
   },
   formRow: {
     display: "flex",
@@ -70,45 +71,45 @@ const styles = {
   input: {
     flex: 1,
     minWidth: "240px",
-    background: "rgba(255,255,255,0.10)",
-    color: "#ffffff",
-    border: "1px solid rgba(255,255,255,0.16)",
+    background: "rgba(255,255,255,0.94)",
+    color: "#0f172a",
+    border: "1px solid #dbe3ee",
     borderRadius: "14px",
     padding: "14px 16px",
     outline: "none",
   },
   button: {
-    background: "linear-gradient(135deg, #6ea8fe 0%, #8b5cf6 100%)",
+    background: "linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)",
     color: "#ffffff",
     border: "none",
     borderRadius: "12px",
     padding: "12px 16px",
     fontWeight: 700,
     cursor: "pointer",
-    boxShadow: "0 10px 24px rgba(85, 105, 255, 0.35)",
+    boxShadow: "0 10px 24px rgba(37,99,235,0.18)",
   },
   message: {
     marginTop: "16px",
     padding: "14px 16px",
     borderRadius: "14px",
-    background: "rgba(255,93,115,0.14)",
-    border: "1px solid rgba(255,93,115,0.35)",
-    color: "#ffd4da",
+    background: "rgba(239,68,68,0.10)",
+    border: "1px solid rgba(239,68,68,0.20)",
+    color: "#991b1b",
   },
   empty: {
     marginTop: "18px",
     padding: "18px",
     borderRadius: "16px",
-    background: "rgba(255,255,255,0.05)",
-    color: "rgba(245,247,251,0.72)",
-    border: "1px dashed rgba(255,255,255,0.16)",
+    background: "rgba(255,255,255,0.64)",
+    color: "#475569",
+    border: "1px dashed #dbe3ee",
   },
   tableWrap: {
     marginTop: "18px",
     overflowX: "auto",
     borderRadius: "18px",
-    border: "1px solid rgba(255,255,255,0.12)",
-    background: "rgba(255,255,255,0.05)",
+    border: "1px solid rgba(15,23,42,0.08)",
+    background: "rgba(255,255,255,0.74)",
   },
   table: {
     width: "100%",
@@ -121,25 +122,27 @@ const styles = {
     fontSize: "13px",
     textTransform: "uppercase",
     letterSpacing: "0.08em",
-    color: "rgba(245,247,251,0.66)",
-    borderBottom: "1px solid rgba(255,255,255,0.10)",
+    color: "#475569",
+    borderBottom: "1px solid rgba(15,23,42,0.08)",
   },
   td: {
     padding: "16px",
-    borderBottom: "1px solid rgba(255,255,255,0.08)",
+    borderBottom: "1px solid rgba(15,23,42,0.06)",
+    color: "#0f172a",
   },
   rank: {
     width: "90px",
     fontWeight: 800,
-    color: "#9dc1ff",
+    color: "#2563eb",
   },
   username: {
     fontWeight: 700,
+    color: "#0f172a",
   },
   score: {
     textAlign: "right",
     fontWeight: 800,
-    color: "#ffffff",
+    color: "#0f172a",
   },
 };
 
@@ -157,15 +160,19 @@ export default function Leaderboard() {
       return;
     }
 
-    const r = await fetch(`${API}/scores/leaderboard/${projectId}?limit=20`);
-    const data = await r.json().catch(() => ({}));
+    try {
+      const response = await fetch(`${API}/scores/leaderboard/${projectId}?limit=20`);
+      const data = await response.json().catch(() => ({}));
 
-    if (!r.ok) {
-      setMsg(data.detail || "Failed to load leaderboard");
-      return;
+      if (!response.ok) {
+        setMsg(data.detail || "Failed to load leaderboard");
+        return;
+      }
+
+      setRows(Array.isArray(data) ? data : []);
+    } catch (error) {
+      setMsg("Failed to load leaderboard");
     }
-
-    setRows(data);
   }
 
   return (
@@ -210,9 +217,9 @@ export default function Leaderboard() {
                   </tr>
                 </thead>
                 <tbody>
-                  {rows.map((row, idx) => (
-                    <tr key={idx}>
-                      <td style={{ ...styles.td, ...styles.rank }}>#{idx + 1}</td>
+                  {rows.map((row, index) => (
+                    <tr key={index}>
+                      <td style={{ ...styles.td, ...styles.rank }}>#{index + 1}</td>
                       <td style={{ ...styles.td, ...styles.username }}>
                         {row.username}
                       </td>
