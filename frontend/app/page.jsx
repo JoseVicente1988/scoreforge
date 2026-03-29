@@ -6,7 +6,10 @@ const API = process.env.NEXT_PUBLIC_API_BASE;
 
 function asMessage(detail) {
   if (!detail) return null;
-  if (typeof detail === "string") return detail;
+
+  if (typeof detail === "string") {
+    return detail;
+  }
 
   try {
     return JSON.stringify(detail);
@@ -14,6 +17,213 @@ function asMessage(detail) {
     return String(detail);
   }
 }
+
+const styles = {
+  page: {
+    minHeight: "100vh",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "32px 20px",
+    color: "#0f172a",
+  },
+  shell: {
+    width: "100%",
+    maxWidth: "1180px",
+    display: "grid",
+    gridTemplateColumns: "1.15fr 0.85fr",
+    gap: "28px",
+    alignItems: "stretch",
+  },
+  hero: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    padding: "20px 8px",
+  },
+  eyebrow: {
+    display: "inline-flex",
+    alignItems: "center",
+    width: "fit-content",
+    padding: "8px 12px",
+    borderRadius: "999px",
+    background: "rgba(255,255,255,0.55)",
+    border: "1px solid rgba(15,23,42,0.08)",
+    color: "#334155",
+    fontSize: "13px",
+    fontWeight: 700,
+    letterSpacing: "0.02em",
+    backdropFilter: "blur(10px)",
+  },
+  heroTitle: {
+    margin: "18px 0 14px 0",
+    fontSize: "54px",
+    lineHeight: 1.02,
+    letterSpacing: "-0.04em",
+    color: "#0f172a",
+    fontWeight: 900,
+    maxWidth: "620px",
+  },
+  heroText: {
+    margin: 0,
+    maxWidth: "680px",
+    color: "#334155",
+    fontSize: "18px",
+    lineHeight: 1.75,
+  },
+  featureGrid: {
+    display: "grid",
+    gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
+    gap: "14px",
+    marginTop: "30px",
+  },
+  featureCard: {
+    background: "rgba(255,255,255,0.52)",
+    border: "1px solid rgba(15,23,42,0.08)",
+    borderRadius: "20px",
+    padding: "18px",
+    boxShadow: "0 10px 30px rgba(15,23,42,0.06)",
+    backdropFilter: "blur(10px)",
+  },
+  featureTitle: {
+    margin: 0,
+    fontSize: "15px",
+    fontWeight: 800,
+    color: "#0f172a",
+  },
+  featureText: {
+    marginTop: "8px",
+    marginBottom: 0,
+    color: "#475569",
+    fontSize: "14px",
+    lineHeight: 1.6,
+  },
+  authWrap: {
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  authCard: {
+    width: "100%",
+    maxWidth: "460px",
+    background: "rgba(255,255,255,0.62)",
+    border: "1px solid rgba(15,23,42,0.08)",
+    borderRadius: "28px",
+    padding: "26px",
+    boxShadow: "0 18px 50px rgba(15,23,42,0.10)",
+    backdropFilter: "blur(16px)",
+  },
+  authHeader: {
+    display: "flex",
+    alignItems: "center",
+    gap: "12px",
+    justifyContent: "space-between",
+    marginBottom: "22px",
+  },
+  tabs: {
+    display: "inline-flex",
+    padding: "5px",
+    borderRadius: "14px",
+    background: "rgba(15,23,42,0.05)",
+    border: "1px solid rgba(15,23,42,0.06)",
+    gap: "6px",
+  },
+  tabButton: {
+    border: "none",
+    background: "transparent",
+    color: "#475569",
+    padding: "10px 16px",
+    borderRadius: "10px",
+    fontWeight: 700,
+    cursor: "pointer",
+    transition: "all 0.2s ease",
+  },
+  tabButtonActive: {
+    background: "#ffffff",
+    color: "#0f172a",
+    boxShadow: "0 6px 20px rgba(15,23,42,0.08)",
+  },
+  dashboardLink: {
+    textDecoration: "none",
+    color: "#0f172a",
+    background: "rgba(255,255,255,0.78)",
+    border: "1px solid rgba(15,23,42,0.08)",
+    borderRadius: "12px",
+    padding: "10px 14px",
+    fontWeight: 700,
+    whiteSpace: "nowrap",
+  },
+  authTitle: {
+    margin: 0,
+    fontSize: "28px",
+    lineHeight: 1.1,
+    fontWeight: 900,
+    color: "#0f172a",
+    letterSpacing: "-0.03em",
+  },
+  authSubtitle: {
+    marginTop: "10px",
+    marginBottom: 0,
+    color: "#475569",
+    lineHeight: 1.7,
+    fontSize: "15px",
+  },
+  form: {
+    marginTop: "24px",
+    display: "grid",
+    gap: "16px",
+  },
+  field: {
+    display: "grid",
+    gap: "8px",
+  },
+  label: {
+    fontSize: "14px",
+    fontWeight: 700,
+    color: "#334155",
+  },
+  input: {
+    width: "100%",
+    borderRadius: "14px",
+    border: "1px solid #dbe3ee",
+    background: "rgba(255,255,255,0.88)",
+    color: "#0f172a",
+    padding: "14px 16px",
+    fontSize: "15px",
+    outline: "none",
+    boxShadow: "inset 0 1px 2px rgba(15,23,42,0.03)",
+  },
+  submitButton: {
+    marginTop: "4px",
+    border: "none",
+    borderRadius: "14px",
+    background: "linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)",
+    color: "#ffffff",
+    padding: "14px 18px",
+    fontSize: "15px",
+    fontWeight: 800,
+    cursor: "pointer",
+    boxShadow: "0 12px 28px rgba(37,99,235,0.22)",
+  },
+  messageError: {
+    marginTop: "4px",
+    padding: "14px 16px",
+    borderRadius: "14px",
+    background: "rgba(239,68,68,0.10)",
+    border: "1px solid rgba(239,68,68,0.18)",
+    color: "#991b1b",
+    fontSize: "14px",
+  },
+  messageSuccess: {
+    marginTop: "4px",
+    padding: "14px 16px",
+    borderRadius: "14px",
+    background: "rgba(34,197,94,0.10)",
+    border: "1px solid rgba(34,197,94,0.18)",
+    color: "#166534",
+    fontSize: "14px",
+  },
+};
 
 export default function Page() {
   const [mode, setMode] = useState("login");
@@ -113,127 +323,154 @@ export default function Page() {
   }
 
   return (
-    <section className="hero-grid">
-      <div className="hero-copy">
-        <span className="eyebrow">Add Leaderboard easy on your game</span>
+    <main style={styles.page}>
+      <div style={styles.shell}>
+        <section style={styles.hero}>
+          <span style={styles.eyebrow}>Add leaderboards to your game easily</span>
 
-        <h1>Manage a leaderboard for your game.</h1>
+          <h1 style={styles.heroTitle}>Manage a leaderboard for your game.</h1>
 
-        <p className="hero-text">
-          Scoreforge is a multi-tenant leaderboard SaaS built for game developers.
-          Create and manage leaderboards for your games without the hassle of
-          building and maintaining your own backend. Focus on making great games
-          while we handle the leaderboard infrastructure.
-        </p>
+          <p style={styles.heroText}>
+            Scoreforge is a multi-tenant leaderboard SaaS built for game developers.
+            Create and manage leaderboards for your games without the hassle of
+            building and maintaining your own backend. Focus on making great games
+            while we handle the leaderboard infrastructure.
+          </p>
 
-        <div className="feature-list">
-          <div className="feature-item">
-            <strong>Project-based setup</strong>
-            <span>Create one project per game and keep data isolated.</span>
-          </div>
-
-          <div className="feature-item">
-            <strong>API key flow</strong>
-            <span>Generate secure keys for game clients and service integration.</span>
-          </div>
-
-          <div className="feature-item">
-            <strong>Developer-friendly</strong>
-            <span>Built for fast integration with backend services and game clients.</span>
-          </div>
-        </div>
-      </div>
-
-      <div className="auth-card">
-        <div className="auth-card-header">
-          <div className="auth-tabs" role="tablist" aria-label="Authentication mode">
-            <button
-              type="button"
-              className={mode === "login" ? "tab-button active" : "tab-button"}
-              onClick={() => setMode("login")}
-              aria-pressed={mode === "login"}
-            >
-              Login
-            </button>
-
-            <button
-              type="button"
-              className={mode === "register" ? "tab-button active" : "tab-button"}
-              onClick={() => setMode("register")}
-              aria-pressed={mode === "register"}
-            >
-              Register
-            </button>
-          </div>
-
-          <a href="/dashboard" className="dashboard-link">
-            Go to dashboard
-          </a>
-        </div>
-
-        <div className="auth-copy">
-          <h2>{title}</h2>
-          <p>{subtitle}</p>
-        </div>
-
-        <form onSubmit={submit} className="auth-form">
-          <div className="form-field">
-            <label htmlFor="username">Username</label>
-            <input
-              id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              required
-              placeholder="Enter your username"
-              autoComplete="username"
-            />
-          </div>
-
-          {mode === "register" && (
-            <div className="form-field">
-              <label htmlFor="email">Email</label>
-              <input
-                id="email"
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                placeholder="Enter your email"
-                autoComplete="email"
-              />
+          <div style={styles.featureGrid}>
+            <div style={styles.featureCard}>
+              <p style={styles.featureTitle}>Project-based setup</p>
+              <p style={styles.featureText}>
+                Create one project per game and keep every leaderboard isolated.
+              </p>
             </div>
-          )}
 
-          <div className="form-field">
-            <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              placeholder="Enter your password"
-              autoComplete={mode === "login" ? "current-password" : "new-password"}
-            />
-          </div>
-
-          <button type="submit" className="primary-button" disabled={isSubmitting}>
-            {isSubmitting
-              ? mode === "register"
-                ? "Creating account..."
-                : "Logging in..."
-              : mode === "register"
-                ? "Create account"
-                : "Login"}
-          </button>
-
-          {msg && (
-            <div className={isError ? "message-box error" : "message-box success"}>
-              {msg}
+            <div style={styles.featureCard}>
+              <p style={styles.featureTitle}>Secure API keys</p>
+              <p style={styles.featureText}>
+                Generate keys for game clients and backend integrations safely.
+              </p>
             </div>
-          )}
-        </form>
+
+            <div style={styles.featureCard}>
+              <p style={styles.featureTitle}>Fast integration</p>
+              <p style={styles.featureText}>
+                Connect your game quickly and focus on gameplay instead of backend work.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section style={styles.authWrap}>
+          <div style={styles.authCard}>
+            <div style={styles.authHeader}>
+              <div style={styles.tabs} role="tablist" aria-label="Authentication mode">
+                <button
+                  type="button"
+                  onClick={() => setMode("login")}
+                  aria-pressed={mode === "login"}
+                  style={
+                    mode === "login"
+                      ? { ...styles.tabButton, ...styles.tabButtonActive }
+                      : styles.tabButton
+                  }
+                >
+                  Login
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => setMode("register")}
+                  aria-pressed={mode === "register"}
+                  style={
+                    mode === "register"
+                      ? { ...styles.tabButton, ...styles.tabButtonActive }
+                      : styles.tabButton
+                  }
+                >
+                  Register
+                </button>
+              </div>
+
+              <a href="/dashboard" style={styles.dashboardLink}>
+                Dashboard
+              </a>
+            </div>
+
+            <div>
+              <h2 style={styles.authTitle}>{title}</h2>
+              <p style={styles.authSubtitle}>{subtitle}</p>
+            </div>
+
+            <form onSubmit={submit} style={styles.form}>
+              <div style={styles.field}>
+                <label htmlFor="username" style={styles.label}>
+                  Username
+                </label>
+                <input
+                  id="username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  required
+                  placeholder="Enter your username"
+                  autoComplete="username"
+                  style={styles.input}
+                />
+              </div>
+
+              {mode === "register" ? (
+                <div style={styles.field}>
+                  <label htmlFor="email" style={styles.label}>
+                    Email
+                  </label>
+                  <input
+                    id="email"
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    placeholder="Enter your email"
+                    autoComplete="email"
+                    style={styles.input}
+                  />
+                </div>
+              ) : null}
+
+              <div style={styles.field}>
+                <label htmlFor="password" style={styles.label}>
+                  Password
+                </label>
+                <input
+                  id="password"
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
+                  placeholder="Enter your password"
+                  autoComplete={mode === "login" ? "current-password" : "new-password"}
+                  style={styles.input}
+                />
+              </div>
+
+              <button type="submit" disabled={isSubmitting} style={styles.submitButton}>
+                {isSubmitting
+                  ? mode === "register"
+                    ? "Creating account..."
+                    : "Logging in..."
+                  : mode === "register"
+                    ? "Create account"
+                    : "Login"}
+              </button>
+
+              {msg ? (
+                <div style={isError ? styles.messageError : styles.messageSuccess}>
+                  {msg}
+                </div>
+              ) : null}
+            </form>
+          </div>
+        </section>
       </div>
-    </section>
+    </main>
   );
 }
