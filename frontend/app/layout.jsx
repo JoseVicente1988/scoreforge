@@ -29,8 +29,12 @@ function ThemeToggle() {
   if (!mounted) {
     return (
       <div className="theme-toggle" aria-hidden="true">
-        <button className="theme-button active">Light</button>
-        <button className="theme-button">Dark</button>
+        <button className="theme-button active" title="Light mode" aria-label="Light mode">
+          ☀️
+        </button>
+        <button className="theme-button" title="Dark mode" aria-label="Dark mode">
+          🌙
+        </button>
       </div>
     );
   }
@@ -41,16 +45,20 @@ function ThemeToggle() {
         type="button"
         className={theme === "light" ? "theme-button active" : "theme-button"}
         onClick={() => toggleTheme("light")}
+        title="Light mode"
+        aria-label="Light mode"
       >
-        Light
+        ☀️
       </button>
 
       <button
         type="button"
         className={theme === "dark" ? "theme-button active" : "theme-button"}
         onClick={() => toggleTheme("dark")}
+        title="Dark mode"
+        aria-label="Dark mode"
       >
-        Dark
+        🌙
       </button>
     </div>
   );
