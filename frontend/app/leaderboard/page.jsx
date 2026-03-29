@@ -7,7 +7,7 @@ const API = process.env.NEXT_PUBLIC_API_BASE;
 const styles = {
   page: {
     minHeight: "100vh",
-    color: "#0f172a",
+    color: "var(--text)",
     padding: "40px 20px",
   },
   shell: {
@@ -17,12 +17,12 @@ const styles = {
     zIndex: 1,
   },
   header: {
-    background: "rgba(255,255,255,0.24)",
-    border: "1px solid rgba(255,255,255,0.36)",
+    background: "var(--surface)",
+    border: "1px solid var(--border)",
     borderRadius: "24px",
     padding: "24px",
     boxShadow:
-      "0 24px 60px rgba(15,23,42,0.14), inset 0 1px 0 rgba(255,255,255,0.34)",
+      "var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,0.18)",
     backdropFilter: "blur(22px) saturate(150%)",
     WebkitBackdropFilter: "blur(22px) saturate(150%)",
   },
@@ -37,14 +37,14 @@ const styles = {
     fontSize: "32px",
     fontWeight: 800,
     letterSpacing: "-0.02em",
-    color: "#0f172a",
+    color: "var(--text)",
   },
   backLink: {
     marginLeft: "auto",
     textDecoration: "none",
-    color: "#0f172a",
-    background: "rgba(255,255,255,0.26)",
-    border: "1px solid rgba(255,255,255,0.36)",
+    color: "var(--text)",
+    background: "var(--surface-soft)",
+    border: "1px solid var(--border)",
     borderRadius: "12px",
     padding: "10px 14px",
     fontWeight: 600,
@@ -55,18 +55,18 @@ const styles = {
   subtitle: {
     marginTop: "12px",
     marginBottom: 0,
-    color: "#334155",
+    color: "var(--text-soft)",
     lineHeight: 1.6,
     maxWidth: "720px",
   },
   card: {
     marginTop: "22px",
-    background: "rgba(255,255,255,0.22)",
-    border: "1px solid rgba(255,255,255,0.34)",
+    background: "var(--surface)",
+    border: "1px solid var(--border)",
     borderRadius: "24px",
     padding: "24px",
     boxShadow:
-      "0 20px 48px rgba(15,23,42,0.10), inset 0 1px 0 rgba(255,255,255,0.30)",
+      "var(--shadow-md), inset 0 1px 0 rgba(255,255,255,0.16)",
     backdropFilter: "blur(20px) saturate(145%)",
     WebkitBackdropFilter: "blur(20px) saturate(145%)",
   },
@@ -78,24 +78,24 @@ const styles = {
   input: {
     flex: 1,
     minWidth: "240px",
-    background: "rgba(255,255,255,0.38)",
-    color: "#0f172a",
-    border: "1px solid rgba(255,255,255,0.40)",
+    background: "var(--surface-soft)",
+    color: "var(--text)",
+    border: "1px solid var(--border)",
     borderRadius: "14px",
     padding: "14px 16px",
     outline: "none",
     transition: "border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease",
     backdropFilter: "blur(10px)",
     WebkitBackdropFilter: "blur(10px)",
-    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.24)",
+    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.12)",
   },
   inputFocus: {
     border: "1px solid rgba(37,99,235,0.70)",
     boxShadow: "0 0 0 3px rgba(37,99,235,0.15)",
-    background: "rgba(255,255,255,0.48)",
+    background: "var(--surface-strong)",
   },
   button: {
-    background: "linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)",
+    background: "linear-gradient(135deg, var(--primary) 0%, var(--primary-secondary) 100%)",
     color: "#ffffff",
     border: "none",
     borderRadius: "12px",
@@ -109,9 +109,9 @@ const styles = {
     marginTop: "16px",
     padding: "14px 16px",
     borderRadius: "14px",
-    background: "rgba(239,68,68,0.10)",
-    border: "1px solid rgba(239,68,68,0.20)",
-    color: "#991b1b",
+    background: "var(--danger-bg)",
+    border: "1px solid var(--danger-border)",
+    color: "var(--danger-text)",
     backdropFilter: "blur(10px)",
     WebkitBackdropFilter: "blur(10px)",
   },
@@ -119,9 +119,9 @@ const styles = {
     marginTop: "18px",
     padding: "18px",
     borderRadius: "16px",
-    background: "rgba(255,255,255,0.18)",
-    color: "#475569",
-    border: "1px dashed rgba(255,255,255,0.34)",
+    background: "var(--surface-soft)",
+    color: "var(--text-muted)",
+    border: "1px dashed var(--border)",
     backdropFilter: "blur(14px)",
     WebkitBackdropFilter: "blur(14px)",
   },
@@ -129,11 +129,11 @@ const styles = {
     marginTop: "18px",
     overflowX: "auto",
     borderRadius: "18px",
-    border: "1px solid rgba(255,255,255,0.34)",
-    background: "rgba(255,255,255,0.18)",
+    border: "1px solid var(--border)",
+    background: "var(--surface-soft)",
     backdropFilter: "blur(16px)",
     WebkitBackdropFilter: "blur(16px)",
-    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.22)",
+    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.12)",
   },
   table: {
     width: "100%",
@@ -146,27 +146,27 @@ const styles = {
     fontSize: "13px",
     textTransform: "uppercase",
     letterSpacing: "0.08em",
-    color: "#475569",
-    borderBottom: "1px solid rgba(255,255,255,0.28)",
+    color: "var(--text-muted)",
+    borderBottom: "1px solid var(--border)",
   },
   td: {
     padding: "16px",
-    borderBottom: "1px solid rgba(255,255,255,0.22)",
-    color: "#0f172a",
+    borderBottom: "1px solid var(--border)",
+    color: "var(--text)",
   },
   rank: {
     width: "90px",
     fontWeight: 800,
-    color: "#2563eb",
+    color: "var(--primary)",
   },
   username: {
     fontWeight: 700,
-    color: "#0f172a",
+    color: "var(--text)",
   },
   score: {
     textAlign: "right",
     fontWeight: 800,
-    color: "#0f172a",
+    color: "var(--text)",
   },
 };
 
@@ -211,12 +211,10 @@ export default function Leaderboard() {
               style={styles.backLink}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "translateY(-1px)";
-                e.currentTarget.style.background = "rgba(255,255,255,0.34)";
                 e.currentTarget.style.boxShadow = "0 8px 20px rgba(15,23,42,0.06)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.background = "rgba(255,255,255,0.26)";
                 e.currentTarget.style.boxShadow = "none";
               }}
             >
