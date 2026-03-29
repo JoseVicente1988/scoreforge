@@ -276,7 +276,7 @@ export default function Page() {
     input: {
       width: "100%",
       borderRadius: "14px",
-      border: "1px solid var(--border)",
+      border: "1px solid rgba(15, 23, 42, 0.45)",
       background: "var(--surface-soft)",
       color: "var(--text)",
       padding: "14px 16px",
@@ -289,7 +289,7 @@ export default function Page() {
       WebkitBackdropFilter: "blur(10px)"
     },
     inputFocus: {
-      border: "1px solid rgba(37,99,235,0.70)",
+      border: "1px solid rgba(37,99,235,0.85)",
       boxShadow: "0 0 0 3px rgba(37,99,235,0.15)",
       background: "var(--surface-strong)"
     },

@@ -87,7 +87,7 @@ export default function Leaderboard() {
       minWidth: "240px",
       background: "var(--surface-soft)",
       color: "var(--text)",
-      border: "1px solid var(--border)",
+      border: "1px solid rgba(15, 23, 42, 0.45)",
       borderRadius: "14px",
       padding: "14px 16px",
       outline: "none",
@@ -97,7 +97,7 @@ export default function Leaderboard() {
       boxShadow: "inset 0 1px 0 rgba(255,255,255,0.12)"
     },
     inputFocus: {
-      border: "1px solid rgba(37,99,235,0.70)",
+      border: "1px solid rgba(37,99,235,0.85)",
       boxShadow: "0 0 0 3px rgba(37,99,235,0.15)",
       background: "var(--surface-strong)"
     },
