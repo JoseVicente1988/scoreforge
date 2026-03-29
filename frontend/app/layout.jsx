@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { LanguageProvider, useLang } from "@/components/LanguageProvider";
+import { LanguageProvider, useLang } from "../components/LanguageProvider";
 import "./globals.css";
 
 function ThemeToggle() {

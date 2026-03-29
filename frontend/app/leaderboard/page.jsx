@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { useLang } from "@/components/LanguageProvider";
+import { useLang } from "../../components/LanguageProvider";
 
 const API = process.env.NEXT_PUBLIC_API_BASE;
 
