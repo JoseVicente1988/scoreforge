@@ -17,12 +17,14 @@ const styles = {
     zIndex: 1,
   },
   header: {
-    background: "rgba(255,255,255,0.82)",
-    border: "1px solid rgba(15,23,42,0.08)",
+    background: "rgba(255,255,255,0.24)",
+    border: "1px solid rgba(255,255,255,0.36)",
     borderRadius: "24px",
     padding: "24px",
-    boxShadow: "0 18px 45px rgba(15,23,42,0.08)",
-    backdropFilter: "blur(10px)",
+    boxShadow:
+      "0 24px 60px rgba(15,23,42,0.14), inset 0 1px 0 rgba(255,255,255,0.34)",
+    backdropFilter: "blur(22px) saturate(150%)",
+    WebkitBackdropFilter: "blur(22px) saturate(150%)",
   },
   topBar: {
     display: "flex",
@@ -41,12 +43,14 @@ const styles = {
     marginLeft: "auto",
     textDecoration: "none",
     color: "#0f172a",
-    background: "rgba(255,255,255,0.92)",
-    border: "1px solid #dbe3ee",
+    background: "rgba(255,255,255,0.26)",
+    border: "1px solid rgba(255,255,255,0.36)",
     borderRadius: "12px",
     padding: "10px 14px",
     fontWeight: 600,
     transition: "all 0.2s ease",
+    backdropFilter: "blur(14px)",
+    WebkitBackdropFilter: "blur(14px)",
   },
   subtitle: {
     marginTop: "12px",
@@ -57,12 +61,14 @@ const styles = {
   },
   card: {
     marginTop: "22px",
-    background: "rgba(255,255,255,0.84)",
-    border: "1px solid rgba(15,23,42,0.08)",
+    background: "rgba(255,255,255,0.22)",
+    border: "1px solid rgba(255,255,255,0.34)",
     borderRadius: "24px",
     padding: "24px",
-    boxShadow: "0 18px 45px rgba(15,23,42,0.06)",
-    backdropFilter: "blur(10px)",
+    boxShadow:
+      "0 20px 48px rgba(15,23,42,0.10), inset 0 1px 0 rgba(255,255,255,0.30)",
+    backdropFilter: "blur(20px) saturate(145%)",
+    WebkitBackdropFilter: "blur(20px) saturate(145%)",
   },
   formRow: {
     display: "flex",
@@ -72,18 +78,21 @@ const styles = {
   input: {
     flex: 1,
     minWidth: "240px",
-    background: "rgba(255,255,255,0.94)",
+    background: "rgba(255,255,255,0.38)",
     color: "#0f172a",
-    border: "1px solid #dbe3ee",
+    border: "1px solid rgba(255,255,255,0.40)",
     borderRadius: "14px",
     padding: "14px 16px",
     outline: "none",
     transition: "border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease",
+    backdropFilter: "blur(10px)",
+    WebkitBackdropFilter: "blur(10px)",
+    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.24)",
   },
   inputFocus: {
-    border: "1px solid #2563eb",
+    border: "1px solid rgba(37,99,235,0.70)",
     boxShadow: "0 0 0 3px rgba(37,99,235,0.15)",
-    background: "rgba(255,255,255,0.98)",
+    background: "rgba(255,255,255,0.48)",
   },
   button: {
     background: "linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)",
@@ -93,7 +102,7 @@ const styles = {
     padding: "12px 16px",
     fontWeight: 700,
     cursor: "pointer",
-    boxShadow: "0 10px 24px rgba(37,99,235,0.18)",
+    boxShadow: "0 12px 28px rgba(37,99,235,0.22)",
     transition: "transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease",
   },
   message: {
@@ -103,21 +112,28 @@ const styles = {
     background: "rgba(239,68,68,0.10)",
     border: "1px solid rgba(239,68,68,0.20)",
     color: "#991b1b",
+    backdropFilter: "blur(10px)",
+    WebkitBackdropFilter: "blur(10px)",
   },
   empty: {
     marginTop: "18px",
     padding: "18px",
     borderRadius: "16px",
-    background: "rgba(255,255,255,0.64)",
+    background: "rgba(255,255,255,0.18)",
     color: "#475569",
-    border: "1px dashed #dbe3ee",
+    border: "1px dashed rgba(255,255,255,0.34)",
+    backdropFilter: "blur(14px)",
+    WebkitBackdropFilter: "blur(14px)",
   },
   tableWrap: {
     marginTop: "18px",
     overflowX: "auto",
     borderRadius: "18px",
-    border: "1px solid rgba(15,23,42,0.08)",
-    background: "rgba(255,255,255,0.74)",
+    border: "1px solid rgba(255,255,255,0.34)",
+    background: "rgba(255,255,255,0.18)",
+    backdropFilter: "blur(16px)",
+    WebkitBackdropFilter: "blur(16px)",
+    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.22)",
   },
   table: {
     width: "100%",
@@ -131,11 +147,11 @@ const styles = {
     textTransform: "uppercase",
     letterSpacing: "0.08em",
     color: "#475569",
-    borderBottom: "1px solid rgba(15,23,42,0.08)",
+    borderBottom: "1px solid rgba(255,255,255,0.28)",
   },
   td: {
     padding: "16px",
-    borderBottom: "1px solid rgba(15,23,42,0.06)",
+    borderBottom: "1px solid rgba(255,255,255,0.22)",
     color: "#0f172a",
   },
   rank: {
@@ -195,12 +211,12 @@ export default function Leaderboard() {
               style={styles.backLink}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "translateY(-1px)";
-                e.currentTarget.style.borderColor = "#c7d7ee";
+                e.currentTarget.style.background = "rgba(255,255,255,0.34)";
                 e.currentTarget.style.boxShadow = "0 8px 20px rgba(15,23,42,0.06)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.borderColor = "#dbe3ee";
+                e.currentTarget.style.background = "rgba(255,255,255,0.26)";
                 e.currentTarget.style.boxShadow = "none";
               }}
             >
@@ -233,7 +249,7 @@ export default function Leaderboard() {
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "0 10px 24px rgba(37,99,235,0.18)";
+                e.currentTarget.style.boxShadow = "0 12px 28px rgba(37,99,235,0.22)";
                 e.currentTarget.style.filter = "brightness(1)";
               }}
             >

@@ -34,12 +34,14 @@ const styles = {
     zIndex: 1,
   },
   headerCard: {
-    background: "rgba(255,255,255,0.82)",
-    border: "1px solid rgba(15,23,42,0.08)",
+    background: "rgba(255,255,255,0.24)",
+    border: "1px solid rgba(255,255,255,0.36)",
     borderRadius: "24px",
     padding: "24px",
-    boxShadow: "0 18px 45px rgba(15,23,42,0.08)",
-    backdropFilter: "blur(10px)",
+    boxShadow:
+      "0 24px 60px rgba(15,23,42,0.14), inset 0 1px 0 rgba(255,255,255,0.34)",
+    backdropFilter: "blur(22px) saturate(150%)",
+    WebkitBackdropFilter: "blur(22px) saturate(150%)",
   },
   topBar: {
     display: "flex",
@@ -61,15 +63,17 @@ const styles = {
     flexWrap: "wrap",
   },
   secondaryButton: {
-    background: "rgba(255,255,255,0.92)",
+    background: "rgba(255,255,255,0.26)",
     color: "#0f172a",
-    border: "1px solid #dbe3ee",
+    border: "1px solid rgba(255,255,255,0.36)",
     borderRadius: "12px",
     padding: "10px 14px",
     textDecoration: "none",
     fontWeight: 600,
     cursor: "pointer",
     transition: "all 0.2s ease",
+    backdropFilter: "blur(14px)",
+    WebkitBackdropFilter: "blur(14px)",
   },
   primaryButton: {
     background: "linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)",
@@ -79,7 +83,7 @@ const styles = {
     padding: "12px 16px",
     fontWeight: 700,
     cursor: "pointer",
-    boxShadow: "0 10px 24px rgba(37,99,235,0.18)",
+    boxShadow: "0 12px 28px rgba(37,99,235,0.22)",
     transition: "transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease",
   },
   dangerButton: {
@@ -106,12 +110,14 @@ const styles = {
     marginTop: "24px",
   },
   card: {
-    background: "rgba(255,255,255,0.84)",
-    border: "1px solid rgba(15,23,42,0.08)",
+    background: "rgba(255,255,255,0.22)",
+    border: "1px solid rgba(255,255,255,0.34)",
     borderRadius: "24px",
     padding: "24px",
-    boxShadow: "0 18px 45px rgba(15,23,42,0.06)",
-    backdropFilter: "blur(10px)",
+    boxShadow:
+      "0 20px 48px rgba(15,23,42,0.10), inset 0 1px 0 rgba(255,255,255,0.30)",
+    backdropFilter: "blur(20px) saturate(145%)",
+    WebkitBackdropFilter: "blur(20px) saturate(145%)",
   },
   cardTitle: {
     margin: 0,
@@ -135,33 +141,40 @@ const styles = {
   input: {
     flex: 1,
     minWidth: "220px",
-    background: "rgba(255,255,255,0.94)",
+    background: "rgba(255,255,255,0.38)",
     color: "#0f172a",
-    border: "1px solid #dbe3ee",
+    border: "1px solid rgba(255,255,255,0.40)",
     borderRadius: "14px",
     padding: "14px 16px",
     outline: "none",
     transition: "border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease",
+    backdropFilter: "blur(10px)",
+    WebkitBackdropFilter: "blur(10px)",
+    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.24)",
   },
   inputFocus: {
-    border: "1px solid #2563eb",
+    border: "1px solid rgba(37,99,235,0.70)",
     boxShadow: "0 0 0 3px rgba(37,99,235,0.15)",
-    background: "rgba(255,255,255,0.98)",
+    background: "rgba(255,255,255,0.48)",
   },
   messageError: {
     marginTop: "16px",
     padding: "14px 16px",
     borderRadius: "14px",
     background: "rgba(239,68,68,0.10)",
-    border: "1px solid rgba(239,68,68,0.20)",
+    border: "1px solid rgba(239,68,68,0.18)",
     color: "#991b1b",
+    backdropFilter: "blur(10px)",
+    WebkitBackdropFilter: "blur(10px)",
   },
   keyBox: {
     marginTop: "18px",
     padding: "18px",
     borderRadius: "18px",
-    background: "rgba(37,99,235,0.08)",
-    border: "1px solid rgba(37,99,235,0.14)",
+    background: "rgba(37,99,235,0.10)",
+    border: "1px solid rgba(255,255,255,0.30)",
+    backdropFilter: "blur(14px)",
+    WebkitBackdropFilter: "blur(14px)",
   },
   keyLabel: {
     fontSize: "14px",
@@ -174,10 +187,12 @@ const styles = {
     lineHeight: 1.6,
     wordBreak: "break-all",
     color: "#0f172a",
-    background: "rgba(255,255,255,0.9)",
-    border: "1px solid #dbe3ee",
+    background: "rgba(255,255,255,0.30)",
+    border: "1px solid rgba(255,255,255,0.34)",
     borderRadius: "12px",
     padding: "12px",
+    backdropFilter: "blur(12px)",
+    WebkitBackdropFilter: "blur(12px)",
   },
   keyHint: {
     marginTop: "10px",
@@ -190,11 +205,14 @@ const styles = {
     marginTop: "18px",
   },
   projectCard: {
-    background: "rgba(255,255,255,0.72)",
-    border: "1px solid rgba(15,23,42,0.08)",
+    background: "rgba(255,255,255,0.18)",
+    border: "1px solid rgba(255,255,255,0.30)",
     borderRadius: "18px",
     padding: "18px",
-    transition: "transform 0.2s ease, box-shadow 0.2s ease",
+    transition: "transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease",
+    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.24)",
+    backdropFilter: "blur(16px)",
+    WebkitBackdropFilter: "blur(16px)",
   },
   projectHeader: {
     display: "flex",
@@ -217,9 +235,11 @@ const styles = {
   empty: {
     padding: "18px",
     borderRadius: "16px",
-    background: "rgba(255,255,255,0.64)",
+    background: "rgba(255,255,255,0.18)",
     color: "#475569",
-    border: "1px dashed #dbe3ee",
+    border: "1px dashed rgba(255,255,255,0.34)",
+    backdropFilter: "blur(14px)",
+    WebkitBackdropFilter: "blur(14px)",
   },
   statGrid: {
     display: "grid",
@@ -228,10 +248,13 @@ const styles = {
     marginTop: "18px",
   },
   statCard: {
-    background: "rgba(255,255,255,0.72)",
-    border: "1px solid rgba(15,23,42,0.08)",
+    background: "rgba(255,255,255,0.18)",
+    border: "1px solid rgba(255,255,255,0.30)",
     borderRadius: "18px",
     padding: "18px",
+    boxShadow: "inset 0 1px 0 rgba(255,255,255,0.24)",
+    backdropFilter: "blur(16px)",
+    WebkitBackdropFilter: "blur(16px)",
   },
   statLabel: {
     fontSize: "13px",
@@ -369,12 +392,12 @@ export default function Dashboard() {
                 style={styles.secondaryButton}
                 onMouseEnter={(e) => {
                   e.currentTarget.style.transform = "translateY(-1px)";
-                  e.currentTarget.style.borderColor = "#c7d7ee";
+                  e.currentTarget.style.background = "rgba(255,255,255,0.34)";
                   e.currentTarget.style.boxShadow = "0 8px 20px rgba(15,23,42,0.06)";
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = "translateY(0)";
-                  e.currentTarget.style.borderColor = "#dbe3ee";
+                  e.currentTarget.style.background = "rgba(255,255,255,0.26)";
                   e.currentTarget.style.boxShadow = "none";
                 }}
               >
@@ -433,7 +456,7 @@ export default function Dashboard() {
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.transform = "translateY(0)";
-                  e.currentTarget.style.boxShadow = "0 10px 24px rgba(37,99,235,0.18)";
+                  e.currentTarget.style.boxShadow = "0 12px 28px rgba(37,99,235,0.22)";
                   e.currentTarget.style.filter = "brightness(1)";
                 }}
               >
@@ -488,11 +511,13 @@ export default function Dashboard() {
                   style={styles.projectCard}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = "translateY(-2px)";
+                    e.currentTarget.style.background = "rgba(255,255,255,0.24)";
                     e.currentTarget.style.boxShadow = "0 14px 28px rgba(15,23,42,0.08)";
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = "translateY(0)";
-                    e.currentTarget.style.boxShadow = "none";
+                    e.currentTarget.style.background = "rgba(255,255,255,0.18)";
+                    e.currentTarget.style.boxShadow = "inset 0 1px 0 rgba(255,255,255,0.24)";
                   }}
                 >
                   <div style={styles.projectHeader}>
@@ -511,7 +536,7 @@ export default function Dashboard() {
                       }}
                       onMouseLeave={(e) => {
                         e.currentTarget.style.transform = "translateY(0)";
-                        e.currentTarget.style.boxShadow = "0 10px 24px rgba(37,99,235,0.18)";
+                        e.currentTarget.style.boxShadow = "0 12px 28px rgba(37,99,235,0.22)";
                         e.currentTarget.style.filter = "brightness(1)";
                       }}
                     >
