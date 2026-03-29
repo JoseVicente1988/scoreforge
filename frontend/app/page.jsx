@@ -20,223 +20,32 @@ function asMessage(detail) {
   }
 }
 
-const styles = {
-  page: {
-    minHeight: "100vh",
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    padding: "32px 20px",
-    color: "#0f172a",
-  },
-  shell: {
-    width: "100%",
-    maxWidth: "1180px",
-    display: "grid",
-    gridTemplateColumns: "1.15fr 0.85fr",
-    gap: "28px",
-    alignItems: "stretch",
-  },
-  hero: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    padding: "20px 8px",
-  },
-  eyebrow: {
-    display: "inline-flex",
-    alignItems: "center",
-    width: "fit-content",
-    padding: "8px 12px",
-    borderRadius: "999px",
-    background: "rgba(255,255,255,0.55)",
-    border: "1px solid rgba(15,23,42,0.08)",
-    color: "#334155",
-    fontSize: "13px",
-    fontWeight: 700,
-    letterSpacing: "0.02em",
-    backdropFilter: "blur(10px)",
-  },
-  heroTitle: {
-    margin: "18px 0 14px 0",
-    fontSize: "54px",
-    lineHeight: 1.02,
-    letterSpacing: "-0.04em",
-    color: "#0f172a",
-    fontWeight: 900,
-    maxWidth: "620px",
-  },
-  heroText: {
-    margin: 0,
-    maxWidth: "680px",
-    color: "#334155",
-    fontSize: "18px",
-    lineHeight: 1.75,
-  },
-  featureGrid: {
-    display: "grid",
-    gridTemplateColumns: "repeat(3, minmax(0, 1fr))",
-    gap: "14px",
-    marginTop: "30px",
-  },
-  featureCard: {
-    background: "rgba(255,255,255,0.52)",
-    border: "1px solid rgba(15,23,42,0.08)",
-    borderRadius: "20px",
-    padding: "18px",
-    boxShadow: "0 10px 30px rgba(15,23,42,0.06)",
-    backdropFilter: "blur(10px)",
-    transition: "transform 0.2s ease, box-shadow 0.2s ease",
-  },
-  featureTitle: {
-    margin: 0,
-    fontSize: "15px",
-    fontWeight: 800,
-    color: "#0f172a",
-  },
-  featureText: {
-    marginTop: "8px",
-    marginBottom: 0,
-    color: "#475569",
-    fontSize: "14px",
-    lineHeight: 1.6,
-  },
-  authWrap: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  authCard: {
-    width: "100%",
-    maxWidth: "460px",
-    background: "rgba(255,255,255,0.58)",
-    border: "1px solid rgba(15,23,42,0.08)",
-    borderRadius: "28px",
-    padding: "26px",
-    boxShadow: "0 18px 50px rgba(15,23,42,0.10)",
-    backdropFilter: "blur(18px)",
-  },
-  authHeader: {
-    display: "flex",
-    alignItems: "center",
-    gap: "12px",
-    justifyContent: "space-between",
-    marginBottom: "22px",
-  },
-  tabs: {
-    display: "inline-flex",
-    padding: "5px",
-    borderRadius: "14px",
-    background: "rgba(15,23,42,0.05)",
-    border: "1px solid rgba(15,23,42,0.06)",
-    gap: "6px",
-  },
-  tabButton: {
-    border: "none",
-    background: "transparent",
-    color: "#475569",
-    padding: "10px 16px",
-    borderRadius: "10px",
-    fontWeight: 700,
-    cursor: "pointer",
-    transition: "all 0.2s ease",
-  },
-  tabButtonActive: {
-    background: "#ffffff",
-    color: "#0f172a",
-    boxShadow: "0 6px 20px rgba(15,23,42,0.08)",
-  },
-  dashboardLink: {
-    textDecoration: "none",
-    color: "#0f172a",
-    background: "rgba(255,255,255,0.78)",
-    border: "1px solid rgba(15,23,42,0.08)",
-    borderRadius: "12px",
-    padding: "10px 14px",
-    fontWeight: 700,
-    whiteSpace: "nowrap",
-    transition: "all 0.2s ease",
-  },
-  authTitle: {
-    margin: 0,
-    fontSize: "28px",
-    lineHeight: 1.1,
-    fontWeight: 900,
-    color: "#0f172a",
-    letterSpacing: "-0.03em",
-  },
-  authSubtitle: {
-    marginTop: "10px",
-    marginBottom: 0,
-    color: "#475569",
-    lineHeight: 1.7,
-    fontSize: "15px",
-  },
-  form: {
-    marginTop: "24px",
-    display: "grid",
-    gap: "16px",
-  },
-  field: {
-    display: "grid",
-    gap: "8px",
-  },
-  label: {
-    fontSize: "14px",
-    fontWeight: 700,
-    color: "#334155",
-  },
-  input: {
-    width: "100%",
-    borderRadius: "14px",
-    border: "1px solid #cfd8e3",
-    background: "rgba(255,255,255,0.94)",
-    color: "#0f172a",
-    padding: "14px 16px",
-    fontSize: "15px",
-    outline: "none",
-    boxShadow: "inset 0 1px 2px rgba(15,23,42,0.03)",
-    transition: "border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease",
-  },
-  inputFocus: {
-    border: "1px solid #2563eb",
-    boxShadow: "0 0 0 3px rgba(37,99,235,0.15)",
-    background: "rgba(255,255,255,0.98)",
-  },
-  submitButton: {
-    marginTop: "4px",
-    border: "none",
-    borderRadius: "14px",
-    background: "linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)",
-    color: "#ffffff",
-    padding: "14px 18px",
-    fontSize: "15px",
-    fontWeight: 800,
-    cursor: "pointer",
-    boxShadow: "0 12px 28px rgba(37,99,235,0.22)",
-    transition: "transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease",
-  },
-  messageError: {
-    marginTop: "4px",
-    padding: "14px 16px",
-    borderRadius: "14px",
-    background: "rgba(239,68,68,0.10)",
-    border: "1px solid rgba(239,68,68,0.18)",
-    color: "#991b1b",
-    fontSize: "14px",
-  },
-  messageSuccess: {
-    marginTop: "4px",
-    padding: "14px 16px",
-    borderRadius: "14px",
-    background: "rgba(34,197,94,0.10)",
-    border: "1px solid rgba(34,197,94,0.18)",
-    color: "#166534",
-    fontSize: "14px",
-  },
-};
+function useViewport() {
+  const [width, setWidth] = useState(1400);
+
+  useEffect(() => {
+    function updateWidth() {
+      setWidth(window.innerWidth);
+    }
+
+    updateWidth();
+    window.addEventListener("resize", updateWidth);
+
+    return function cleanup() {
+      window.removeEventListener("resize", updateWidth);
+    };
+  }, []);
+
+  return {
+    width,
+    isMobile: width <= 768,
+    isTablet: width > 768 && width <= 1080,
+  };
+}
 
 export default function Page() {
+  const { isMobile, isTablet } = useViewport();
+
   const [mode, setMode] = useState("login");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -266,6 +75,259 @@ export default function Page() {
 
     return "Login to manage projects, generate API keys and control your leaderboard SaaS.";
   }, [mode]);
+
+  const styles = {
+    page: {
+      minHeight: "100vh",
+      display: "flex",
+      alignItems: isMobile ? "flex-start" : "center",
+      justifyContent: "center",
+      padding: isMobile ? "24px 16px 32px" : "36px 20px",
+      color: "#0f172a",
+    },
+    shell: {
+      width: "100%",
+      maxWidth: "1200px",
+      display: "grid",
+      gridTemplateColumns: isMobile ? "1fr" : isTablet ? "1fr" : "1.12fr 0.88fr",
+      gap: isMobile ? "20px" : "30px",
+      alignItems: "stretch",
+    },
+    hero: {
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      padding: isMobile ? "4px 2px" : "16px 8px",
+      order: isMobile ? 2 : 1,
+    },
+    eyebrow: {
+      display: "inline-flex",
+      alignItems: "center",
+      width: "fit-content",
+      padding: "8px 12px",
+      borderRadius: "999px",
+      background: "rgba(255,255,255,0.20)",
+      border: "1px solid rgba(255,255,255,0.36)",
+      color: "#334155",
+      fontSize: isMobile ? "12px" : "13px",
+      fontWeight: 700,
+      letterSpacing: "0.02em",
+      backdropFilter: "blur(14px) saturate(140%)",
+      WebkitBackdropFilter: "blur(14px) saturate(140%)",
+      boxShadow: "0 8px 22px rgba(15,23,42,0.05)",
+    },
+    heroTitle: {
+      margin: "18px 0 14px 0",
+      fontSize: isMobile ? "34px" : isTablet ? "44px" : "56px",
+      lineHeight: 1.02,
+      letterSpacing: "-0.04em",
+      color: "#0f172a",
+      fontWeight: 900,
+      maxWidth: isMobile ? "none" : "620px",
+    },
+    heroText: {
+      margin: 0,
+      maxWidth: isMobile ? "none" : "680px",
+      color: "#334155",
+      fontSize: isMobile ? "15px" : "18px",
+      lineHeight: isMobile ? 1.7 : 1.75,
+    },
+    featureGrid: {
+      display: "grid",
+      gridTemplateColumns: isMobile ? "1fr" : isTablet ? "1fr 1fr" : "repeat(3, minmax(0, 1fr))",
+      gap: "14px",
+      marginTop: isMobile ? "22px" : "30px",
+    },
+    featureCard: {
+      background: "rgba(255,255,255,0.18)",
+      border: "1px solid rgba(255,255,255,0.34)",
+      borderRadius: "20px",
+      padding: "18px",
+      boxShadow:
+        "0 10px 30px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.28)",
+      backdropFilter: "blur(18px) saturate(145%)",
+      WebkitBackdropFilter: "blur(18px) saturate(145%)",
+      transition: "transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease",
+    },
+    featureTitle: {
+      margin: 0,
+      fontSize: "15px",
+      fontWeight: 800,
+      color: "#0f172a",
+    },
+    featureText: {
+      marginTop: "8px",
+      marginBottom: 0,
+      color: "#475569",
+      fontSize: "14px",
+      lineHeight: 1.6,
+    },
+    authWrap: {
+      display: "flex",
+      alignItems: isMobile ? "stretch" : "center",
+      justifyContent: "center",
+      order: isMobile ? 1 : 2,
+    },
+    authCard: {
+      width: "100%",
+      maxWidth: isMobile ? "100%" : "470px",
+      background: "rgba(255,255,255,0.18)",
+      border: "1px solid rgba(255,255,255,0.38)",
+      borderRadius: isMobile ? "24px" : "30px",
+      padding: isMobile ? "20px" : "28px",
+      boxShadow:
+        "0 28px 70px rgba(15,23,42,0.16), inset 0 1px 0 rgba(255,255,255,0.34)",
+      backdropFilter: "blur(28px) saturate(155%)",
+      WebkitBackdropFilter: "blur(28px) saturate(155%)",
+      position: "relative",
+      overflow: "hidden",
+    },
+    authCardGlow: {
+      position: "absolute",
+      inset: 0,
+      pointerEvents: "none",
+      background:
+        "linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.04) 42%, rgba(124,92,255,0.06) 100%)",
+    },
+    authInner: {
+      position: "relative",
+      zIndex: 1,
+    },
+    authHeader: {
+      display: "flex",
+      flexDirection: isMobile ? "column" : "row",
+      alignItems: isMobile ? "stretch" : "center",
+      gap: "12px",
+      justifyContent: "space-between",
+      marginBottom: "22px",
+    },
+    tabs: {
+      display: "inline-flex",
+      width: isMobile ? "100%" : "fit-content",
+      padding: "5px",
+      borderRadius: "14px",
+      background: "rgba(255,255,255,0.16)",
+      border: "1px solid rgba(255,255,255,0.30)",
+      gap: "6px",
+      backdropFilter: "blur(14px)",
+      WebkitBackdropFilter: "blur(14px)",
+      flexWrap: "wrap",
+    },
+    tabButton: {
+      flex: isMobile ? 1 : "unset",
+      border: "none",
+      background: "transparent",
+      color: "#475569",
+      padding: "10px 16px",
+      borderRadius: "10px",
+      fontWeight: 700,
+      cursor: "pointer",
+      transition: "all 0.2s ease",
+    },
+    tabButtonActive: {
+      background: "rgba(255,255,255,0.78)",
+      color: "#0f172a",
+      boxShadow: "0 6px 20px rgba(15,23,42,0.08)",
+    },
+    dashboardLink: {
+      textDecoration: "none",
+      color: "#0f172a",
+      background: "rgba(255,255,255,0.22)",
+      border: "1px solid rgba(255,255,255,0.34)",
+      borderRadius: "12px",
+      padding: "10px 14px",
+      fontWeight: 700,
+      whiteSpace: "nowrap",
+      textAlign: "center",
+      transition: "all 0.2s ease",
+      backdropFilter: "blur(12px)",
+      WebkitBackdropFilter: "blur(12px)",
+    },
+    authTitle: {
+      margin: 0,
+      fontSize: isMobile ? "24px" : "30px",
+      lineHeight: 1.08,
+      fontWeight: 900,
+      color: "#0f172a",
+      letterSpacing: "-0.03em",
+    },
+    authSubtitle: {
+      marginTop: "10px",
+      marginBottom: 0,
+      color: "#475569",
+      lineHeight: 1.7,
+      fontSize: isMobile ? "14px" : "15px",
+    },
+    form: {
+      marginTop: "24px",
+      display: "grid",
+      gap: "16px",
+    },
+    field: {
+      display: "grid",
+      gap: "8px",
+    },
+    label: {
+      fontSize: "14px",
+      fontWeight: 700,
+      color: "#334155",
+    },
+    input: {
+      width: "100%",
+      borderRadius: "14px",
+      border: "1px solid rgba(255,255,255,0.40)",
+      background: "rgba(255,255,255,0.30)",
+      color: "#0f172a",
+      padding: "14px 16px",
+      fontSize: "15px",
+      outline: "none",
+      boxShadow:
+        "inset 0 1px 0 rgba(255,255,255,0.24), inset 0 1px 2px rgba(15,23,42,0.02)",
+      transition: "border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease",
+      backdropFilter: "blur(10px)",
+      WebkitBackdropFilter: "blur(10px)",
+    },
+    inputFocus: {
+      border: "1px solid rgba(37,99,235,0.70)",
+      boxShadow: "0 0 0 3px rgba(37,99,235,0.15)",
+      background: "rgba(255,255,255,0.42)",
+    },
+    submitButton: {
+      marginTop: "4px",
+      border: "none",
+      borderRadius: "14px",
+      background: "linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)",
+      color: "#ffffff",
+      padding: "14px 18px",
+      fontSize: "15px",
+      fontWeight: 800,
+      cursor: "pointer",
+      boxShadow: "0 12px 28px rgba(37,99,235,0.22)",
+      transition: "transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease",
+    },
+    messageError: {
+      marginTop: "4px",
+      padding: "14px 16px",
+      borderRadius: "14px",
+      background: "rgba(239,68,68,0.10)",
+      border: "1px solid rgba(239,68,68,0.18)",
+      color: "#991b1b",
+      fontSize: "14px",
+      backdropFilter: "blur(10px)",
+      WebkitBackdropFilter: "blur(10px)",
+    },
+    messageSuccess: {
+      marginTop: "4px",
+      padding: "14px 16px",
+      borderRadius: "14px",
+      background: "rgba(34,197,94,0.10)",
+      border: "1px solid rgba(34,197,94,0.18)",
+      color: "#166534",
+      fontSize: "14px",
+      backdropFilter: "blur(10px)",
+      WebkitBackdropFilter: "blur(10px)",
+    },
+  };
 
   function getInputStyle(name) {
     if (focusedField === name) {
@@ -362,11 +424,15 @@ export default function Page() {
               style={styles.featureCard}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "translateY(-2px)";
-                e.currentTarget.style.boxShadow = "0 14px 34px rgba(15,23,42,0.09)";
+                e.currentTarget.style.background = "rgba(255,255,255,0.24)";
+                e.currentTarget.style.boxShadow =
+                  "0 14px 34px rgba(15,23,42,0.09), inset 0 1px 0 rgba(255,255,255,0.30)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "0 10px 30px rgba(15,23,42,0.06)";
+                e.currentTarget.style.background = "rgba(255,255,255,0.18)";
+                e.currentTarget.style.boxShadow =
+                  "0 10px 30px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.28)";
               }}
             >
               <p style={styles.featureTitle}>Project-based setup</p>
@@ -379,11 +445,15 @@ export default function Page() {
               style={styles.featureCard}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "translateY(-2px)";
-                e.currentTarget.style.boxShadow = "0 14px 34px rgba(15,23,42,0.09)";
+                e.currentTarget.style.background = "rgba(255,255,255,0.24)";
+                e.currentTarget.style.boxShadow =
+                  "0 14px 34px rgba(15,23,42,0.09), inset 0 1px 0 rgba(255,255,255,0.30)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "0 10px 30px rgba(15,23,42,0.06)";
+                e.currentTarget.style.background = "rgba(255,255,255,0.18)";
+                e.currentTarget.style.boxShadow =
+                  "0 10px 30px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.28)";
               }}
             >
               <p style={styles.featureTitle}>Secure API keys</p>
@@ -396,11 +466,15 @@ export default function Page() {
               style={styles.featureCard}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "translateY(-2px)";
-                e.currentTarget.style.boxShadow = "0 14px 34px rgba(15,23,42,0.09)";
+                e.currentTarget.style.background = "rgba(255,255,255,0.24)";
+                e.currentTarget.style.boxShadow =
+                  "0 14px 34px rgba(15,23,42,0.09), inset 0 1px 0 rgba(255,255,255,0.30)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow = "0 10px 30px rgba(15,23,42,0.06)";
+                e.currentTarget.style.background = "rgba(255,255,255,0.18)";
+                e.currentTarget.style.boxShadow =
+                  "0 10px 30px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.28)";
               }}
             >
               <p style={styles.featureTitle}>Fast integration</p>
@@ -413,170 +487,173 @@ export default function Page() {
 
         <section style={styles.authWrap}>
           <div style={styles.authCard}>
-            <div style={styles.authHeader}>
-              <div style={styles.tabs} role="tablist" aria-label="Authentication mode">
-                <button
-                  type="button"
-                  onClick={() => setMode("login")}
-                  aria-pressed={mode === "login"}
-                  style={
-                    mode === "login"
-                      ? { ...styles.tabButton, ...styles.tabButtonActive }
-                      : styles.tabButton
-                  }
-                  onMouseEnter={(e) => {
-                    if (mode !== "login") {
-                      e.currentTarget.style.background = "rgba(255,255,255,0.55)";
-                      e.currentTarget.style.color = "#0f172a";
+            <div style={styles.authCardGlow} />
+            <div style={styles.authInner}>
+              <div style={styles.authHeader}>
+                <div style={styles.tabs} role="tablist" aria-label="Authentication mode">
+                  <button
+                    type="button"
+                    onClick={() => setMode("login")}
+                    aria-pressed={mode === "login"}
+                    style={
+                      mode === "login"
+                        ? { ...styles.tabButton, ...styles.tabButtonActive }
+                        : styles.tabButton
                     }
+                    onMouseEnter={(e) => {
+                      if (mode !== "login") {
+                        e.currentTarget.style.background = "rgba(255,255,255,0.36)";
+                        e.currentTarget.style.color = "#0f172a";
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (mode !== "login") {
+                        e.currentTarget.style.background = "transparent";
+                        e.currentTarget.style.color = "#475569";
+                      }
+                    }}
+                  >
+                    Login
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setMode("register")}
+                    aria-pressed={mode === "register"}
+                    style={
+                      mode === "register"
+                        ? { ...styles.tabButton, ...styles.tabButtonActive }
+                        : styles.tabButton
+                    }
+                    onMouseEnter={(e) => {
+                      if (mode !== "register") {
+                        e.currentTarget.style.background = "rgba(255,255,255,0.36)";
+                        e.currentTarget.style.color = "#0f172a";
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      if (mode !== "register") {
+                        e.currentTarget.style.background = "transparent";
+                        e.currentTarget.style.color = "#475569";
+                      }
+                    }}
+                  >
+                    Register
+                  </button>
+                </div>
+
+                <a
+                  href="/dashboard"
+                  style={styles.dashboardLink}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "translateY(-1px)";
+                    e.currentTarget.style.background = "rgba(255,255,255,0.30)";
+                    e.currentTarget.style.boxShadow = "0 8px 20px rgba(15,23,42,0.06)";
                   }}
                   onMouseLeave={(e) => {
-                    if (mode !== "login") {
-                      e.currentTarget.style.background = "transparent";
-                      e.currentTarget.style.color = "#475569";
-                    }
+                    e.currentTarget.style.transform = "translateY(0)";
+                    e.currentTarget.style.background = "rgba(255,255,255,0.22)";
+                    e.currentTarget.style.boxShadow = "none";
                   }}
                 >
-                  Login
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setMode("register")}
-                  aria-pressed={mode === "register"}
-                  style={
-                    mode === "register"
-                      ? { ...styles.tabButton, ...styles.tabButtonActive }
-                      : styles.tabButton
-                  }
-                  onMouseEnter={(e) => {
-                    if (mode !== "register") {
-                      e.currentTarget.style.background = "rgba(255,255,255,0.55)";
-                      e.currentTarget.style.color = "#0f172a";
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    if (mode !== "register") {
-                      e.currentTarget.style.background = "transparent";
-                      e.currentTarget.style.color = "#475569";
-                    }
-                  }}
-                >
-                  Register
-                </button>
+                  Dashboard
+                </a>
               </div>
 
-              <a
-                href="/dashboard"
-                style={styles.dashboardLink}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "translateY(-1px)";
-                  e.currentTarget.style.borderColor = "#c7d7ee";
-                  e.currentTarget.style.boxShadow = "0 8px 20px rgba(15,23,42,0.06)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "translateY(0)";
-                  e.currentTarget.style.borderColor = "rgba(15,23,42,0.08)";
-                  e.currentTarget.style.boxShadow = "none";
-                }}
-              >
-                Dashboard
-              </a>
-            </div>
-
-            <div>
-              <h2 style={styles.authTitle}>{title}</h2>
-              <p style={styles.authSubtitle}>{subtitle}</p>
-            </div>
-
-            <form onSubmit={submit} style={styles.form}>
-              <div style={styles.field}>
-                <label htmlFor="username" style={styles.label}>
-                  Username
-                </label>
-                <input
-                  id="username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  onFocus={() => setFocusedField("username")}
-                  onBlur={() => setFocusedField("")}
-                  required
-                  placeholder="Enter your username"
-                  autoComplete="username"
-                  style={getInputStyle("username")}
-                />
+              <div>
+                <h2 style={styles.authTitle}>{title}</h2>
+                <p style={styles.authSubtitle}>{subtitle}</p>
               </div>
 
-              {mode === "register" ? (
+              <form onSubmit={submit} style={styles.form}>
                 <div style={styles.field}>
-                  <label htmlFor="email" style={styles.label}>
-                    Email
+                  <label htmlFor="username" style={styles.label}>
+                    Username
                   </label>
                   <input
-                    id="email"
-                    type="email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    onFocus={() => setFocusedField("email")}
+                    id="username"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    onFocus={() => setFocusedField("username")}
                     onBlur={() => setFocusedField("")}
                     required
-                    placeholder="Enter your email"
-                    autoComplete="email"
-                    style={getInputStyle("email")}
+                    placeholder="Enter your username"
+                    autoComplete="username"
+                    style={getInputStyle("username")}
                   />
                 </div>
-              ) : null}
 
-              <div style={styles.field}>
-                <label htmlFor="password" style={styles.label}>
-                  Password
-                </label>
-                <input
-                  id="password"
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  onFocus={() => setFocusedField("password")}
-                  onBlur={() => setFocusedField("")}
-                  required
-                  placeholder="Enter your password"
-                  autoComplete={mode === "login" ? "current-password" : "new-password"}
-                  style={getInputStyle("password")}
-                />
-              </div>
+                {mode === "register" ? (
+                  <div style={styles.field}>
+                    <label htmlFor="email" style={styles.label}>
+                      Email
+                    </label>
+                    <input
+                      id="email"
+                      type="email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      onFocus={() => setFocusedField("email")}
+                      onBlur={() => setFocusedField("")}
+                      required
+                      placeholder="Enter your email"
+                      autoComplete="email"
+                      style={getInputStyle("email")}
+                    />
+                  </div>
+                ) : null}
 
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                style={styles.submitButton}
-                onMouseEnter={(e) => {
-                  if (!isSubmitting) {
-                    e.currentTarget.style.transform = "translateY(-1px)";
-                    e.currentTarget.style.boxShadow = "0 16px 32px rgba(37,99,235,0.28)";
-                    e.currentTarget.style.filter = "brightness(1.02)";
-                  }
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "translateY(0)";
-                  e.currentTarget.style.boxShadow = "0 12px 28px rgba(37,99,235,0.22)";
-                  e.currentTarget.style.filter = "brightness(1)";
-                }}
-              >
-                {isSubmitting
-                  ? mode === "register"
-                    ? "Creating account..."
-                    : "Logging in..."
-                  : mode === "register"
-                    ? "Create account"
-                    : "Login"}
-              </button>
-
-              {msg ? (
-                <div style={isError ? styles.messageError : styles.messageSuccess}>
-                  {msg}
+                <div style={styles.field}>
+                  <label htmlFor="password" style={styles.label}>
+                    Password
+                  </label>
+                  <input
+                    id="password"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    onFocus={() => setFocusedField("password")}
+                    onBlur={() => setFocusedField("")}
+                    required
+                    placeholder="Enter your password"
+                    autoComplete={mode === "login" ? "current-password" : "new-password"}
+                    style={getInputStyle("password")}
+                  />
                 </div>
-              ) : null}
-            </form>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  style={styles.submitButton}
+                  onMouseEnter={(e) => {
+                    if (!isSubmitting) {
+                      e.currentTarget.style.transform = "translateY(-1px)";
+                      e.currentTarget.style.boxShadow = "0 16px 32px rgba(37,99,235,0.28)";
+                      e.currentTarget.style.filter = "brightness(1.02)";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "translateY(0)";
+                    e.currentTarget.style.boxShadow = "0 12px 28px rgba(37,99,235,0.22)";
+                    e.currentTarget.style.filter = "brightness(1)";
+                  }}
+                >
+                  {isSubmitting
+                    ? mode === "register"
+                      ? "Creating account..."
+                      : "Logging in..."
+                    : mode === "register"
+                      ? "Create account"
+                      : "Login"}
+                </button>
+
+                {msg ? (
+                  <div style={isError ? styles.messageError : styles.messageSuccess}>
+                    {msg}
+                  </div>
+                ) : null}
+              </form>
+            </div>
           </div>
         </section>
       </div>
