@@ -44,6 +44,95 @@ function useViewport() {
   };
 }
 
+function renderHighlightedLine(line) {
+  const keywordPattern = /^(extends|const|func|var|return)$/;
+  const decoratorPattern = /^@onready$/;
+  const boolNullPattern = /^(true|false|null)$/;
+  const methodPattern = /^(HTTPClient\.METHOD_POST|HTTPClient\.METHOD_GET)$/;
+  const functionCallPattern = /^([A-Za-z_][A-Za-z0-9_]*)\($/;
+
+  const parts = line.split(/(\s+|"[^"]*"|\bHTTPClient\.METHOD_POST\b|\bHTTPClient\.METHOD_GET\b|\bextends\b|\bconst\b|\bfunc\b|\bvar\b|\breturn\b|\btrue\b|\bfalse\b|\bnull\b|\b@onready\b|\b\d+\b)/g);
+
+  return parts.map((part, index) => {
+    if (part === "") {
+      return null;
+    }
+
+    if (/^\s+$/.test(part)) {
+      return (
+        <span key={index}>
+          {part}
+        </span>
+      );
+    }
+
+    if (decoratorPattern.test(part)) {
+      return (
+        <span key={index} style={{ color: "#60a5fa" }}>
+          {part}
+        </span>
+      );
+    }
+
+    if (keywordPattern.test(part)) {
+      return (
+        <span key={index} style={{ color: "#c084fc" }}>
+          {part}
+        </span>
+      );
+    }
+
+    if (boolNullPattern.test(part)) {
+      return (
+        <span key={index} style={{ color: "#f59e0b" }}>
+          {part}
+        </span>
+      );
+    }
+
+    if (methodPattern.test(part)) {
+      return (
+        <span key={index} style={{ color: "#93c5fd" }}>
+          {part}
+        </span>
+      );
+    }
+
+    if (/^"[^"]*"$/.test(part)) {
+      return (
+        <span key={index} style={{ color: "#86efac" }}>
+          {part}
+        </span>
+      );
+    }
+
+    if (/^\d+$/.test(part)) {
+      return (
+        <span key={index} style={{ color: "#fca5a5" }}>
+          {part}
+        </span>
+      );
+    }
+
+    if (functionCallPattern.test(part)) {
+      const functionName = part.slice(0, -1);
+
+      return (
+        <span key={index}>
+          <span style={{ color: "#f9a8d4" }}>{functionName}</span>
+          <span>(</span>
+        </span>
+      );
+    }
+
+    return (
+      <span key={index}>
+        {part}
+      </span>
+    );
+  });
+}
+
 export default function Page() {
   const { t } = useLang();
   const { isMobile, isTablet } = useViewport();
@@ -1016,35 +1105,9 @@ func _on_http_request_request_completed(result, response_code, headers, body):
               {godotCode.split("\n").map((line, index) => (
                 <div key={index} style={styles.codeLine}>
                   <span style={styles.codeLineNumber}>{index + 1}</span>
-                  <span
-                    style={styles.codeLineText}
-                    dangerouslySetInnerHTML={{
-                      __html: line
-                        .replace(/&/g, "&amp;")
-                        .replace(/</g, "&lt;")
-                        .replace(/>/g, "&gt;")
-                        .replace(
-                          /\b(extends|const|func|var|return)\b/g,
-                          '<span style="color:#c084fc;">$1</span>'
-                        )
-                        .replace(
-                          /\b(true|false|null)\b/g,
-                          '<span style="color:#f59e0b;">$1</span>'
-                        )
-                        .replace(
-                          /("[^"]*")/g,
-                          '<span style="color:#86efac;">$1</span>'
-                        )
-                        .replace(
-                          /\b([0-9]+)\b/g,
-                          '<span style="color:#fca5a5;">$1</span>'
-                        )
-                        .replace(
-                          /(@onready)/g,
-                          '<span style="color:#60a5fa;">$1</span>'
-                        )
-                    }}
-                  />
+                  <span style={styles.codeLineText}>
+                    {renderHighlightedLine(line)}
+                  </span>
                 </div>
               ))}
             </div>
