@@ -83,7 +83,7 @@ export default function Page() {
       alignItems: isMobile ? "flex-start" : "center",
       justifyContent: "center",
       padding: isMobile ? "24px 16px 32px" : "36px 20px",
-      color: "#0f172a",
+      color: "var(--text)",
     },
     shell: {
       width: "100%",
@@ -106,9 +106,9 @@ export default function Page() {
       width: "fit-content",
       padding: "8px 12px",
       borderRadius: "999px",
-      background: "rgba(255,255,255,0.20)",
-      border: "1px solid rgba(255,255,255,0.36)",
-      color: "#334155",
+      background: "var(--surface-soft)",
+      border: "1px solid var(--border)",
+      color: "var(--text-soft)",
       fontSize: isMobile ? "12px" : "13px",
       fontWeight: 700,
       letterSpacing: "0.02em",
@@ -121,14 +121,14 @@ export default function Page() {
       fontSize: isMobile ? "34px" : isTablet ? "44px" : "56px",
       lineHeight: 1.02,
       letterSpacing: "-0.04em",
-      color: "#0f172a",
+      color: "var(--text)",
       fontWeight: 900,
       maxWidth: isMobile ? "none" : "620px",
     },
     heroText: {
       margin: 0,
       maxWidth: isMobile ? "none" : "680px",
-      color: "#334155",
+      color: "var(--text-soft)",
       fontSize: isMobile ? "15px" : "18px",
       lineHeight: isMobile ? 1.7 : 1.75,
     },
@@ -139,12 +139,12 @@ export default function Page() {
       marginTop: isMobile ? "22px" : "30px",
     },
     featureCard: {
-      background: "rgba(255,255,255,0.18)",
-      border: "1px solid rgba(255,255,255,0.34)",
+      background: "var(--surface-soft)",
+      border: "1px solid var(--border)",
       borderRadius: "20px",
       padding: "18px",
       boxShadow:
-        "0 10px 30px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.28)",
+        "0 10px 30px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.18)",
       backdropFilter: "blur(18px) saturate(145%)",
       WebkitBackdropFilter: "blur(18px) saturate(145%)",
       transition: "transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease",
@@ -153,12 +153,12 @@ export default function Page() {
       margin: 0,
       fontSize: "15px",
       fontWeight: 800,
-      color: "#0f172a",
+      color: "var(--text)",
     },
     featureText: {
       marginTop: "8px",
       marginBottom: 0,
-      color: "#475569",
+      color: "var(--text-soft)",
       fontSize: "14px",
       lineHeight: 1.6,
     },
@@ -171,12 +171,12 @@ export default function Page() {
     authCard: {
       width: "100%",
       maxWidth: isMobile ? "100%" : "470px",
-      background: "rgba(255,255,255,0.18)",
-      border: "1px solid rgba(255,255,255,0.38)",
+      background: "var(--surface)",
+      border: "1px solid var(--border)",
       borderRadius: isMobile ? "24px" : "30px",
       padding: isMobile ? "20px" : "28px",
       boxShadow:
-        "0 28px 70px rgba(15,23,42,0.16), inset 0 1px 0 rgba(255,255,255,0.34)",
+        "var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,0.18)",
       backdropFilter: "blur(28px) saturate(155%)",
       WebkitBackdropFilter: "blur(28px) saturate(155%)",
       position: "relative",
@@ -187,7 +187,7 @@ export default function Page() {
       inset: 0,
       pointerEvents: "none",
       background:
-        "linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(255,255,255,0.04) 42%, rgba(124,92,255,0.06) 100%)",
+        "linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.03) 42%, rgba(124,92,255,0.06) 100%)",
     },
     authInner: {
       position: "relative",
@@ -206,8 +206,8 @@ export default function Page() {
       width: isMobile ? "100%" : "fit-content",
       padding: "5px",
       borderRadius: "14px",
-      background: "rgba(255,255,255,0.16)",
-      border: "1px solid rgba(255,255,255,0.30)",
+      background: "var(--surface-soft)",
+      border: "1px solid var(--border)",
       gap: "6px",
       backdropFilter: "blur(14px)",
       WebkitBackdropFilter: "blur(14px)",
@@ -217,7 +217,7 @@ export default function Page() {
       flex: isMobile ? 1 : "unset",
       border: "none",
       background: "transparent",
-      color: "#475569",
+      color: "var(--text-muted)",
       padding: "10px 16px",
       borderRadius: "10px",
       fontWeight: 700,
@@ -225,15 +225,15 @@ export default function Page() {
       transition: "all 0.2s ease",
     },
     tabButtonActive: {
-      background: "rgba(255,255,255,0.78)",
-      color: "#0f172a",
+      background: "rgba(255,255,255,0.72)",
+      color: "var(--text)",
       boxShadow: "0 6px 20px rgba(15,23,42,0.08)",
     },
     dashboardLink: {
       textDecoration: "none",
-      color: "#0f172a",
-      background: "rgba(255,255,255,0.22)",
-      border: "1px solid rgba(255,255,255,0.34)",
+      color: "var(--text)",
+      background: "var(--surface-soft)",
+      border: "1px solid var(--border)",
       borderRadius: "12px",
       padding: "10px 14px",
       fontWeight: 700,
@@ -248,13 +248,13 @@ export default function Page() {
       fontSize: isMobile ? "24px" : "30px",
       lineHeight: 1.08,
       fontWeight: 900,
-      color: "#0f172a",
+      color: "var(--text)",
       letterSpacing: "-0.03em",
     },
     authSubtitle: {
       marginTop: "10px",
       marginBottom: 0,
-      color: "#475569",
+      color: "var(--text-soft)",
       lineHeight: 1.7,
       fontSize: isMobile ? "14px" : "15px",
     },
@@ -270,19 +270,19 @@ export default function Page() {
     label: {
       fontSize: "14px",
       fontWeight: 700,
-      color: "#334155",
+      color: "var(--text-soft)",
     },
     input: {
       width: "100%",
       borderRadius: "14px",
-      border: "1px solid rgba(255,255,255,0.40)",
-      background: "rgba(255,255,255,0.30)",
-      color: "#0f172a",
+      border: "1px solid var(--border)",
+      background: "var(--surface-soft)",
+      color: "var(--text)",
       padding: "14px 16px",
       fontSize: "15px",
       outline: "none",
       boxShadow:
-        "inset 0 1px 0 rgba(255,255,255,0.24), inset 0 1px 2px rgba(15,23,42,0.02)",
+        "inset 0 1px 0 rgba(255,255,255,0.12), inset 0 1px 2px rgba(15,23,42,0.02)",
       transition: "border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease",
       backdropFilter: "blur(10px)",
       WebkitBackdropFilter: "blur(10px)",
@@ -290,13 +290,13 @@ export default function Page() {
     inputFocus: {
       border: "1px solid rgba(37,99,235,0.70)",
       boxShadow: "0 0 0 3px rgba(37,99,235,0.15)",
-      background: "rgba(255,255,255,0.42)",
+      background: "var(--surface-strong)",
     },
     submitButton: {
       marginTop: "4px",
       border: "none",
       borderRadius: "14px",
-      background: "linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)",
+      background: "linear-gradient(135deg, var(--primary) 0%, var(--primary-secondary) 100%)",
       color: "#ffffff",
       padding: "14px 18px",
       fontSize: "15px",
@@ -309,9 +309,9 @@ export default function Page() {
       marginTop: "4px",
       padding: "14px 16px",
       borderRadius: "14px",
-      background: "rgba(239,68,68,0.10)",
-      border: "1px solid rgba(239,68,68,0.18)",
-      color: "#991b1b",
+      background: "var(--danger-bg)",
+      border: "1px solid var(--danger-border)",
+      color: "var(--danger-text)",
       fontSize: "14px",
       backdropFilter: "blur(10px)",
       WebkitBackdropFilter: "blur(10px)",
@@ -320,9 +320,9 @@ export default function Page() {
       marginTop: "4px",
       padding: "14px 16px",
       borderRadius: "14px",
-      background: "rgba(34,197,94,0.10)",
-      border: "1px solid rgba(34,197,94,0.18)",
-      color: "#166534",
+      background: "var(--success-bg)",
+      border: "1px solid var(--success-border)",
+      color: "var(--success-text)",
       fontSize: "14px",
       backdropFilter: "blur(10px)",
       WebkitBackdropFilter: "blur(10px)",
@@ -424,15 +424,13 @@ export default function Page() {
               style={styles.featureCard}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "translateY(-2px)";
-                e.currentTarget.style.background = "rgba(255,255,255,0.24)";
                 e.currentTarget.style.boxShadow =
-                  "0 14px 34px rgba(15,23,42,0.09), inset 0 1px 0 rgba(255,255,255,0.30)";
+                  "0 14px 34px rgba(15,23,42,0.09), inset 0 1px 0 rgba(255,255,255,0.16)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.background = "rgba(255,255,255,0.18)";
                 e.currentTarget.style.boxShadow =
-                  "0 10px 30px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.28)";
+                  "0 10px 30px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.18)";
               }}
             >
               <p style={styles.featureTitle}>Project-based setup</p>
@@ -445,15 +443,13 @@ export default function Page() {
               style={styles.featureCard}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "translateY(-2px)";
-                e.currentTarget.style.background = "rgba(255,255,255,0.24)";
                 e.currentTarget.style.boxShadow =
-                  "0 14px 34px rgba(15,23,42,0.09), inset 0 1px 0 rgba(255,255,255,0.30)";
+                  "0 14px 34px rgba(15,23,42,0.09), inset 0 1px 0 rgba(255,255,255,0.16)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.background = "rgba(255,255,255,0.18)";
                 e.currentTarget.style.boxShadow =
-                  "0 10px 30px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.28)";
+                  "0 10px 30px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.18)";
               }}
             >
               <p style={styles.featureTitle}>Secure API keys</p>
@@ -466,15 +462,13 @@ export default function Page() {
               style={styles.featureCard}
               onMouseEnter={(e) => {
                 e.currentTarget.style.transform = "translateY(-2px)";
-                e.currentTarget.style.background = "rgba(255,255,255,0.24)";
                 e.currentTarget.style.boxShadow =
-                  "0 14px 34px rgba(15,23,42,0.09), inset 0 1px 0 rgba(255,255,255,0.30)";
+                  "0 14px 34px rgba(15,23,42,0.09), inset 0 1px 0 rgba(255,255,255,0.16)";
               }}
               onMouseLeave={(e) => {
                 e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.background = "rgba(255,255,255,0.18)";
                 e.currentTarget.style.boxShadow =
-                  "0 10px 30px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.28)";
+                  "0 10px 30px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.18)";
               }}
             >
               <p style={styles.featureTitle}>Fast integration</p>
@@ -502,14 +496,14 @@ export default function Page() {
                     }
                     onMouseEnter={(e) => {
                       if (mode !== "login") {
-                        e.currentTarget.style.background = "rgba(255,255,255,0.36)";
-                        e.currentTarget.style.color = "#0f172a";
+                        e.currentTarget.style.background = "rgba(255,255,255,0.18)";
+                        e.currentTarget.style.color = "var(--text)";
                       }
                     }}
                     onMouseLeave={(e) => {
                       if (mode !== "login") {
                         e.currentTarget.style.background = "transparent";
-                        e.currentTarget.style.color = "#475569";
+                        e.currentTarget.style.color = "var(--text-muted)";
                       }
                     }}
                   >
@@ -527,14 +521,14 @@ export default function Page() {
                     }
                     onMouseEnter={(e) => {
                       if (mode !== "register") {
-                        e.currentTarget.style.background = "rgba(255,255,255,0.36)";
-                        e.currentTarget.style.color = "#0f172a";
+                        e.currentTarget.style.background = "rgba(255,255,255,0.18)";
+                        e.currentTarget.style.color = "var(--text)";
                       }
                     }}
                     onMouseLeave={(e) => {
                       if (mode !== "register") {
                         e.currentTarget.style.background = "transparent";
-                        e.currentTarget.style.color = "#475569";
+                        e.currentTarget.style.color = "var(--text-muted)";
                       }
                     }}
                   >
@@ -547,12 +541,10 @@ export default function Page() {
                   style={styles.dashboardLink}
                   onMouseEnter={(e) => {
                     e.currentTarget.style.transform = "translateY(-1px)";
-                    e.currentTarget.style.background = "rgba(255,255,255,0.30)";
                     e.currentTarget.style.boxShadow = "0 8px 20px rgba(15,23,42,0.06)";
                   }}
                   onMouseLeave={(e) => {
                     e.currentTarget.style.transform = "translateY(0)";
-                    e.currentTarget.style.background = "rgba(255,255,255,0.22)";
                     e.currentTarget.style.boxShadow = "none";
                   }}
                 >
