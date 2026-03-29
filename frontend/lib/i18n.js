@@ -2,6 +2,7 @@ export const translations = {
   en: {
     navHome: "Home",
     navDashboard: "Dashboard",
+    navTutorial: "How to implement",
 
     themeLight: "Light mode",
     themeDark: "Dark mode",
@@ -26,6 +27,7 @@ export const translations = {
     login: "Login",
     register: "Register",
     dashboard: "Dashboard",
+    howToImplement: "How to implement",
 
     welcomeBack: "Welcome back",
     createYourAccount: "Create your account",
@@ -95,12 +97,29 @@ export const translations = {
     failedLoadLeaderboard: "Failed to load leaderboard",
     noLeaderboardData: "No leaderboard data loaded yet.",
     rank: "Rank",
-    score: "Score"
+    score: "Score",
+
+    tutorialSectionTitle: "How to integrate it in Godot",
+    tutorialSectionSubtitle:
+      "This is the basic flow to connect a Godot game with Scoreforge.",
+    tutorialStep1Title: "1. Create your project",
+    tutorialStep1Text:
+      "Inside the dashboard, create a project for your game and copy its API key.",
+    tutorialStep2Title: "2. Send scores from Godot",
+    tutorialStep2Text:
+      "Use an HTTPRequest node to send a POST request with your player name and score value.",
+    tutorialStep3Title: "3. Read the leaderboard",
+    tutorialStep3Text:
+      "Query the public leaderboard endpoint from your game or your web page to display rankings.",
+    tutorialCodeTitle: "Initial Godot example",
+    tutorialCodeHint:
+      "This is a simple starting point. Replace the URL and API key with your own values."
   },
 
   es: {
     navHome: "Inicio",
     navDashboard: "Panel",
+    navTutorial: "Cómo implementarlo",
 
     themeLight: "Modo claro",
     themeDark: "Modo oscuro",
@@ -125,6 +144,7 @@ export const translations = {
     login: "Iniciar sesión",
     register: "Registrarse",
     dashboard: "Panel",
+    howToImplement: "Cómo implementarlo",
 
     welcomeBack: "Bienvenido de nuevo",
     createYourAccount: "Crea tu cuenta",
@@ -194,6 +214,22 @@ export const translations = {
     failedLoadLeaderboard: "No se pudo cargar el leaderboard",
     noLeaderboardData: "Aún no se han cargado datos del leaderboard.",
     rank: "Puesto",
-    score: "Puntuación"
+    score: "Puntuación",
+
+    tutorialSectionTitle: "Cómo integrarlo en Godot",
+    tutorialSectionSubtitle:
+      "Este es el flujo básico para conectar un juego en Godot con Scoreforge.",
+    tutorialStep1Title: "1. Crea tu proyecto",
+    tutorialStep1Text:
+      "Dentro del panel, crea un proyecto para tu juego y copia su API key.",
+    tutorialStep2Title: "2. Envía puntuaciones desde Godot",
+    tutorialStep2Text:
+      "Usa un nodo HTTPRequest para enviar una petición POST con el nombre del jugador y el valor de la puntuación.",
+    tutorialStep3Title: "3. Lee el leaderboard",
+    tutorialStep3Text:
+      "Consulta el endpoint público del leaderboard desde tu juego o tu web para mostrar la clasificación.",
+    tutorialCodeTitle: "Ejemplo inicial en Godot",
+    tutorialCodeHint:
+      "Este es un punto de partida simple. Sustituye la URL y la API key por las tuyas."
   }
 };

@@ -48,6 +48,10 @@ export default function Leaderboard() {
       color: "var(--text)"
     },
     backLink: {
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      minWidth: "170px",
       marginLeft: "auto",
       textDecoration: "none",
       color: "var(--text)",
@@ -58,7 +62,9 @@ export default function Leaderboard() {
       fontWeight: 600,
       transition: "all 0.2s ease",
       backdropFilter: "blur(14px)",
-      WebkitBackdropFilter: "blur(14px)"
+      WebkitBackdropFilter: "blur(14px)",
+      whiteSpace: "nowrap",
+      textAlign: "center"
     },
     subtitle: {
       marginTop: "12px",
@@ -102,6 +108,10 @@ export default function Leaderboard() {
       background: "var(--surface-strong)"
     },
     button: {
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      minWidth: "170px",
       background: "linear-gradient(135deg, var(--primary) 0%, var(--primary-secondary) 100%)",
       color: "#ffffff",
       border: "none",
@@ -110,7 +120,8 @@ export default function Leaderboard() {
       fontWeight: 700,
       cursor: "pointer",
       boxShadow: "0 12px 28px rgba(37,99,235,0.22)",
-      transition: "transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease"
+      transition: "transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease",
+      whiteSpace: "nowrap"
     },
     message: {
       marginTop: "16px",

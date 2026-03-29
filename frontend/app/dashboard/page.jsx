@@ -72,6 +72,10 @@ export default function Dashboard() {
       flexWrap: "wrap"
     },
     secondaryButton: {
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      minWidth: "160px",
       background: "var(--surface-soft)",
       color: "var(--text)",
       border: "1px solid var(--border)",
@@ -82,9 +86,14 @@ export default function Dashboard() {
       cursor: "pointer",
       transition: "all 0.2s ease",
       backdropFilter: "blur(14px)",
-      WebkitBackdropFilter: "blur(14px)"
+      WebkitBackdropFilter: "blur(14px)",
+      whiteSpace: "nowrap"
     },
     primaryButton: {
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      minWidth: "170px",
       background: "linear-gradient(135deg, var(--primary) 0%, var(--primary-secondary) 100%)",
       color: "#ffffff",
       border: "none",
@@ -93,9 +102,14 @@ export default function Dashboard() {
       fontWeight: 700,
       cursor: "pointer",
       boxShadow: "0 12px 28px rgba(37,99,235,0.22)",
-      transition: "transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease"
+      transition: "transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease",
+      whiteSpace: "nowrap"
     },
     dangerButton: {
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      minWidth: "130px",
       background: "#ef4444",
       color: "#ffffff",
       border: "none",
@@ -103,7 +117,8 @@ export default function Dashboard() {
       padding: "10px 14px",
       fontWeight: 700,
       cursor: "pointer",
-      transition: "transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease"
+      transition: "transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease",
+      whiteSpace: "nowrap"
     },
     subtitle: {
       marginTop: "12px",
@@ -151,7 +166,7 @@ export default function Dashboard() {
       minWidth: "220px",
       background: "var(--surface-soft)",
       color: "var(--text)",
-      border: "1px solid var(--border)",
+      border: "1px solid rgba(15, 23, 42, 0.45)",
       borderRadius: "14px",
       padding: "14px 16px",
       outline: "none",
@@ -161,7 +176,7 @@ export default function Dashboard() {
       boxShadow: "inset 0 1px 0 rgba(255,255,255,0.12)"
     },
     inputFocus: {
-      border: "1px solid rgba(37,99,235,0.70)",
+      border: "1px solid rgba(37,99,235,0.85)",
       boxShadow: "0 0 0 3px rgba(37,99,235,0.15)",
       background: "var(--surface-strong)"
     },

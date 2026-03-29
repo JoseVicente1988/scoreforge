@@ -113,6 +113,7 @@ function LayoutContent({ children }) {
           <nav className="topbar-nav">
             <a href="/">{t("navHome")}</a>
             <a href="/dashboard">{t("navDashboard")}</a>
+            <a href="/#tutorial">{t("navTutorial")}</a>
             <LanguageToggle />
             <ThemeToggle />
           </nav>

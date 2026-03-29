@@ -78,18 +78,49 @@ export default function Page() {
     return t("subtitleLogin");
   }, [mode, t]);
 
+  const godotCode = `extends Node
+
+@onready var http_request = $HTTPRequest
+
+const SCOREFORGE_URL = "https://scoreforge-phi.vercel.app"
+const API_KEY = "YOUR_API_KEY_HERE"
+
+func submit_score(player_name: String, score_value: int) -> void:
+\tvar url = SCOREFORGE_URL + "/scores/submit"
+\tvar headers = [
+\t\t"Content-Type: application/json",
+\t\t"X-API-Key: " + API_KEY
+\t]
+\tvar body = {
+\t\t"username": player_name,
+\t\t"value": score_value
+\t}
+
+\thttp_request.request(
+\t\turl,
+\t\theaders,
+\t\tHTTPClient.METHOD_POST,
+\t\tJSON.stringify(body)
+\t)`;
+
   const styles = {
     page: {
       minHeight: "100vh",
       display: "flex",
       alignItems: isMobile ? "flex-start" : "center",
       justifyContent: "center",
-      padding: isMobile ? "24px 16px 32px" : "36px 20px",
+      padding: isMobile ? "24px 16px 48px" : "36px 20px 56px",
       color: "var(--text)"
     },
     shell: {
       width: "100%",
       maxWidth: "1200px",
+      display: "grid",
+      gridTemplateColumns: "1fr",
+      gap: isMobile ? "20px" : "30px",
+      alignItems: "stretch"
+    },
+    heroGrid: {
       display: "grid",
       gridTemplateColumns: isMobile ? "1fr" : isTablet ? "1fr" : "1.12fr 0.88fr",
       gap: isMobile ? "20px" : "30px",
@@ -133,6 +164,28 @@ export default function Page() {
       color: "var(--text-soft)",
       fontSize: isMobile ? "15px" : "18px",
       lineHeight: isMobile ? 1.7 : 1.75
+    },
+    ctaRow: {
+      display: "flex",
+      gap: "12px",
+      flexWrap: "wrap",
+      marginTop: "22px"
+    },
+    secondaryCta: {
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      minWidth: "170px",
+      padding: "12px 18px",
+      borderRadius: "14px",
+      border: "1px solid var(--border)",
+      background: "var(--surface-soft)",
+      color: "var(--text)",
+      fontWeight: 700,
+      textDecoration: "none",
+      transition: "all 0.2s ease",
+      backdropFilter: "blur(12px)",
+      WebkitBackdropFilter: "blur(12px)"
     },
     featureGrid: {
       display: "grid",
@@ -215,7 +268,8 @@ export default function Page() {
       flexWrap: "wrap"
     },
     tabButton: {
-      flex: isMobile ? 1 : "unset",
+      flex: 1,
+      minWidth: isMobile ? "0" : "140px",
       border: "none",
       background: "transparent",
       color: "var(--text-muted)",
@@ -223,7 +277,9 @@ export default function Page() {
       borderRadius: "10px",
       fontWeight: 700,
       cursor: "pointer",
-      transition: "all 0.2s ease"
+      transition: "all 0.2s ease",
+      textAlign: "center",
+      whiteSpace: "nowrap"
     },
     tabButtonActive: {
       background: "rgba(255,255,255,0.72)",
@@ -231,6 +287,10 @@ export default function Page() {
       boxShadow: "0 6px 20px rgba(15,23,42,0.08)"
     },
     dashboardLink: {
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      minWidth: "150px",
       textDecoration: "none",
       color: "var(--text)",
       background: "var(--surface-soft)",
@@ -294,6 +354,10 @@ export default function Page() {
       background: "var(--surface-strong)"
     },
     submitButton: {
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      minWidth: "170px",
       marginTop: "4px",
       border: "none",
       borderRadius: "14px",
@@ -304,7 +368,8 @@ export default function Page() {
       fontWeight: 800,
       cursor: "pointer",
       boxShadow: "0 12px 28px rgba(37,99,235,0.22)",
-      transition: "transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease"
+      transition: "transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease",
+      whiteSpace: "nowrap"
     },
     messageError: {
       marginTop: "4px",
@@ -327,6 +392,88 @@ export default function Page() {
       fontSize: "14px",
       backdropFilter: "blur(10px)",
       WebkitBackdropFilter: "blur(10px)"
+    },
+    tutorialSection: {
+      background: "var(--surface)",
+      border: "1px solid var(--border)",
+      borderRadius: "30px",
+      padding: isMobile ? "22px" : "30px",
+      boxShadow: "var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,0.18)",
+      backdropFilter: "blur(22px) saturate(150%)",
+      WebkitBackdropFilter: "blur(22px) saturate(150%)"
+    },
+    tutorialTitle: {
+      margin: 0,
+      fontSize: isMobile ? "28px" : "36px",
+      fontWeight: 900,
+      letterSpacing: "-0.03em",
+      color: "var(--text)"
+    },
+    tutorialSubtitle: {
+      marginTop: "10px",
+      marginBottom: 0,
+      color: "var(--text-soft)",
+      lineHeight: 1.7,
+      maxWidth: "820px"
+    },
+    tutorialGrid: {
+      display: "grid",
+      gridTemplateColumns: isMobile ? "1fr" : "repeat(3, minmax(0, 1fr))",
+      gap: "14px",
+      marginTop: "22px"
+    },
+    tutorialCard: {
+      background: "var(--surface-soft)",
+      border: "1px solid var(--border)",
+      borderRadius: "20px",
+      padding: "18px",
+      boxShadow:
+        "0 10px 30px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.18)",
+      backdropFilter: "blur(18px) saturate(145%)",
+      WebkitBackdropFilter: "blur(18px) saturate(145%)"
+    },
+    tutorialCardTitle: {
+      margin: 0,
+      fontSize: "17px",
+      fontWeight: 800,
+      color: "var(--text)"
+    },
+    tutorialCardText: {
+      marginTop: "8px",
+      marginBottom: 0,
+      color: "var(--text-soft)",
+      lineHeight: 1.7,
+      fontSize: "14px"
+    },
+    codeWrap: {
+      marginTop: "22px",
+      background: "rgba(9, 14, 30, 0.92)",
+      border: "1px solid rgba(255,255,255,0.12)",
+      borderRadius: "20px",
+      padding: isMobile ? "16px" : "20px",
+      overflowX: "auto",
+      boxShadow: "0 18px 40px rgba(0,0,0,0.22)"
+    },
+    codeTitle: {
+      margin: 0,
+      color: "#e5edff",
+      fontSize: "16px",
+      fontWeight: 800
+    },
+    codeHint: {
+      marginTop: "8px",
+      marginBottom: "14px",
+      color: "#aeb9d6",
+      lineHeight: 1.6,
+      fontSize: "14px"
+    },
+    code: {
+      margin: 0,
+      color: "#f8fafc",
+      fontSize: "13px",
+      lineHeight: 1.7,
+      fontFamily: "Consolas, Monaco, monospace",
+      whiteSpace: "pre"
     }
   };
 
@@ -408,234 +555,281 @@ export default function Page() {
   return (
     <main style={styles.page}>
       <div style={styles.shell}>
-        <section style={styles.hero}>
-          <span style={styles.eyebrow}>{t("eyebrow")}</span>
+        <section style={styles.heroGrid}>
+          <section style={styles.hero}>
+            <span style={styles.eyebrow}>{t("eyebrow")}</span>
 
-          <h1 style={styles.heroTitle}>{t("heroTitle")}</h1>
+            <h1 style={styles.heroTitle}>{t("heroTitle")}</h1>
 
-          <p style={styles.heroText}>{t("heroText")}</p>
+            <p style={styles.heroText}>{t("heroText")}</p>
 
-          <div style={styles.featureGrid}>
-            <div
-              style={styles.featureCard}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "translateY(-2px)";
-                e.currentTarget.style.boxShadow =
-                  "0 14px 34px rgba(15,23,42,0.09), inset 0 1px 0 rgba(255,255,255,0.16)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow =
-                  "0 10px 30px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.18)";
-              }}
-            >
-              <p style={styles.featureTitle}>{t("featureProjectTitle")}</p>
-              <p style={styles.featureText}>{t("featureProjectText")}</p>
+            <div style={styles.ctaRow}>
+              <a
+                href="#tutorial"
+                style={styles.secondaryCta}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-1px)";
+                  e.currentTarget.style.boxShadow = "0 8px 20px rgba(15,23,42,0.06)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow = "none";
+                }}
+              >
+                {t("howToImplement")}
+              </a>
             </div>
 
-            <div
-              style={styles.featureCard}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "translateY(-2px)";
-                e.currentTarget.style.boxShadow =
-                  "0 14px 34px rgba(15,23,42,0.09), inset 0 1px 0 rgba(255,255,255,0.16)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow =
-                  "0 10px 30px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.18)";
-              }}
-            >
-              <p style={styles.featureTitle}>{t("featureApiTitle")}</p>
-              <p style={styles.featureText}>{t("featureApiText")}</p>
-            </div>
-
-            <div
-              style={styles.featureCard}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "translateY(-2px)";
-                e.currentTarget.style.boxShadow =
-                  "0 14px 34px rgba(15,23,42,0.09), inset 0 1px 0 rgba(255,255,255,0.16)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "translateY(0)";
-                e.currentTarget.style.boxShadow =
-                  "0 10px 30px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.18)";
-              }}
-            >
-              <p style={styles.featureTitle}>{t("featureFastTitle")}</p>
-              <p style={styles.featureText}>{t("featureFastText")}</p>
-            </div>
-          </div>
-        </section>
-
-        <section style={styles.authWrap}>
-          <div style={styles.authCard}>
-            <div style={styles.authCardGlow} />
-            <div style={styles.authInner}>
-              <div style={styles.authHeader}>
-                <div style={styles.tabs} role="tablist" aria-label="Authentication mode">
-                  <button
-                    type="button"
-                    onClick={() => setMode("login")}
-                    aria-pressed={mode === "login"}
-                    style={
-                      mode === "login"
-                        ? { ...styles.tabButton, ...styles.tabButtonActive }
-                        : styles.tabButton
-                    }
-                    onMouseEnter={(e) => {
-                      if (mode !== "login") {
-                        e.currentTarget.style.background = "rgba(255,255,255,0.18)";
-                        e.currentTarget.style.color = "var(--text)";
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (mode !== "login") {
-                        e.currentTarget.style.background = "transparent";
-                        e.currentTarget.style.color = "var(--text-muted)";
-                      }
-                    }}
-                  >
-                    {t("login")}
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => setMode("register")}
-                    aria-pressed={mode === "register"}
-                    style={
-                      mode === "register"
-                        ? { ...styles.tabButton, ...styles.tabButtonActive }
-                        : styles.tabButton
-                    }
-                    onMouseEnter={(e) => {
-                      if (mode !== "register") {
-                        e.currentTarget.style.background = "rgba(255,255,255,0.18)";
-                        e.currentTarget.style.color = "var(--text)";
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      if (mode !== "register") {
-                        e.currentTarget.style.background = "transparent";
-                        e.currentTarget.style.color = "var(--text-muted)";
-                      }
-                    }}
-                  >
-                    {t("register")}
-                  </button>
-                </div>
-
-                <a
-                  href="/dashboard"
-                  style={styles.dashboardLink}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.transform = "translateY(-1px)";
-                    e.currentTarget.style.boxShadow = "0 8px 20px rgba(15,23,42,0.06)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "translateY(0)";
-                    e.currentTarget.style.boxShadow = "none";
-                  }}
-                >
-                  {t("dashboard")}
-                </a>
+            <div style={styles.featureGrid}>
+              <div
+                style={styles.featureCard}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-2px)";
+                  e.currentTarget.style.boxShadow =
+                    "0 14px 34px rgba(15,23,42,0.09), inset 0 1px 0 rgba(255,255,255,0.16)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow =
+                    "0 10px 30px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.18)";
+                }}
+              >
+                <p style={styles.featureTitle}>{t("featureProjectTitle")}</p>
+                <p style={styles.featureText}>{t("featureProjectText")}</p>
               </div>
 
-              <div>
-                <h2 style={styles.authTitle}>{title}</h2>
-                <p style={styles.authSubtitle}>{subtitle}</p>
+              <div
+                style={styles.featureCard}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-2px)";
+                  e.currentTarget.style.boxShadow =
+                    "0 14px 34px rgba(15,23,42,0.09), inset 0 1px 0 rgba(255,255,255,0.16)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow =
+                    "0 10px 30px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.18)";
+                }}
+              >
+                <p style={styles.featureTitle}>{t("featureApiTitle")}</p>
+                <p style={styles.featureText}>{t("featureApiText")}</p>
               </div>
 
-              <form onSubmit={submit} style={styles.form}>
-                <div style={styles.field}>
-                  <label htmlFor="username" style={styles.label}>
-                    {t("username")}
-                  </label>
-                  <input
-                    id="username"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    onFocus={() => setFocusedField("username")}
-                    onBlur={() => setFocusedField("")}
-                    required
-                    placeholder={t("enterUsername")}
-                    autoComplete="username"
-                    style={getInputStyle("username")}
-                  />
+              <div
+                style={styles.featureCard}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-2px)";
+                  e.currentTarget.style.boxShadow =
+                    "0 14px 34px rgba(15,23,42,0.09), inset 0 1px 0 rgba(255,255,255,0.16)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow =
+                    "0 10px 30px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.18)";
+                }}
+              >
+                <p style={styles.featureTitle}>{t("featureFastTitle")}</p>
+                <p style={styles.featureText}>{t("featureFastText")}</p>
+              </div>
+            </div>
+          </section>
+
+          <section style={styles.authWrap}>
+            <div style={styles.authCard}>
+              <div style={styles.authCardGlow} />
+              <div style={styles.authInner}>
+                <div style={styles.authHeader}>
+                  <div style={styles.tabs} role="tablist" aria-label="Authentication mode">
+                    <button
+                      type="button"
+                      onClick={() => setMode("login")}
+                      aria-pressed={mode === "login"}
+                      style={
+                        mode === "login"
+                          ? { ...styles.tabButton, ...styles.tabButtonActive }
+                          : styles.tabButton
+                      }
+                      onMouseEnter={(e) => {
+                        if (mode !== "login") {
+                          e.currentTarget.style.background = "rgba(255,255,255,0.18)";
+                          e.currentTarget.style.color = "var(--text)";
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (mode !== "login") {
+                          e.currentTarget.style.background = "transparent";
+                          e.currentTarget.style.color = "var(--text-muted)";
+                        }
+                      }}
+                    >
+                      {t("login")}
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => setMode("register")}
+                      aria-pressed={mode === "register"}
+                      style={
+                        mode === "register"
+                          ? { ...styles.tabButton, ...styles.tabButtonActive }
+                          : styles.tabButton
+                      }
+                      onMouseEnter={(e) => {
+                        if (mode !== "register") {
+                          e.currentTarget.style.background = "rgba(255,255,255,0.18)";
+                          e.currentTarget.style.color = "var(--text)";
+                        }
+                      }}
+                      onMouseLeave={(e) => {
+                        if (mode !== "register") {
+                          e.currentTarget.style.background = "transparent";
+                          e.currentTarget.style.color = "var(--text-muted)";
+                        }
+                      }}
+                    >
+                      {t("register")}
+                    </button>
+                  </div>
+
+                  <a
+                    href="/dashboard"
+                    style={styles.dashboardLink}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.transform = "translateY(-1px)";
+                      e.currentTarget.style.boxShadow = "0 8px 20px rgba(15,23,42,0.06)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = "translateY(0)";
+                      e.currentTarget.style.boxShadow = "none";
+                    }}
+                  >
+                    {t("dashboard")}
+                  </a>
                 </div>
 
-                {mode === "register" ? (
+                <div>
+                  <h2 style={styles.authTitle}>{title}</h2>
+                  <p style={styles.authSubtitle}>{subtitle}</p>
+                </div>
+
+                <form onSubmit={submit} style={styles.form}>
                   <div style={styles.field}>
-                    <label htmlFor="email" style={styles.label}>
-                      {t("email")}
+                    <label htmlFor="username" style={styles.label}>
+                      {t("username")}
                     </label>
                     <input
-                      id="email"
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      onFocus={() => setFocusedField("email")}
+                      id="username"
+                      value={username}
+                      onChange={(e) => setUsername(e.target.value)}
+                      onFocus={() => setFocusedField("username")}
                       onBlur={() => setFocusedField("")}
                       required
-                      placeholder={t("enterEmail")}
-                      autoComplete="email"
-                      style={getInputStyle("email")}
+                      placeholder={t("enterUsername")}
+                      autoComplete="username"
+                      style={getInputStyle("username")}
                     />
                   </div>
-                ) : null}
 
-                <div style={styles.field}>
-                  <label htmlFor="password" style={styles.label}>
-                    {t("password")}
-                  </label>
-                  <input
-                    id="password"
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    onFocus={() => setFocusedField("password")}
-                    onBlur={() => setFocusedField("")}
-                    required
-                    placeholder={t("enterPassword")}
-                    autoComplete={mode === "login" ? "current-password" : "new-password"}
-                    style={getInputStyle("password")}
-                  />
-                </div>
+                  {mode === "register" ? (
+                    <div style={styles.field}>
+                      <label htmlFor="email" style={styles.label}>
+                        {t("email")}
+                      </label>
+                      <input
+                        id="email"
+                        type="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        onFocus={() => setFocusedField("email")}
+                        onBlur={() => setFocusedField("")}
+                        required
+                        placeholder={t("enterEmail")}
+                        autoComplete="email"
+                        style={getInputStyle("email")}
+                      />
+                    </div>
+                  ) : null}
 
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  style={styles.submitButton}
-                  onMouseEnter={(e) => {
-                    if (!isSubmitting) {
-                      e.currentTarget.style.transform = "translateY(-1px)";
-                      e.currentTarget.style.boxShadow = "0 16px 32px rgba(37,99,235,0.28)";
-                      e.currentTarget.style.filter = "brightness(1.02)";
-                    }
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = "translateY(0)";
-                    e.currentTarget.style.boxShadow = "0 12px 28px rgba(37,99,235,0.22)";
-                    e.currentTarget.style.filter = "brightness(1)";
-                  }}
-                >
-                  {isSubmitting
-                    ? mode === "register"
-                      ? t("creatingAccount")
-                      : t("loggingIn")
-                    : mode === "register"
-                      ? t("createAccount")
-                      : t("login")}
-                </button>
-
-                {msg ? (
-                  <div style={isError ? styles.messageError : styles.messageSuccess}>
-                    {msg}
+                  <div style={styles.field}>
+                    <label htmlFor="password" style={styles.label}>
+                      {t("password")}
+                    </label>
+                    <input
+                      id="password"
+                      type="password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      onFocus={() => setFocusedField("password")}
+                      onBlur={() => setFocusedField("")}
+                      required
+                      placeholder={t("enterPassword")}
+                      autoComplete={mode === "login" ? "current-password" : "new-password"}
+                      style={getInputStyle("password")}
+                    />
                   </div>
-                ) : null}
-              </form>
+
+                  <button
+                    type="submit"
+                    disabled={isSubmitting}
+                    style={styles.submitButton}
+                    onMouseEnter={(e) => {
+                      if (!isSubmitting) {
+                        e.currentTarget.style.transform = "translateY(-1px)";
+                        e.currentTarget.style.boxShadow = "0 16px 32px rgba(37,99,235,0.28)";
+                        e.currentTarget.style.filter = "brightness(1.02)";
+                      }
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.transform = "translateY(0)";
+                      e.currentTarget.style.boxShadow = "0 12px 28px rgba(37,99,235,0.22)";
+                      e.currentTarget.style.filter = "brightness(1)";
+                    }}
+                  >
+                    {isSubmitting
+                      ? mode === "register"
+                        ? t("creatingAccount")
+                        : t("loggingIn")
+                      : mode === "register"
+                        ? t("createAccount")
+                        : t("login")}
+                  </button>
+
+                  {msg ? (
+                    <div style={isError ? styles.messageError : styles.messageSuccess}>
+                      {msg}
+                    </div>
+                  ) : null}
+                </form>
+              </div>
             </div>
+          </section>
+        </section>
+
+        <section id="tutorial" style={styles.tutorialSection}>
+          <h2 style={styles.tutorialTitle}>{t("tutorialSectionTitle")}</h2>
+          <p style={styles.tutorialSubtitle}>{t("tutorialSectionSubtitle")}</p>
+
+          <div style={styles.tutorialGrid}>
+            <div style={styles.tutorialCard}>
+              <p style={styles.tutorialCardTitle}>{t("tutorialStep1Title")}</p>
+              <p style={styles.tutorialCardText}>{t("tutorialStep1Text")}</p>
+            </div>
+
+            <div style={styles.tutorialCard}>
+              <p style={styles.tutorialCardTitle}>{t("tutorialStep2Title")}</p>
+              <p style={styles.tutorialCardText}>{t("tutorialStep2Text")}</p>
+            </div>
+
+            <div style={styles.tutorialCard}>
+              <p style={styles.tutorialCardTitle}>{t("tutorialStep3Title")}</p>
+              <p style={styles.tutorialCardText}>{t("tutorialStep3Text")}</p>
+            </div>
+          </div>
+
+          <div style={styles.codeWrap}>
+            <p style={styles.codeTitle}>{t("tutorialCodeTitle")}</p>
+            <p style={styles.codeHint}>{t("tutorialCodeHint")}</p>
+            <pre style={styles.code}>{godotCode}</pre>
           </div>
         </section>
       </div>
