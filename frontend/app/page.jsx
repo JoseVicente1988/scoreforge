@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useLang } from "@/components/LanguageProvider";
 
 const API = process.env.NEXT_PUBLIC_API_BASE;
 
@@ -39,11 +40,12 @@ function useViewport() {
   return {
     width,
     isMobile: width <= 768,
-    isTablet: width > 768 && width <= 1080,
+    isTablet: width > 768 && width <= 1080
   };
 }
 
 export default function Page() {
+  const { t } = useLang();
   const { isMobile, isTablet } = useViewport();
 
   const [mode, setMode] = useState("login");
@@ -62,19 +64,19 @@ export default function Page() {
 
   const title = useMemo(() => {
     if (mode === "register") {
-      return "Create your account";
+      return t("createYourAccount");
     }
 
-    return "Welcome back";
-  }, [mode]);
+    return t("welcomeBack");
+  }, [mode, t]);
 
   const subtitle = useMemo(() => {
     if (mode === "register") {
-      return "Create a dashboard account and start managing game leaderboard projects.";
+      return t("subtitleRegister");
     }
 
-    return "Login to manage projects, generate API keys and control your leaderboard SaaS.";
-  }, [mode]);
+    return t("subtitleLogin");
+  }, [mode, t]);
 
   const styles = {
     page: {
@@ -83,7 +85,7 @@ export default function Page() {
       alignItems: isMobile ? "flex-start" : "center",
       justifyContent: "center",
       padding: isMobile ? "24px 16px 32px" : "36px 20px",
-      color: "var(--text)",
+      color: "var(--text)"
     },
     shell: {
       width: "100%",
@@ -91,14 +93,14 @@ export default function Page() {
       display: "grid",
       gridTemplateColumns: isMobile ? "1fr" : isTablet ? "1fr" : "1.12fr 0.88fr",
       gap: isMobile ? "20px" : "30px",
-      alignItems: "stretch",
+      alignItems: "stretch"
     },
     hero: {
       display: "flex",
       flexDirection: "column",
       justifyContent: "center",
       padding: isMobile ? "4px 2px" : "16px 8px",
-      order: isMobile ? 2 : 1,
+      order: isMobile ? 2 : 1
     },
     eyebrow: {
       display: "inline-flex",
@@ -114,7 +116,7 @@ export default function Page() {
       letterSpacing: "0.02em",
       backdropFilter: "blur(14px) saturate(140%)",
       WebkitBackdropFilter: "blur(14px) saturate(140%)",
-      boxShadow: "0 8px 22px rgba(15,23,42,0.05)",
+      boxShadow: "0 8px 22px rgba(15,23,42,0.05)"
     },
     heroTitle: {
       margin: "18px 0 14px 0",
@@ -123,20 +125,20 @@ export default function Page() {
       letterSpacing: "-0.04em",
       color: "var(--text)",
       fontWeight: 900,
-      maxWidth: isMobile ? "none" : "620px",
+      maxWidth: isMobile ? "none" : "620px"
     },
     heroText: {
       margin: 0,
       maxWidth: isMobile ? "none" : "680px",
       color: "var(--text-soft)",
       fontSize: isMobile ? "15px" : "18px",
-      lineHeight: isMobile ? 1.7 : 1.75,
+      lineHeight: isMobile ? 1.7 : 1.75
     },
     featureGrid: {
       display: "grid",
       gridTemplateColumns: isMobile ? "1fr" : isTablet ? "1fr 1fr" : "repeat(3, minmax(0, 1fr))",
       gap: "14px",
-      marginTop: isMobile ? "22px" : "30px",
+      marginTop: isMobile ? "22px" : "30px"
     },
     featureCard: {
       background: "var(--surface-soft)",
@@ -147,26 +149,26 @@ export default function Page() {
         "0 10px 30px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.18)",
       backdropFilter: "blur(18px) saturate(145%)",
       WebkitBackdropFilter: "blur(18px) saturate(145%)",
-      transition: "transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease",
+      transition: "transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease"
     },
     featureTitle: {
       margin: 0,
       fontSize: "15px",
       fontWeight: 800,
-      color: "var(--text)",
+      color: "var(--text)"
     },
     featureText: {
       marginTop: "8px",
       marginBottom: 0,
       color: "var(--text-soft)",
       fontSize: "14px",
-      lineHeight: 1.6,
+      lineHeight: 1.6
     },
     authWrap: {
       display: "flex",
       alignItems: isMobile ? "stretch" : "center",
       justifyContent: "center",
-      order: isMobile ? 1 : 2,
+      order: isMobile ? 1 : 2
     },
     authCard: {
       width: "100%",
@@ -175,23 +177,22 @@ export default function Page() {
       border: "1px solid var(--border)",
       borderRadius: isMobile ? "24px" : "30px",
       padding: isMobile ? "20px" : "28px",
-      boxShadow:
-        "var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,0.18)",
+      boxShadow: "var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,0.18)",
       backdropFilter: "blur(28px) saturate(155%)",
       WebkitBackdropFilter: "blur(28px) saturate(155%)",
       position: "relative",
-      overflow: "hidden",
+      overflow: "hidden"
     },
     authCardGlow: {
       position: "absolute",
       inset: 0,
       pointerEvents: "none",
       background:
-        "linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.03) 42%, rgba(124,92,255,0.06) 100%)",
+        "linear-gradient(135deg, rgba(255,255,255,0.14) 0%, rgba(255,255,255,0.03) 42%, rgba(124,92,255,0.06) 100%)"
     },
     authInner: {
       position: "relative",
-      zIndex: 1,
+      zIndex: 1
     },
     authHeader: {
       display: "flex",
@@ -199,7 +200,7 @@ export default function Page() {
       alignItems: isMobile ? "stretch" : "center",
       gap: "12px",
       justifyContent: "space-between",
-      marginBottom: "22px",
+      marginBottom: "22px"
     },
     tabs: {
       display: "inline-flex",
@@ -211,7 +212,7 @@ export default function Page() {
       gap: "6px",
       backdropFilter: "blur(14px)",
       WebkitBackdropFilter: "blur(14px)",
-      flexWrap: "wrap",
+      flexWrap: "wrap"
     },
     tabButton: {
       flex: isMobile ? 1 : "unset",
@@ -222,12 +223,12 @@ export default function Page() {
       borderRadius: "10px",
       fontWeight: 700,
       cursor: "pointer",
-      transition: "all 0.2s ease",
+      transition: "all 0.2s ease"
     },
     tabButtonActive: {
       background: "rgba(255,255,255,0.72)",
       color: "var(--text)",
-      boxShadow: "0 6px 20px rgba(15,23,42,0.08)",
+      boxShadow: "0 6px 20px rgba(15,23,42,0.08)"
     },
     dashboardLink: {
       textDecoration: "none",
@@ -241,7 +242,7 @@ export default function Page() {
       textAlign: "center",
       transition: "all 0.2s ease",
       backdropFilter: "blur(12px)",
-      WebkitBackdropFilter: "blur(12px)",
+      WebkitBackdropFilter: "blur(12px)"
     },
     authTitle: {
       margin: 0,
@@ -249,28 +250,28 @@ export default function Page() {
       lineHeight: 1.08,
       fontWeight: 900,
       color: "var(--text)",
-      letterSpacing: "-0.03em",
+      letterSpacing: "-0.03em"
     },
     authSubtitle: {
       marginTop: "10px",
       marginBottom: 0,
       color: "var(--text-soft)",
       lineHeight: 1.7,
-      fontSize: isMobile ? "14px" : "15px",
+      fontSize: isMobile ? "14px" : "15px"
     },
     form: {
       marginTop: "24px",
       display: "grid",
-      gap: "16px",
+      gap: "16px"
     },
     field: {
       display: "grid",
-      gap: "8px",
+      gap: "8px"
     },
     label: {
       fontSize: "14px",
       fontWeight: 700,
-      color: "var(--text-soft)",
+      color: "var(--text-soft)"
     },
     input: {
       width: "100%",
@@ -285,12 +286,12 @@ export default function Page() {
         "inset 0 1px 0 rgba(255,255,255,0.12), inset 0 1px 2px rgba(15,23,42,0.02)",
       transition: "border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease",
       backdropFilter: "blur(10px)",
-      WebkitBackdropFilter: "blur(10px)",
+      WebkitBackdropFilter: "blur(10px)"
     },
     inputFocus: {
       border: "1px solid rgba(37,99,235,0.70)",
       boxShadow: "0 0 0 3px rgba(37,99,235,0.15)",
-      background: "var(--surface-strong)",
+      background: "var(--surface-strong)"
     },
     submitButton: {
       marginTop: "4px",
@@ -303,7 +304,7 @@ export default function Page() {
       fontWeight: 800,
       cursor: "pointer",
       boxShadow: "0 12px 28px rgba(37,99,235,0.22)",
-      transition: "transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease",
+      transition: "transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease"
     },
     messageError: {
       marginTop: "4px",
@@ -314,7 +315,7 @@ export default function Page() {
       color: "var(--danger-text)",
       fontSize: "14px",
       backdropFilter: "blur(10px)",
-      WebkitBackdropFilter: "blur(10px)",
+      WebkitBackdropFilter: "blur(10px)"
     },
     messageSuccess: {
       marginTop: "4px",
@@ -325,8 +326,8 @@ export default function Page() {
       color: "var(--success-text)",
       fontSize: "14px",
       backdropFilter: "blur(10px)",
-      WebkitBackdropFilter: "blur(10px)",
-    },
+      WebkitBackdropFilter: "blur(10px)"
+    }
   };
 
   function getInputStyle(name) {
@@ -343,7 +344,7 @@ export default function Page() {
     setIsError(false);
 
     if (!API) {
-      setMsg("Missing NEXT_PUBLIC_API_BASE in .env.local");
+      setMsg(t("missingApiBase"));
       setIsError(true);
       return;
     }
@@ -355,22 +356,22 @@ export default function Page() {
         const response = await fetch(`${API}/auth/register`, {
           method: "POST",
           headers: {
-            "Content-Type": "application/json",
+            "Content-Type": "application/json"
           },
           body: JSON.stringify({
             username,
             email,
-            password,
-          }),
+            password
+          })
         });
 
         const data = await response.json().catch(() => ({}));
 
         if (!response.ok) {
-          throw new Error(asMessage(data.detail) || "Register failed");
+          throw new Error(asMessage(data.detail) || t("registerFailed"));
         }
 
-        setMsg("Account created successfully. You can now log in.");
+        setMsg(t("accountCreated"));
         setIsError(false);
         setMode("login");
         return;
@@ -383,21 +384,21 @@ export default function Page() {
       const response = await fetch(`${API}/auth/login`, {
         method: "POST",
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Type": "application/x-www-form-urlencoded"
         },
-        body: body.toString(),
+        body: body.toString()
       });
 
       const data = await response.json().catch(() => ({}));
 
       if (!response.ok) {
-        throw new Error(asMessage(data.detail) || "Login failed");
+        throw new Error(asMessage(data.detail) || t("loginFailed"));
       }
 
       localStorage.setItem("token", data.access_token);
       window.location.href = "/dashboard";
     } catch (err) {
-      setMsg(err?.message || "Something went wrong");
+      setMsg(err?.message || t("somethingWentWrong"));
       setIsError(true);
     } finally {
       setIsSubmitting(false);
@@ -408,16 +409,11 @@ export default function Page() {
     <main style={styles.page}>
       <div style={styles.shell}>
         <section style={styles.hero}>
-          <span style={styles.eyebrow}>Add leaderboards to your game easily</span>
+          <span style={styles.eyebrow}>{t("eyebrow")}</span>
 
-          <h1 style={styles.heroTitle}>Manage a leaderboard for your game.</h1>
+          <h1 style={styles.heroTitle}>{t("heroTitle")}</h1>
 
-          <p style={styles.heroText}>
-            Scoreforge is a multi-tenant leaderboard SaaS built for game developers.
-            Create and manage leaderboards for your games without the hassle of
-            building and maintaining your own backend. Focus on making great games
-            while we handle the leaderboard infrastructure.
-          </p>
+          <p style={styles.heroText}>{t("heroText")}</p>
 
           <div style={styles.featureGrid}>
             <div
@@ -433,10 +429,8 @@ export default function Page() {
                   "0 10px 30px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.18)";
               }}
             >
-              <p style={styles.featureTitle}>Project-based setup</p>
-              <p style={styles.featureText}>
-                Create one project per game and keep every leaderboard isolated.
-              </p>
+              <p style={styles.featureTitle}>{t("featureProjectTitle")}</p>
+              <p style={styles.featureText}>{t("featureProjectText")}</p>
             </div>
 
             <div
@@ -452,10 +446,8 @@ export default function Page() {
                   "0 10px 30px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.18)";
               }}
             >
-              <p style={styles.featureTitle}>Secure API keys</p>
-              <p style={styles.featureText}>
-                Generate keys for game clients and backend integrations safely.
-              </p>
+              <p style={styles.featureTitle}>{t("featureApiTitle")}</p>
+              <p style={styles.featureText}>{t("featureApiText")}</p>
             </div>
 
             <div
@@ -471,10 +463,8 @@ export default function Page() {
                   "0 10px 30px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.18)";
               }}
             >
-              <p style={styles.featureTitle}>Fast integration</p>
-              <p style={styles.featureText}>
-                Connect your game quickly and focus on gameplay instead of backend work.
-              </p>
+              <p style={styles.featureTitle}>{t("featureFastTitle")}</p>
+              <p style={styles.featureText}>{t("featureFastText")}</p>
             </div>
           </div>
         </section>
@@ -507,7 +497,7 @@ export default function Page() {
                       }
                     }}
                   >
-                    Login
+                    {t("login")}
                   </button>
 
                   <button
@@ -532,7 +522,7 @@ export default function Page() {
                       }
                     }}
                   >
-                    Register
+                    {t("register")}
                   </button>
                 </div>
 
@@ -548,7 +538,7 @@ export default function Page() {
                     e.currentTarget.style.boxShadow = "none";
                   }}
                 >
-                  Dashboard
+                  {t("dashboard")}
                 </a>
               </div>
 
@@ -560,7 +550,7 @@ export default function Page() {
               <form onSubmit={submit} style={styles.form}>
                 <div style={styles.field}>
                   <label htmlFor="username" style={styles.label}>
-                    Username
+                    {t("username")}
                   </label>
                   <input
                     id="username"
@@ -569,7 +559,7 @@ export default function Page() {
                     onFocus={() => setFocusedField("username")}
                     onBlur={() => setFocusedField("")}
                     required
-                    placeholder="Enter your username"
+                    placeholder={t("enterUsername")}
                     autoComplete="username"
                     style={getInputStyle("username")}
                   />
@@ -578,7 +568,7 @@ export default function Page() {
                 {mode === "register" ? (
                   <div style={styles.field}>
                     <label htmlFor="email" style={styles.label}>
-                      Email
+                      {t("email")}
                     </label>
                     <input
                       id="email"
@@ -588,7 +578,7 @@ export default function Page() {
                       onFocus={() => setFocusedField("email")}
                       onBlur={() => setFocusedField("")}
                       required
-                      placeholder="Enter your email"
+                      placeholder={t("enterEmail")}
                       autoComplete="email"
                       style={getInputStyle("email")}
                     />
@@ -597,7 +587,7 @@ export default function Page() {
 
                 <div style={styles.field}>
                   <label htmlFor="password" style={styles.label}>
-                    Password
+                    {t("password")}
                   </label>
                   <input
                     id="password"
@@ -607,7 +597,7 @@ export default function Page() {
                     onFocus={() => setFocusedField("password")}
                     onBlur={() => setFocusedField("")}
                     required
-                    placeholder="Enter your password"
+                    placeholder={t("enterPassword")}
                     autoComplete={mode === "login" ? "current-password" : "new-password"}
                     style={getInputStyle("password")}
                   />
@@ -632,11 +622,11 @@ export default function Page() {
                 >
                   {isSubmitting
                     ? mode === "register"
-                      ? "Creating account..."
-                      : "Logging in..."
+                      ? t("creatingAccount")
+                      : t("loggingIn")
                     : mode === "register"
-                      ? "Create account"
-                      : "Login"}
+                      ? t("createAccount")
+                      : t("login")}
                 </button>
 
                 {msg ? (
