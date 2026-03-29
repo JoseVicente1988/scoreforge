@@ -101,19 +101,29 @@ export const translations = {
 
     tutorialSectionTitle: "How to integrate it in Godot",
     tutorialSectionSubtitle:
-      "This is the basic flow to connect a Godot game with Scoreforge.",
+      "This guide shows the real flow to connect a Godot game with Scoreforge: create a project, generate an API key, submit scores, and read the public leaderboard.",
     tutorialStep1Title: "1. Create your project",
     tutorialStep1Text:
-      "Inside the dashboard, create a project for your game and copy its API key.",
-    tutorialStep2Title: "2. Send scores from Godot",
+      "Open the dashboard, create a project for your game, and note its project ID. Then generate the API key. The API key is shown once, so save it immediately.",
+    tutorialStep2Title: "2. Submit scores from Godot",
     tutorialStep2Text:
-      "Use an HTTPRequest node to send a POST request with your player name and score value.",
-    tutorialStep3Title: "3. Read the leaderboard",
+      "Use an HTTPRequest node to send a POST request to Scoreforge with the X-API-Key header. The URL stays the Scoreforge service URL. What changes is your API key and the score data you send.",
+    tutorialStep3Title: "3. Read the public leaderboard",
     tutorialStep3Text:
-      "Query the public leaderboard endpoint from your game or your web page to display rankings.",
-    tutorialCodeTitle: "Initial Godot example",
+      "Use the project ID shown in your dashboard and request the public leaderboard endpoint. You can display the returned JSON directly inside your game UI.",
+
+    tutorialCodeTitle: "Godot example: submit score and fetch leaderboard",
     tutorialCodeHint:
-      "This is a simple starting point. Replace the URL and API key with your own values."
+      "Keep the Scoreforge base URL as-is. Replace only YOUR_API_KEY_HERE and YOUR_PROJECT_ID_HERE with the values from your dashboard.",
+    tutorialSubmitTitle: "Submit endpoint",
+    tutorialSubmitText:
+      "POST /scores/submit with headers Content-Type: application/json and X-API-Key: YOUR_API_KEY",
+    tutorialLeaderboardTitle: "Leaderboard endpoint",
+    tutorialLeaderboardText:
+      "GET /scores/leaderboard/YOUR_PROJECT_ID?limit=20 to retrieve the public ranking list.",
+    tutorialExtraTitle: "What you need from the dashboard",
+    tutorialExtraText:
+      "You need 2 things: the API key for score submission, and the project ID to read the leaderboard."
   },
 
   es: {
@@ -218,18 +228,28 @@ export const translations = {
 
     tutorialSectionTitle: "Cómo integrarlo en Godot",
     tutorialSectionSubtitle:
-      "Este es el flujo básico para conectar un juego en Godot con Scoreforge.",
+      "Esta guía muestra el flujo real para conectar un juego en Godot con Scoreforge: crear proyecto, generar API key, enviar puntuaciones y leer el leaderboard público.",
     tutorialStep1Title: "1. Crea tu proyecto",
     tutorialStep1Text:
-      "Dentro del panel, crea un proyecto para tu juego y copia su API key.",
+      "Abre el panel, crea un proyecto para tu juego y anota su project ID. Después genera la API key. La API key solo se muestra una vez, así que guárdala al momento.",
     tutorialStep2Title: "2. Envía puntuaciones desde Godot",
     tutorialStep2Text:
-      "Usa un nodo HTTPRequest para enviar una petición POST con el nombre del jugador y el valor de la puntuación.",
-    tutorialStep3Title: "3. Lee el leaderboard",
+      "Usa un nodo HTTPRequest para enviar una petición POST a Scoreforge con la cabecera X-API-Key. La URL debe seguir siendo la del servicio Scoreforge. Lo que cambia es tu API key y los datos de puntuación que envías.",
+    tutorialStep3Title: "3. Lee el leaderboard público",
     tutorialStep3Text:
-      "Consulta el endpoint público del leaderboard desde tu juego o tu web para mostrar la clasificación.",
-    tutorialCodeTitle: "Ejemplo inicial en Godot",
+      "Usa el project ID que aparece en tu panel y consulta el endpoint público del leaderboard. El JSON devuelto puedes mostrarlo directamente dentro de la UI de tu juego.",
+
+    tutorialCodeTitle: "Ejemplo Godot: enviar score y leer leaderboard",
     tutorialCodeHint:
-      "Este es un punto de partida simple. Sustituye la URL y la API key por las tuyas."
+      "Mantén la URL base de Scoreforge tal cual. Sustituye solo YOUR_API_KEY_HERE y YOUR_PROJECT_ID_HERE con los valores de tu panel.",
+    tutorialSubmitTitle: "Endpoint para enviar score",
+    tutorialSubmitText:
+      "POST /scores/submit con las cabeceras Content-Type: application/json y X-API-Key: TU_API_KEY",
+    tutorialLeaderboardTitle: "Endpoint para leer el leaderboard",
+    tutorialLeaderboardText:
+      "GET /scores/leaderboard/YOUR_PROJECT_ID?limit=20 para obtener el listado público de puntuaciones.",
+    tutorialExtraTitle: "Qué necesitas sacar del panel",
+    tutorialExtraText:
+      "Necesitas 2 cosas: la API key para enviar puntuaciones y el project ID para leer el leaderboard."
   }
 };

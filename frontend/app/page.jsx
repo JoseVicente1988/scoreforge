@@ -82,11 +82,12 @@ export default function Page() {
 
 @onready var http_request = $HTTPRequest
 
-const SCOREFORGE_URL = "https://scoreforge-phi.vercel.app"
+const SCOREFORGE_BASE_URL = "https://scoreforge-phi.vercel.app"
 const API_KEY = "YOUR_API_KEY_HERE"
+const PROJECT_ID = "YOUR_PROJECT_ID_HERE"
 
 func submit_score(player_name: String, score_value: int) -> void:
-\tvar url = SCOREFORGE_URL + "/scores/submit"
+\tvar url = SCOREFORGE_BASE_URL + "/scores/submit"
 \tvar headers = [
 \t\t"Content-Type: application/json",
 \t\t"X-API-Key: " + API_KEY
@@ -101,7 +102,22 @@ func submit_score(player_name: String, score_value: int) -> void:
 \t\theaders,
 \t\tHTTPClient.METHOD_POST,
 \t\tJSON.stringify(body)
-\t)`;
+\t)
+
+func fetch_leaderboard(limit: int = 20) -> void:
+\tvar url = SCOREFORGE_BASE_URL + "/scores/leaderboard/" + PROJECT_ID + "?limit=" + str(limit)
+
+\thttp_request.request(
+\t\turl,
+\t\t[],
+\t\tHTTPClient.METHOD_GET
+\t)
+
+func _on_http_request_request_completed(result, response_code, headers, body):
+\tvar text = body.get_string_from_utf8()
+\tprint("HTTP code:", response_code)
+\tprint("Response:", text)
+`;
 
   const styles = {
     page: {
@@ -418,7 +434,7 @@ func submit_score(player_name: String, score_value: int) -> void:
     },
     tutorialGrid: {
       display: "grid",
-      gridTemplateColumns: isMobile ? "1fr" : "repeat(3, minmax(0, 1fr))",
+      gridTemplateColumns: isMobile ? "1fr" : "repeat(2, minmax(0, 1fr))",
       gap: "14px",
       marginTop: "22px"
     },
@@ -823,6 +839,23 @@ func submit_score(player_name: String, score_value: int) -> void:
             <div style={styles.tutorialCard}>
               <p style={styles.tutorialCardTitle}>{t("tutorialStep3Title")}</p>
               <p style={styles.tutorialCardText}>{t("tutorialStep3Text")}</p>
+            </div>
+
+            <div style={styles.tutorialCard}>
+              <p style={styles.tutorialCardTitle}>{t("tutorialExtraTitle")}</p>
+              <p style={styles.tutorialCardText}>{t("tutorialExtraText")}</p>
+            </div>
+          </div>
+
+          <div style={styles.tutorialGrid}>
+            <div style={styles.tutorialCard}>
+              <p style={styles.tutorialCardTitle}>{t("tutorialSubmitTitle")}</p>
+              <p style={styles.tutorialCardText}>{t("tutorialSubmitText")}</p>
+            </div>
+
+            <div style={styles.tutorialCard}>
+              <p style={styles.tutorialCardTitle}>{t("tutorialLeaderboardTitle")}</p>
+              <p style={styles.tutorialCardText}>{t("tutorialLeaderboardText")}</p>
             </div>
           </div>
 
