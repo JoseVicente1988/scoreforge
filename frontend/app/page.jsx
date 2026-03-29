@@ -5,7 +5,9 @@ import { useEffect, useMemo, useState } from "react";
 const API = process.env.NEXT_PUBLIC_API_BASE;
 
 function asMessage(detail) {
-  if (!detail) return null;
+  if (!detail) {
+    return null;
+  }
 
   if (typeof detail === "string") {
     return detail;
@@ -185,8 +187,8 @@ const styles = {
   input: {
     width: "100%",
     borderRadius: "14px",
-    border: "1px solid #dbe3ee",
-    background: "rgba(255,255,255,0.88)",
+    border: "1px solid #cfd8e3",
+    background: "rgba(255,255,255,0.94)",
     color: "#0f172a",
     padding: "14px 16px",
     fontSize: "15px",

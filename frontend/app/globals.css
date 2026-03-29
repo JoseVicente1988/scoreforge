@@ -1,6 +1,6 @@
 :root {
   color-scheme: dark;
-  --bg: #ffffff;
+  --bg: #0b1020;
   --bg-elevated: rgba(17, 24, 39, 0.88);
   --bg-soft: rgba(255, 255, 255, 0.04);
   --border: rgba(255, 255, 255, 0.08);
@@ -44,7 +44,45 @@ body {
   background-attachment: fixed;
   font-family: Arial, Helvetica, sans-serif;
 }
+html,
+body {
+  min-height: 100%;
+}
 
+body {
+  margin: 0;
+  color: #111827;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.18), rgba(255, 255, 255, 0.24)),
+    url("/backgrounds/scoreforge-bg.jpeg");
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Quita el amarillo horrible del autofill de Chrome/Edge/Safari */
+input,
+textarea,
+select {
+  font: inherit;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-text-fill-color: #0f172a !important;
+  -webkit-box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.94) inset !important;
+  box-shadow: 0 0 0 1000px rgba(255, 255, 255, 0.94) inset !important;
+  transition: background-color 9999s ease-in-out 0s;
+  caret-color: #0f172a !important;
+}
 * {
   box-sizing: border-box;
 }
@@ -300,7 +338,7 @@ input {
 .form-field input:focus {
   border-color: rgba(124, 156, 255, 0.7);
   box-shadow: 0 0 0 4px rgba(124, 156, 255, 0.12);
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(236, 226, 226, 0.05);
 }
 
 .primary-button {
@@ -383,4 +421,5 @@ input {
   .auth-card {
     padding: 18px;
   }
+  
 }
