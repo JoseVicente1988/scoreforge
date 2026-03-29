@@ -123,7 +123,13 @@ export const translations = {
       "GET /scores/leaderboard/YOUR_PROJECT_ID?limit=20 to retrieve the public ranking list.",
     tutorialExtraTitle: "What you need from the dashboard",
     tutorialExtraText:
-      "You need 2 things: the API key for score submission, and the project ID to read the leaderboard."
+      "You need 2 things: the API key for score submission, and the project ID to read the leaderboard.",
+
+    tutorialCodeFile: "scoreforge_example.gd",
+    tutorialCodeBadge: "Godot GDScript",
+
+    copyCode: "Copy code",
+    copiedCode: "Copied!"
   },
 
   es: {
@@ -250,6 +256,12 @@ export const translations = {
       "GET /scores/leaderboard/YOUR_PROJECT_ID?limit=20 para obtener el listado público de puntuaciones.",
     tutorialExtraTitle: "Qué necesitas sacar del panel",
     tutorialExtraText:
-      "Necesitas 2 cosas: la API key para enviar puntuaciones y el project ID para leer el leaderboard."
+      "Necesitas 2 cosas: la API key para enviar puntuaciones y el project ID para leer el leaderboard.",
+
+    tutorialCodeFile: "scoreforge_example.gd",
+    tutorialCodeBadge: "Godot GDScript",
+
+    copyCode: "Copiar código",
+    copiedCode: "¡Copiado!"
   }
 };

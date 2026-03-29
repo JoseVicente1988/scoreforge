@@ -56,6 +56,7 @@ export default function Page() {
   const [isError, setIsError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [focusedField, setFocusedField] = useState("");
+  const [copied, setCopied] = useState(false);
 
   useEffect(() => {
     setMsg("");
@@ -118,6 +119,18 @@ func _on_http_request_request_completed(result, response_code, headers, body):
 \tprint("HTTP code:", response_code)
 \tprint("Response:", text)
 `;
+
+  async function copyCode() {
+    try {
+      await navigator.clipboard.writeText(godotCode);
+      setCopied(true);
+      window.setTimeout(() => {
+        setCopied(false);
+      }, 1800);
+    } catch (error) {
+      setCopied(false);
+    }
+  }
 
   const styles = {
     page: {
@@ -470,6 +483,18 @@ func _on_http_request_request_completed(result, response_code, headers, body):
       overflowX: "auto",
       boxShadow: "0 18px 40px rgba(0,0,0,0.22)"
     },
+    codeTopBar: {
+      display: "flex",
+      alignItems: isMobile ? "flex-start" : "center",
+      justifyContent: "space-between",
+      gap: "12px",
+      flexDirection: isMobile ? "column" : "row",
+      marginBottom: "14px"
+    },
+    codeTitleWrap: {
+      display: "grid",
+      gap: "8px"
+    },
     codeTitle: {
       margin: 0,
       color: "#e5edff",
@@ -477,14 +502,106 @@ func _on_http_request_request_completed(result, response_code, headers, body):
       fontWeight: 800
     },
     codeHint: {
-      marginTop: "8px",
-      marginBottom: "14px",
+      margin: 0,
       color: "#aeb9d6",
       lineHeight: 1.6,
       fontSize: "14px"
     },
-    code: {
-      margin: 0,
+    copyButton: {
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      minWidth: "140px",
+      border: "1px solid rgba(255,255,255,0.18)",
+      borderRadius: "12px",
+      background: copied ? "rgba(34,197,94,0.22)" : "rgba(255,255,255,0.08)",
+      color: "#f8fafc",
+      padding: "10px 14px",
+      fontWeight: 700,
+      cursor: "pointer",
+      transition: "all 0.2s ease",
+      whiteSpace: "nowrap"
+    },
+    editorHeader: {
+      display: "flex",
+      alignItems: "center",
+      gap: "12px",
+      justifyContent: "space-between",
+      padding: "12px 14px",
+      borderRadius: "14px 14px 0 0",
+      background: "rgba(255,255,255,0.06)",
+      border: "1px solid rgba(255,255,255,0.08)",
+      borderBottom: "none",
+      flexWrap: "wrap"
+    },
+    editorDots: {
+      display: "flex",
+      alignItems: "center",
+      gap: "8px"
+    },
+    editorDotRed: {
+      width: "10px",
+      height: "10px",
+      borderRadius: "999px",
+      background: "#fb7185",
+      display: "inline-block"
+    },
+    editorDotYellow: {
+      width: "10px",
+      height: "10px",
+      borderRadius: "999px",
+      background: "#fbbf24",
+      display: "inline-block"
+    },
+    editorDotGreen: {
+      width: "10px",
+      height: "10px",
+      borderRadius: "999px",
+      background: "#4ade80",
+      display: "inline-block"
+    },
+    editorFile: {
+      color: "#e5edff",
+      fontSize: "13px",
+      fontWeight: 700,
+      flex: 1,
+      minWidth: "160px"
+    },
+    editorBadge: {
+      display: "inline-flex",
+      alignItems: "center",
+      justifyContent: "center",
+      padding: "6px 10px",
+      borderRadius: "999px",
+      background: "rgba(96,165,250,0.16)",
+      border: "1px solid rgba(96,165,250,0.22)",
+      color: "#bfdbfe",
+      fontSize: "12px",
+      fontWeight: 700
+    },
+    codeBody: {
+      border: "1px solid rgba(255,255,255,0.08)",
+      borderTop: "none",
+      borderRadius: "0 0 14px 14px",
+      overflowX: "auto"
+    },
+    codeLine: {
+      display: "grid",
+      gridTemplateColumns: "56px 1fr",
+      alignItems: "start"
+    },
+    codeLineNumber: {
+      color: "#64748b",
+      textAlign: "right",
+      padding: "0 14px 0 0",
+      userSelect: "none",
+      fontFamily: "Consolas, Monaco, monospace",
+      fontSize: "13px",
+      lineHeight: 1.7,
+      borderRight: "1px solid rgba(255,255,255,0.06)"
+    },
+    codeLineText: {
+      padding: "0 0 0 14px",
       color: "#f8fafc",
       fontSize: "13px",
       lineHeight: 1.7,
@@ -860,9 +977,77 @@ func _on_http_request_request_completed(result, response_code, headers, body):
           </div>
 
           <div style={styles.codeWrap}>
-            <p style={styles.codeTitle}>{t("tutorialCodeTitle")}</p>
-            <p style={styles.codeHint}>{t("tutorialCodeHint")}</p>
-            <pre style={styles.code}>{godotCode}</pre>
+            <div style={styles.codeTopBar}>
+              <div style={styles.codeTitleWrap}>
+                <p style={styles.codeTitle}>{t("tutorialCodeTitle")}</p>
+                <p style={styles.codeHint}>{t("tutorialCodeHint")}</p>
+              </div>
+
+              <button
+                type="button"
+                style={styles.copyButton}
+                onClick={copyCode}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-1px)";
+                  e.currentTarget.style.boxShadow = "0 8px 18px rgba(0,0,0,0.18)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow = "none";
+                }}
+              >
+                {copied ? t("copiedCode") : t("copyCode")}
+              </button>
+            </div>
+
+            <div style={styles.editorHeader}>
+              <div style={styles.editorDots}>
+                <span style={styles.editorDotRed} />
+                <span style={styles.editorDotYellow} />
+                <span style={styles.editorDotGreen} />
+              </div>
+
+              <div style={styles.editorFile}>{t("tutorialCodeFile")}</div>
+
+              <div style={styles.editorBadge}>{t("tutorialCodeBadge")}</div>
+            </div>
+
+            <div style={styles.codeBody}>
+              {godotCode.split("\n").map((line, index) => (
+                <div key={index} style={styles.codeLine}>
+                  <span style={styles.codeLineNumber}>{index + 1}</span>
+                  <span
+                    style={styles.codeLineText}
+                    dangerouslySetInnerHTML={{
+                      __html: line
+                        .replace(/&/g, "&amp;")
+                        .replace(/</g, "&lt;")
+                        .replace(/>/g, "&gt;")
+                        .replace(
+                          /\b(extends|const|func|var|return)\b/g,
+                          '<span style="color:#c084fc;">$1</span>'
+                        )
+                        .replace(
+                          /\b(true|false|null)\b/g,
+                          '<span style="color:#f59e0b;">$1</span>'
+                        )
+                        .replace(
+                          /("[^"]*")/g,
+                          '<span style="color:#86efac;">$1</span>'
+                        )
+                        .replace(
+                          /\b([0-9]+)\b/g,
+                          '<span style="color:#fca5a5;">$1</span>'
+                        )
+                        .replace(
+                          /(@onready)/g,
+                          '<span style="color:#60a5fa;">$1</span>'
+                        )
+                    }}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </section>
       </div>
