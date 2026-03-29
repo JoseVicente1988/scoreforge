@@ -86,6 +86,7 @@ const styles = {
     padding: "18px",
     boxShadow: "0 10px 30px rgba(15,23,42,0.06)",
     backdropFilter: "blur(10px)",
+    transition: "transform 0.2s ease, box-shadow 0.2s ease",
   },
   featureTitle: {
     margin: 0,
@@ -108,12 +109,12 @@ const styles = {
   authCard: {
     width: "100%",
     maxWidth: "460px",
-    background: "rgba(255,255,255,0.62)",
+    background: "rgba(255,255,255,0.58)",
     border: "1px solid rgba(15,23,42,0.08)",
     borderRadius: "28px",
     padding: "26px",
     boxShadow: "0 18px 50px rgba(15,23,42,0.10)",
-    backdropFilter: "blur(16px)",
+    backdropFilter: "blur(18px)",
   },
   authHeader: {
     display: "flex",
@@ -154,6 +155,7 @@ const styles = {
     padding: "10px 14px",
     fontWeight: 700,
     whiteSpace: "nowrap",
+    transition: "all 0.2s ease",
   },
   authTitle: {
     margin: 0,
@@ -194,6 +196,12 @@ const styles = {
     fontSize: "15px",
     outline: "none",
     boxShadow: "inset 0 1px 2px rgba(15,23,42,0.03)",
+    transition: "border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease",
+  },
+  inputFocus: {
+    border: "1px solid #2563eb",
+    boxShadow: "0 0 0 3px rgba(37,99,235,0.15)",
+    background: "rgba(255,255,255,0.98)",
   },
   submitButton: {
     marginTop: "4px",
@@ -206,6 +214,7 @@ const styles = {
     fontWeight: 800,
     cursor: "pointer",
     boxShadow: "0 12px 28px rgba(37,99,235,0.22)",
+    transition: "transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease",
   },
   messageError: {
     marginTop: "4px",
@@ -235,6 +244,7 @@ export default function Page() {
   const [msg, setMsg] = useState("");
   const [isError, setIsError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [focusedField, setFocusedField] = useState("");
 
   useEffect(() => {
     setMsg("");
@@ -256,6 +266,14 @@ export default function Page() {
 
     return "Login to manage projects, generate API keys and control your leaderboard SaaS.";
   }, [mode]);
+
+  function getInputStyle(name) {
+    if (focusedField === name) {
+      return { ...styles.input, ...styles.inputFocus };
+    }
+
+    return styles.input;
+  }
 
   async function submit(e) {
     e.preventDefault();
@@ -340,21 +358,51 @@ export default function Page() {
           </p>
 
           <div style={styles.featureGrid}>
-            <div style={styles.featureCard}>
+            <div
+              style={styles.featureCard}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.boxShadow = "0 14px 34px rgba(15,23,42,0.09)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "0 10px 30px rgba(15,23,42,0.06)";
+              }}
+            >
               <p style={styles.featureTitle}>Project-based setup</p>
               <p style={styles.featureText}>
                 Create one project per game and keep every leaderboard isolated.
               </p>
             </div>
 
-            <div style={styles.featureCard}>
+            <div
+              style={styles.featureCard}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.boxShadow = "0 14px 34px rgba(15,23,42,0.09)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "0 10px 30px rgba(15,23,42,0.06)";
+              }}
+            >
               <p style={styles.featureTitle}>Secure API keys</p>
               <p style={styles.featureText}>
                 Generate keys for game clients and backend integrations safely.
               </p>
             </div>
 
-            <div style={styles.featureCard}>
+            <div
+              style={styles.featureCard}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-2px)";
+                e.currentTarget.style.boxShadow = "0 14px 34px rgba(15,23,42,0.09)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "0 10px 30px rgba(15,23,42,0.06)";
+              }}
+            >
               <p style={styles.featureTitle}>Fast integration</p>
               <p style={styles.featureText}>
                 Connect your game quickly and focus on gameplay instead of backend work.
@@ -376,6 +424,18 @@ export default function Page() {
                       ? { ...styles.tabButton, ...styles.tabButtonActive }
                       : styles.tabButton
                   }
+                  onMouseEnter={(e) => {
+                    if (mode !== "login") {
+                      e.currentTarget.style.background = "rgba(255,255,255,0.55)";
+                      e.currentTarget.style.color = "#0f172a";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (mode !== "login") {
+                      e.currentTarget.style.background = "transparent";
+                      e.currentTarget.style.color = "#475569";
+                    }
+                  }}
                 >
                   Login
                 </button>
@@ -389,12 +449,37 @@ export default function Page() {
                       ? { ...styles.tabButton, ...styles.tabButtonActive }
                       : styles.tabButton
                   }
+                  onMouseEnter={(e) => {
+                    if (mode !== "register") {
+                      e.currentTarget.style.background = "rgba(255,255,255,0.55)";
+                      e.currentTarget.style.color = "#0f172a";
+                    }
+                  }}
+                  onMouseLeave={(e) => {
+                    if (mode !== "register") {
+                      e.currentTarget.style.background = "transparent";
+                      e.currentTarget.style.color = "#475569";
+                    }
+                  }}
                 >
                   Register
                 </button>
               </div>
 
-              <a href="/dashboard" style={styles.dashboardLink}>
+              <a
+                href="/dashboard"
+                style={styles.dashboardLink}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-1px)";
+                  e.currentTarget.style.borderColor = "#c7d7ee";
+                  e.currentTarget.style.boxShadow = "0 8px 20px rgba(15,23,42,0.06)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.borderColor = "rgba(15,23,42,0.08)";
+                  e.currentTarget.style.boxShadow = "none";
+                }}
+              >
                 Dashboard
               </a>
             </div>
@@ -413,10 +498,12 @@ export default function Page() {
                   id="username"
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
+                  onFocus={() => setFocusedField("username")}
+                  onBlur={() => setFocusedField("")}
                   required
                   placeholder="Enter your username"
                   autoComplete="username"
-                  style={styles.input}
+                  style={getInputStyle("username")}
                 />
               </div>
 
@@ -430,10 +517,12 @@ export default function Page() {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    onFocus={() => setFocusedField("email")}
+                    onBlur={() => setFocusedField("")}
                     required
                     placeholder="Enter your email"
                     autoComplete="email"
-                    style={styles.input}
+                    style={getInputStyle("email")}
                   />
                 </div>
               ) : null}
@@ -447,14 +536,32 @@ export default function Page() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  onFocus={() => setFocusedField("password")}
+                  onBlur={() => setFocusedField("")}
                   required
                   placeholder="Enter your password"
                   autoComplete={mode === "login" ? "current-password" : "new-password"}
-                  style={styles.input}
+                  style={getInputStyle("password")}
                 />
               </div>
 
-              <button type="submit" disabled={isSubmitting} style={styles.submitButton}>
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                style={styles.submitButton}
+                onMouseEnter={(e) => {
+                  if (!isSubmitting) {
+                    e.currentTarget.style.transform = "translateY(-1px)";
+                    e.currentTarget.style.boxShadow = "0 16px 32px rgba(37,99,235,0.28)";
+                    e.currentTarget.style.filter = "brightness(1.02)";
+                  }
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow = "0 12px 28px rgba(37,99,235,0.22)";
+                  e.currentTarget.style.filter = "brightness(1)";
+                }}
+              >
                 {isSubmitting
                   ? mode === "register"
                     ? "Creating account..."

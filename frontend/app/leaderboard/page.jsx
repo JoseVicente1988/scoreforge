@@ -46,6 +46,7 @@ const styles = {
     borderRadius: "12px",
     padding: "10px 14px",
     fontWeight: 600,
+    transition: "all 0.2s ease",
   },
   subtitle: {
     marginTop: "12px",
@@ -77,6 +78,12 @@ const styles = {
     borderRadius: "14px",
     padding: "14px 16px",
     outline: "none",
+    transition: "border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease",
+  },
+  inputFocus: {
+    border: "1px solid #2563eb",
+    boxShadow: "0 0 0 3px rgba(37,99,235,0.15)",
+    background: "rgba(255,255,255,0.98)",
   },
   button: {
     background: "linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)",
@@ -87,6 +94,7 @@ const styles = {
     fontWeight: 700,
     cursor: "pointer",
     boxShadow: "0 10px 24px rgba(37,99,235,0.18)",
+    transition: "transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease",
   },
   message: {
     marginTop: "16px",
@@ -150,6 +158,7 @@ export default function Leaderboard() {
   const [projectId, setProjectId] = useState("");
   const [rows, setRows] = useState([]);
   const [msg, setMsg] = useState("");
+  const [isInputFocused, setIsInputFocused] = useState(false);
 
   async function load() {
     setMsg("");
@@ -181,7 +190,20 @@ export default function Leaderboard() {
         <section style={styles.header}>
           <div style={styles.topBar}>
             <h1 style={styles.title}>Leaderboard</h1>
-            <a href="/dashboard" style={styles.backLink}>
+            <a
+              href="/dashboard"
+              style={styles.backLink}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-1px)";
+                e.currentTarget.style.borderColor = "#c7d7ee";
+                e.currentTarget.style.boxShadow = "0 8px 20px rgba(15,23,42,0.06)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.borderColor = "#dbe3ee";
+                e.currentTarget.style.boxShadow = "none";
+              }}
+            >
               Back to dashboard
             </a>
           </div>
@@ -197,9 +219,24 @@ export default function Leaderboard() {
               placeholder="Enter Project ID"
               value={projectId}
               onChange={(e) => setProjectId(e.target.value)}
-              style={styles.input}
+              onFocus={() => setIsInputFocused(true)}
+              onBlur={() => setIsInputFocused(false)}
+              style={isInputFocused ? { ...styles.input, ...styles.inputFocus } : styles.input}
             />
-            <button onClick={load} style={styles.button}>
+            <button
+              onClick={load}
+              style={styles.button}
+              onMouseEnter={(e) => {
+                e.currentTarget.style.transform = "translateY(-1px)";
+                e.currentTarget.style.boxShadow = "0 16px 30px rgba(37,99,235,0.24)";
+                e.currentTarget.style.filter = "brightness(1.02)";
+              }}
+              onMouseLeave={(e) => {
+                e.currentTarget.style.transform = "translateY(0)";
+                e.currentTarget.style.boxShadow = "0 10px 24px rgba(37,99,235,0.18)";
+                e.currentTarget.style.filter = "brightness(1)";
+              }}
+            >
               Load leaderboard
             </button>
           </div>

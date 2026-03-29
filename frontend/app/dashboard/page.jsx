@@ -69,6 +69,7 @@ const styles = {
     textDecoration: "none",
     fontWeight: 600,
     cursor: "pointer",
+    transition: "all 0.2s ease",
   },
   primaryButton: {
     background: "linear-gradient(135deg, #2563eb 0%, #7c3aed 100%)",
@@ -79,6 +80,7 @@ const styles = {
     fontWeight: 700,
     cursor: "pointer",
     boxShadow: "0 10px 24px rgba(37,99,235,0.18)",
+    transition: "transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease",
   },
   dangerButton: {
     background: "#ef4444",
@@ -88,6 +90,7 @@ const styles = {
     padding: "10px 14px",
     fontWeight: 700,
     cursor: "pointer",
+    transition: "transform 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease",
   },
   subtitle: {
     marginTop: "12px",
@@ -138,6 +141,12 @@ const styles = {
     borderRadius: "14px",
     padding: "14px 16px",
     outline: "none",
+    transition: "border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease",
+  },
+  inputFocus: {
+    border: "1px solid #2563eb",
+    boxShadow: "0 0 0 3px rgba(37,99,235,0.15)",
+    background: "rgba(255,255,255,0.98)",
   },
   messageError: {
     marginTop: "16px",
@@ -185,6 +194,7 @@ const styles = {
     border: "1px solid rgba(15,23,42,0.08)",
     borderRadius: "18px",
     padding: "18px",
+    transition: "transform 0.2s ease, box-shadow 0.2s ease",
   },
   projectHeader: {
     display: "flex",
@@ -246,6 +256,7 @@ export default function Dashboard() {
   const [newName, setNewName] = useState("");
   const [msg, setMsg] = useState("");
   const [apiKey, setApiKey] = useState(null);
+  const [isInputFocused, setIsInputFocused] = useState(false);
 
   useEffect(() => {
     if (!getToken()) {
@@ -353,10 +364,36 @@ export default function Dashboard() {
             <h1 style={styles.title}>Dashboard</h1>
 
             <div style={styles.topActions}>
-              <a href="/leaderboard" style={styles.secondaryButton}>
+              <a
+                href="/leaderboard"
+                style={styles.secondaryButton}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-1px)";
+                  e.currentTarget.style.borderColor = "#c7d7ee";
+                  e.currentTarget.style.boxShadow = "0 8px 20px rgba(15,23,42,0.06)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.borderColor = "#dbe3ee";
+                  e.currentTarget.style.boxShadow = "none";
+                }}
+              >
                 View leaderboard
               </a>
-              <button onClick={logout} style={styles.dangerButton}>
+              <button
+                onClick={logout}
+                style={styles.dangerButton}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-1px)";
+                  e.currentTarget.style.boxShadow = "0 14px 26px rgba(239,68,68,0.20)";
+                  e.currentTarget.style.filter = "brightness(1.02)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow = "none";
+                  e.currentTarget.style.filter = "brightness(1)";
+                }}
+              >
                 Logout
               </button>
             </div>
@@ -381,10 +418,25 @@ export default function Dashboard() {
                 placeholder="Enter project name"
                 value={newName}
                 onChange={(e) => setNewName(e.target.value)}
+                onFocus={() => setIsInputFocused(true)}
+                onBlur={() => setIsInputFocused(false)}
                 required
-                style={styles.input}
+                style={isInputFocused ? { ...styles.input, ...styles.inputFocus } : styles.input}
               />
-              <button type="submit" style={styles.primaryButton}>
+              <button
+                type="submit"
+                style={styles.primaryButton}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = "translateY(-1px)";
+                  e.currentTarget.style.boxShadow = "0 16px 30px rgba(37,99,235,0.24)";
+                  e.currentTarget.style.filter = "brightness(1.02)";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = "translateY(0)";
+                  e.currentTarget.style.boxShadow = "0 10px 24px rgba(37,99,235,0.18)";
+                  e.currentTarget.style.filter = "brightness(1)";
+                }}
+              >
                 Create project
               </button>
             </form>
@@ -431,7 +483,18 @@ export default function Dashboard() {
           <div style={styles.projectList}>
             {projects.length > 0 ? (
               projects.map((project) => (
-                <div key={project.id} style={styles.projectCard}>
+                <div
+                  key={project.id}
+                  style={styles.projectCard}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = "translateY(-2px)";
+                    e.currentTarget.style.boxShadow = "0 14px 28px rgba(15,23,42,0.08)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = "translateY(0)";
+                    e.currentTarget.style.boxShadow = "none";
+                  }}
+                >
                   <div style={styles.projectHeader}>
                     <div>
                       <p style={styles.projectName}>{project.name}</p>
@@ -441,6 +504,16 @@ export default function Dashboard() {
                     <button
                       onClick={() => createKey(project.id)}
                       style={{ ...styles.primaryButton, marginLeft: "auto" }}
+                      onMouseEnter={(e) => {
+                        e.currentTarget.style.transform = "translateY(-1px)";
+                        e.currentTarget.style.boxShadow = "0 16px 30px rgba(37,99,235,0.24)";
+                        e.currentTarget.style.filter = "brightness(1.02)";
+                      }}
+                      onMouseLeave={(e) => {
+                        e.currentTarget.style.transform = "translateY(0)";
+                        e.currentTarget.style.boxShadow = "0 10px 24px rgba(37,99,235,0.18)";
+                        e.currentTarget.style.filter = "brightness(1)";
+                      }}
                     >
                       Generate API key
                     </button>
