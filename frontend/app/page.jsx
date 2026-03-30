@@ -45,13 +45,14 @@ function useViewport() {
 }
 
 function renderHighlightedLine(line) {
-  const keywordPattern = /^(extends|const|func|var|return)$/;
-  const decoratorPattern = /^@onready$/;
+  const keywordPattern = /^(extends|class_name|const|func|var|return|if|await)$/;
+  const decoratorPattern = /^@export$/;
   const boolNullPattern = /^(true|false|null)$/;
   const methodPattern = /^(HTTPClient\.METHOD_POST|HTTPClient\.METHOD_GET)$/;
-  const functionCallPattern = /^([A-Za-z_][A-Za-z0-9_]*)\($/;
 
-  const parts = line.split(/(\s+|"[^"]*"|\bHTTPClient\.METHOD_POST\b|\bHTTPClient\.METHOD_GET\b|\bextends\b|\bconst\b|\bfunc\b|\bvar\b|\breturn\b|\btrue\b|\bfalse\b|\bnull\b|\b@onready\b|\b\d+\b)/g);
+  const parts = line.split(
+    /(\s+|"[^"]*"|\bHTTPClient\.METHOD_POST\b|\bHTTPClient\.METHOD_GET\b|\bextends\b|\bclass_name\b|\bconst\b|\bfunc\b|\bvar\b|\breturn\b|\bif\b|\bawait\b|\btrue\b|\bfalse\b|\bnull\b|\b@export\b|\b\d+\b)/g
+  );
 
   return parts.map((part, index) => {
     if (part === "") {
@@ -59,11 +60,7 @@ function renderHighlightedLine(line) {
     }
 
     if (/^\s+$/.test(part)) {
-      return (
-        <span key={index}>
-          {part}
-        </span>
-      );
+      return <span key={index}>{part}</span>;
     }
 
     if (decoratorPattern.test(part)) {
@@ -114,22 +111,7 @@ function renderHighlightedLine(line) {
       );
     }
 
-    if (functionCallPattern.test(part)) {
-      const functionName = part.slice(0, -1);
-
-      return (
-        <span key={index}>
-          <span style={{ color: "#f9a8d4" }}>{functionName}</span>
-          <span>(</span>
-        </span>
-      );
-    }
-
-    return (
-      <span key={index}>
-        {part}
-      </span>
-    );
+    return <span key={index}>{part}</span>;
   });
 }
 
@@ -169,46 +151,118 @@ export default function Page() {
   }, [mode, t]);
 
   const godotCode = `extends Node
+class_name ScoreforgeClient
 
-@onready var http_request = $HTTPRequest
+@export var base_url: String = "https://scoreforge-phi.vercel.app"
+@export var api_key: String = "YOUR_API_KEY_HERE"
+@export var project_id: int = 1
 
-const SCOREFORGE_BASE_URL = "https://scoreforge-phi.vercel.app"
-const API_KEY = "YOUR_API_KEY_HERE"
-const PROJECT_ID = "YOUR_PROJECT_ID_HERE"
+func submit_score(username: String, value: int, metadata: Dictionary = {}) -> Dictionary:
+\tif api_key.strip_edges() == "":
+\t\treturn {
+\t\t\t"ok": false,
+\t\t\t"error": "Missing api_key"
+\t\t}
 
-func submit_score(player_name: String, score_value: int) -> void:
-\tvar url = SCOREFORGE_BASE_URL + "/scores/submit"
-\tvar headers = [
+\tif project_id <= 0:
+\t\treturn {
+\t\t\t"ok": false,
+\t\t\t"error": "Missing project_id"
+\t\t}
+
+\tvar url = "%s/scores/submit" % base_url
+\tvar headers = PackedStringArray([
+\t\t"Accept: application/json",
 \t\t"Content-Type: application/json",
-\t\t"X-API-Key: " + API_KEY
-\t]
+\t\t"X-API-Key: %s" % api_key
+\t])
+
 \tvar body = {
-\t\t"username": player_name,
-\t\t"value": score_value
+\t\t"project_id": project_id,
+\t\t"username": username,
+\t\t"value": value,
+\t\t"metadata": metadata
 \t}
 
-\thttp_request.request(
-\t\turl,
-\t\theaders,
-\t\tHTTPClient.METHOD_POST,
-\t\tJSON.stringify(body)
-\t)
+\treturn await _request_json(url, HTTPClient.METHOD_POST, headers, body)
 
-func fetch_leaderboard(limit: int = 20) -> void:
-\tvar url = SCOREFORGE_BASE_URL + "/scores/leaderboard/" + PROJECT_ID + "?limit=" + str(limit)
+func get_leaderboard(limit: int = 20) -> Dictionary:
+\tif project_id <= 0:
+\t\treturn {
+\t\t\t"ok": false,
+\t\t\t"error": "Missing project_id"
+\t\t}
 
-\thttp_request.request(
-\t\turl,
-\t\t[],
-\t\tHTTPClient.METHOD_GET
-\t)
+\tvar url = "%s/scores/leaderboard/%d?limit=%d" % [base_url, project_id, limit]
+\tvar headers = PackedStringArray([
+\t\t"Accept: application/json"
+\t])
 
-func _on_http_request_request_completed(result, response_code, headers, body):
-\tvar text = body.get_string_from_utf8()
-\tprint("HTTP code:", response_code)
-\tprint("Response:", text)
-`;
+\treturn await _request_json(url, HTTPClient.METHOD_GET, headers, null)
 
+func _request_json(url: String, method: int, headers: PackedStringArray, body: Variant) -> Dictionary:
+\tvar http = HTTPRequest.new()
+\tadd_child(http)
+
+\tvar body_text = ""
+\tif body != null:
+\t\tbody_text = JSON.stringify(body)
+
+\tvar err = http.request(url, headers, method, body_text)
+\tif err != OK:
+\t\thttp.queue_free()
+\t\treturn {
+\t\t\t"ok": false,
+\t\t\t"status": 0,
+\t\t\t"error": "Request error: %s" % str(err)
+\t\t}
+
+\tvar response = await http.request_completed
+\thttp.queue_free()
+
+\tvar result = response[0]
+\tvar status = response[1]
+\tvar raw_body: PackedByteArray = response[3]
+\tvar text = raw_body.get_string_from_utf8()
+
+\tif result != HTTPRequest.RESULT_SUCCESS:
+\t\treturn {
+\t\t\t"ok": false,
+\t\t\t"status": status,
+\t\t\t"error": "HTTP request failed",
+\t\t\t"raw": text
+\t\t}
+
+\tif text.strip_edges() == "":
+\t\treturn {
+\t\t\t"ok": status >= 200 and status < 300,
+\t\t\t"status": status,
+\t\t\t"data": null
+\t\t}
+
+\tvar data = JSON.parse_string(text)
+\tif data == null:
+\t\treturn {
+\t\t\t"ok": false,
+\t\t\t"status": status,
+\t\t\t"error": "Invalid JSON response",
+\t\t\t"raw": text
+\t\t}
+
+\tif status < 200 or status >= 300:
+\t\treturn {
+\t\t\t"ok": false,
+\t\t\t"status": status,
+\t\t\t"error": "HTTP error",
+\t\t\t"data": data
+\t\t}
+
+\treturn {
+\t\t"ok": true,
+\t\t"status": status,
+\t\t"data": data
+\t}`;
+  
   async function copyCode() {
     try {
       await navigator.clipboard.writeText(godotCode);
@@ -225,9 +279,9 @@ func _on_http_request_request_completed(result, response_code, headers, body):
     page: {
       minHeight: "100vh",
       display: "flex",
-      alignItems: isMobile ? "flex-start" : "center",
+      alignItems: "flex-start",
       justifyContent: "center",
-      padding: isMobile ? "24px 16px 48px" : "36px 20px 56px",
+      padding: isMobile ? "18px 12px 40px" : "36px 20px 56px",
       color: "var(--text)"
     },
     shell: {
@@ -235,32 +289,33 @@ func _on_http_request_request_completed(result, response_code, headers, body):
       maxWidth: "1200px",
       display: "grid",
       gridTemplateColumns: "1fr",
-      gap: isMobile ? "20px" : "30px",
+      gap: isMobile ? "18px" : "30px",
       alignItems: "stretch"
     },
     heroGrid: {
       display: "grid",
       gridTemplateColumns: isMobile ? "1fr" : isTablet ? "1fr" : "1.12fr 0.88fr",
-      gap: isMobile ? "20px" : "30px",
+      gap: isMobile ? "18px" : "30px",
       alignItems: "stretch"
     },
     hero: {
       display: "flex",
       flexDirection: "column",
       justifyContent: "center",
-      padding: isMobile ? "4px 2px" : "16px 8px",
+      padding: isMobile ? "2px 0" : "16px 8px",
       order: isMobile ? 2 : 1
     },
     eyebrow: {
       display: "inline-flex",
       alignItems: "center",
       width: "fit-content",
-      padding: "8px 12px",
+      maxWidth: "100%",
+      padding: isMobile ? "7px 10px" : "8px 12px",
       borderRadius: "999px",
       background: "var(--surface-soft)",
       border: "1px solid var(--border)",
       color: "var(--text-soft)",
-      fontSize: isMobile ? "12px" : "13px",
+      fontSize: isMobile ? "11px" : "13px",
       fontWeight: 700,
       letterSpacing: "0.02em",
       backdropFilter: "blur(14px) saturate(140%)",
@@ -268,33 +323,34 @@ func _on_http_request_request_completed(result, response_code, headers, body):
       boxShadow: "0 8px 22px rgba(15,23,42,0.05)"
     },
     heroTitle: {
-      margin: "18px 0 14px 0",
-      fontSize: isMobile ? "34px" : isTablet ? "44px" : "56px",
+      margin: "16px 0 12px 0",
+      fontSize: isMobile ? "31px" : isTablet ? "44px" : "56px",
       lineHeight: 1.02,
       letterSpacing: "-0.04em",
       color: "var(--text)",
       fontWeight: 900,
-      maxWidth: isMobile ? "none" : "620px"
+      maxWidth: isMobile ? "100%" : "620px"
     },
     heroText: {
       margin: 0,
-      maxWidth: isMobile ? "none" : "680px",
+      maxWidth: isMobile ? "100%" : "680px",
       color: "var(--text-soft)",
-      fontSize: isMobile ? "15px" : "18px",
-      lineHeight: isMobile ? 1.7 : 1.75
+      fontSize: isMobile ? "14px" : "18px",
+      lineHeight: isMobile ? 1.65 : 1.75
     },
     ctaRow: {
       display: "flex",
       gap: "12px",
       flexWrap: "wrap",
-      marginTop: "22px"
+      marginTop: isMobile ? "18px" : "22px"
     },
     secondaryCta: {
       display: "inline-flex",
       alignItems: "center",
       justifyContent: "center",
-      minWidth: "170px",
-      padding: "12px 18px",
+      width: isMobile ? "100%" : "auto",
+      minWidth: isMobile ? "0" : "170px",
+      padding: isMobile ? "12px 14px" : "12px 18px",
       borderRadius: "14px",
       border: "1px solid var(--border)",
       background: "var(--surface-soft)",
@@ -309,13 +365,13 @@ func _on_http_request_request_completed(result, response_code, headers, body):
       display: "grid",
       gridTemplateColumns: isMobile ? "1fr" : isTablet ? "1fr 1fr" : "repeat(3, minmax(0, 1fr))",
       gap: "14px",
-      marginTop: isMobile ? "22px" : "30px"
+      marginTop: isMobile ? "18px" : "30px"
     },
     featureCard: {
       background: "var(--surface-soft)",
       border: "1px solid var(--border)",
-      borderRadius: "20px",
-      padding: "18px",
+      borderRadius: isMobile ? "18px" : "20px",
+      padding: isMobile ? "16px" : "18px",
       boxShadow:
         "0 10px 30px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.18)",
       backdropFilter: "blur(18px) saturate(145%)",
@@ -324,7 +380,7 @@ func _on_http_request_request_completed(result, response_code, headers, body):
     },
     featureTitle: {
       margin: 0,
-      fontSize: "15px",
+      fontSize: isMobile ? "14px" : "15px",
       fontWeight: 800,
       color: "var(--text)"
     },
@@ -332,12 +388,12 @@ func _on_http_request_request_completed(result, response_code, headers, body):
       marginTop: "8px",
       marginBottom: 0,
       color: "var(--text-soft)",
-      fontSize: "14px",
+      fontSize: isMobile ? "13px" : "14px",
       lineHeight: 1.6
     },
     authWrap: {
       display: "flex",
-      alignItems: isMobile ? "stretch" : "center",
+      alignItems: "stretch",
       justifyContent: "center",
       order: isMobile ? 1 : 2
     },
@@ -346,8 +402,8 @@ func _on_http_request_request_completed(result, response_code, headers, body):
       maxWidth: isMobile ? "100%" : "470px",
       background: "var(--surface)",
       border: "1px solid var(--border)",
-      borderRadius: isMobile ? "24px" : "30px",
-      padding: isMobile ? "20px" : "28px",
+      borderRadius: isMobile ? "22px" : "30px",
+      padding: isMobile ? "16px" : "28px",
       boxShadow: "var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,0.18)",
       backdropFilter: "blur(28px) saturate(155%)",
       WebkitBackdropFilter: "blur(28px) saturate(155%)",
@@ -367,33 +423,33 @@ func _on_http_request_request_completed(result, response_code, headers, body):
     },
     authHeader: {
       display: "flex",
-      flexDirection: isMobile ? "column" : "row",
-      alignItems: isMobile ? "stretch" : "center",
-      gap: "12px",
+      flexDirection: "column",
+      alignItems: "stretch",
+      gap: "10px",
       justifyContent: "space-between",
-      marginBottom: "22px"
+      marginBottom: "18px"
     },
     tabs: {
-      display: "inline-flex",
-      width: isMobile ? "100%" : "fit-content",
+      display: "grid",
+      gridTemplateColumns: "1fr 1fr",
+      width: "100%",
       padding: "5px",
       borderRadius: "14px",
       background: "var(--surface-soft)",
       border: "1px solid var(--border)",
       gap: "6px",
       backdropFilter: "blur(14px)",
-      WebkitBackdropFilter: "blur(14px)",
-      flexWrap: "wrap"
+      WebkitBackdropFilter: "blur(14px)"
     },
     tabButton: {
-      flex: 1,
-      minWidth: isMobile ? "0" : "140px",
+      minWidth: "0",
       border: "none",
       background: "transparent",
       color: "var(--text-muted)",
-      padding: "10px 16px",
+      padding: isMobile ? "10px 8px" : "10px 16px",
       borderRadius: "10px",
       fontWeight: 700,
+      fontSize: isMobile ? "13px" : "14px",
       cursor: "pointer",
       transition: "all 0.2s ease",
       textAlign: "center",
@@ -408,7 +464,8 @@ func _on_http_request_request_completed(result, response_code, headers, body):
       display: "inline-flex",
       alignItems: "center",
       justifyContent: "center",
-      minWidth: "150px",
+      width: isMobile ? "100%" : "150px",
+      minWidth: isMobile ? "0" : "150px",
       textDecoration: "none",
       color: "var(--text)",
       background: "var(--surface-soft)",
@@ -424,27 +481,27 @@ func _on_http_request_request_completed(result, response_code, headers, body):
     },
     authTitle: {
       margin: 0,
-      fontSize: isMobile ? "24px" : "30px",
+      fontSize: isMobile ? "23px" : "30px",
       lineHeight: 1.08,
       fontWeight: 900,
       color: "var(--text)",
       letterSpacing: "-0.03em"
     },
     authSubtitle: {
-      marginTop: "10px",
+      marginTop: "8px",
       marginBottom: 0,
       color: "var(--text-soft)",
-      lineHeight: 1.7,
-      fontSize: isMobile ? "14px" : "15px"
+      lineHeight: 1.65,
+      fontSize: isMobile ? "13px" : "15px"
     },
     form: {
-      marginTop: "24px",
+      marginTop: "20px",
       display: "grid",
-      gap: "16px"
+      gap: "14px"
     },
     field: {
       display: "grid",
-      gap: "8px"
+      gap: "7px"
     },
     label: {
       fontSize: "14px",
@@ -457,7 +514,7 @@ func _on_http_request_request_completed(result, response_code, headers, body):
       border: "1px solid rgba(15, 23, 42, 0.45)",
       background: "var(--surface-soft)",
       color: "var(--text)",
-      padding: "14px 16px",
+      padding: isMobile ? "13px 14px" : "14px 16px",
       fontSize: "15px",
       outline: "none",
       boxShadow:
@@ -475,7 +532,8 @@ func _on_http_request_request_completed(result, response_code, headers, body):
       display: "inline-flex",
       alignItems: "center",
       justifyContent: "center",
-      minWidth: "170px",
+      width: isMobile ? "100%" : "170px",
+      minWidth: isMobile ? "0" : "170px",
       marginTop: "4px",
       border: "none",
       borderRadius: "14px",
@@ -514,37 +572,39 @@ func _on_http_request_request_completed(result, response_code, headers, body):
     tutorialSection: {
       background: "var(--surface)",
       border: "1px solid var(--border)",
-      borderRadius: "30px",
-      padding: isMobile ? "22px" : "30px",
+      borderRadius: isMobile ? "22px" : "30px",
+      padding: isMobile ? "16px" : "30px",
       boxShadow: "var(--shadow-lg), inset 0 1px 0 rgba(255,255,255,0.18)",
       backdropFilter: "blur(22px) saturate(150%)",
       WebkitBackdropFilter: "blur(22px) saturate(150%)"
     },
     tutorialTitle: {
       margin: 0,
-      fontSize: isMobile ? "28px" : "36px",
+      fontSize: isMobile ? "24px" : "36px",
       fontWeight: 900,
       letterSpacing: "-0.03em",
-      color: "var(--text)"
+      color: "var(--text)",
+      lineHeight: 1.08
     },
     tutorialSubtitle: {
       marginTop: "10px",
       marginBottom: 0,
       color: "var(--text-soft)",
       lineHeight: 1.7,
-      maxWidth: "820px"
+      maxWidth: "820px",
+      fontSize: isMobile ? "14px" : "15px"
     },
     tutorialGrid: {
       display: "grid",
-      gridTemplateColumns: isMobile ? "1fr" : "repeat(2, minmax(0, 1fr))",
-      gap: "14px",
-      marginTop: "22px"
+      gridTemplateColumns: "1fr",
+      gap: "12px",
+      marginTop: "18px"
     },
     tutorialCard: {
       background: "var(--surface-soft)",
       border: "1px solid var(--border)",
-      borderRadius: "20px",
-      padding: "18px",
+      borderRadius: "18px",
+      padding: isMobile ? "15px" : "18px",
       boxShadow:
         "0 10px 30px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.18)",
       backdropFilter: "blur(18px) saturate(145%)",
@@ -552,75 +612,80 @@ func _on_http_request_request_completed(result, response_code, headers, body):
     },
     tutorialCardTitle: {
       margin: 0,
-      fontSize: "17px",
+      fontSize: isMobile ? "15px" : "17px",
       fontWeight: 800,
-      color: "var(--text)"
+      color: "var(--text)",
+      lineHeight: 1.4
     },
     tutorialCardText: {
       marginTop: "8px",
       marginBottom: 0,
       color: "var(--text-soft)",
-      lineHeight: 1.7,
-      fontSize: "14px"
+      lineHeight: 1.65,
+      fontSize: isMobile ? "13px" : "14px"
     },
     codeWrap: {
-      marginTop: "22px",
-      background: "rgba(9, 14, 30, 0.92)",
+      marginTop: "18px",
+      background: "rgba(9, 14, 30, 0.96)",
       border: "1px solid rgba(255,255,255,0.12)",
-      borderRadius: "20px",
-      padding: isMobile ? "16px" : "20px",
-      overflowX: "auto",
+      borderRadius: "18px",
+      padding: isMobile ? "12px" : "20px",
+      overflow: "hidden",
       boxShadow: "0 18px 40px rgba(0,0,0,0.22)"
     },
     codeTopBar: {
       display: "flex",
-      alignItems: isMobile ? "flex-start" : "center",
+      alignItems: isMobile ? "stretch" : "center",
       justifyContent: "space-between",
       gap: "12px",
       flexDirection: isMobile ? "column" : "row",
-      marginBottom: "14px"
+      marginBottom: "12px"
     },
     codeTitleWrap: {
       display: "grid",
-      gap: "8px"
+      gap: "6px",
+      minWidth: 0
     },
     codeTitle: {
       margin: 0,
       color: "#e5edff",
-      fontSize: "16px",
+      fontSize: isMobile ? "14px" : "16px",
       fontWeight: 800
     },
     codeHint: {
       margin: 0,
       color: "#aeb9d6",
-      lineHeight: 1.6,
-      fontSize: "14px"
+      lineHeight: 1.55,
+      fontSize: isMobile ? "12px" : "14px"
     },
     copyButton: {
       display: "inline-flex",
       alignItems: "center",
       justifyContent: "center",
-      minWidth: "140px",
+      width: isMobile ? "100%" : "140px",
+      minWidth: isMobile ? "0" : "140px",
       border: "1px solid rgba(255,255,255,0.18)",
       borderRadius: "12px",
       background: copied ? "rgba(34,197,94,0.22)" : "rgba(255,255,255,0.08)",
       color: "#f8fafc",
       padding: "10px 14px",
       fontWeight: 700,
+      fontSize: isMobile ? "13px" : "14px",
       cursor: "pointer",
       transition: "all 0.2s ease",
       whiteSpace: "nowrap"
     },
     editorHeader: {
       display: "flex",
-      alignItems: "center",
-      gap: "12px",
+      alignItems: isMobile ? "flex-start" : "center",
+      gap: "10px",
       justifyContent: "space-between",
-      padding: "12px 14px",
+      padding: isMobile ? "10px 12px" : "12px 14px",
       borderRadius: "14px 14px 0 0",
       background: "rgba(255,255,255,0.06)",
       border: "1px solid rgba(255,255,255,0.08)",
       borderBottom: "none",
+      flexDirection: isMobile ? "column" : "row",
       flexWrap: "wrap"
     },
     editorDots: {
@@ -651,10 +716,11 @@ func _on_http_request_request_completed(result, response_code, headers, body):
     },
     editorFile: {
       color: "#e5edff",
-      fontSize: "13px",
+      fontSize: isMobile ? "12px" : "13px",
       fontWeight: 700,
       flex: 1,
-      minWidth: "160px"
+      minWidth: 0,
+      wordBreak: "break-word"
     },
     editorBadge: {
       display: "inline-flex",
@@ -666,36 +732,39 @@ func _on_http_request_request_completed(result, response_code, headers, body):
       border: "1px solid rgba(96,165,250,0.22)",
       color: "#bfdbfe",
       fontSize: "12px",
-      fontWeight: 700
+      fontWeight: 700,
+      maxWidth: "100%"
     },
     codeBody: {
       border: "1px solid rgba(255,255,255,0.08)",
       borderTop: "none",
       borderRadius: "0 0 14px 14px",
-      overflowX: "auto"
+      overflowX: "auto",
+      WebkitOverflowScrolling: "touch"
     },
     codeLine: {
       display: "grid",
-      gridTemplateColumns: "56px 1fr",
+      gridTemplateColumns: isMobile ? "42px minmax(0, 1fr)" : "56px minmax(0, 1fr)",
       alignItems: "start"
     },
     codeLineNumber: {
       color: "#64748b",
       textAlign: "right",
-      padding: "0 14px 0 0",
+      padding: isMobile ? "0 10px 0 0" : "0 14px 0 0",
       userSelect: "none",
       fontFamily: "Consolas, Monaco, monospace",
-      fontSize: "13px",
+      fontSize: isMobile ? "11px" : "13px",
       lineHeight: 1.7,
       borderRight: "1px solid rgba(255,255,255,0.06)"
     },
     codeLineText: {
-      padding: "0 0 0 14px",
+      padding: isMobile ? "0 0 0 10px" : "0 0 0 14px",
       color: "#f8fafc",
-      fontSize: "13px",
+      fontSize: isMobile ? "11px" : "13px",
       lineHeight: 1.7,
       fontFamily: "Consolas, Monaco, monospace",
-      whiteSpace: "pre"
+      whiteSpace: "pre",
+      minWidth: "max-content"
     }
   };
 
@@ -786,70 +855,23 @@ func _on_http_request_request_completed(result, response_code, headers, body):
             <p style={styles.heroText}>{t("heroText")}</p>
 
             <div style={styles.ctaRow}>
-              <a
-                href="#tutorial"
-                style={styles.secondaryCta}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "translateY(-1px)";
-                  e.currentTarget.style.boxShadow = "0 8px 20px rgba(15,23,42,0.06)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "translateY(0)";
-                  e.currentTarget.style.boxShadow = "none";
-                }}
-              >
+              <a href="#tutorial" style={styles.secondaryCta}>
                 {t("howToImplement")}
               </a>
             </div>
 
             <div style={styles.featureGrid}>
-              <div
-                style={styles.featureCard}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "translateY(-2px)";
-                  e.currentTarget.style.boxShadow =
-                    "0 14px 34px rgba(15,23,42,0.09), inset 0 1px 0 rgba(255,255,255,0.16)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "translateY(0)";
-                  e.currentTarget.style.boxShadow =
-                    "0 10px 30px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.18)";
-                }}
-              >
+              <div style={styles.featureCard}>
                 <p style={styles.featureTitle}>{t("featureProjectTitle")}</p>
                 <p style={styles.featureText}>{t("featureProjectText")}</p>
               </div>
 
-              <div
-                style={styles.featureCard}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "translateY(-2px)";
-                  e.currentTarget.style.boxShadow =
-                    "0 14px 34px rgba(15,23,42,0.09), inset 0 1px 0 rgba(255,255,255,0.16)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "translateY(0)";
-                  e.currentTarget.style.boxShadow =
-                    "0 10px 30px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.18)";
-                }}
-              >
+              <div style={styles.featureCard}>
                 <p style={styles.featureTitle}>{t("featureApiTitle")}</p>
                 <p style={styles.featureText}>{t("featureApiText")}</p>
               </div>
 
-              <div
-                style={styles.featureCard}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "translateY(-2px)";
-                  e.currentTarget.style.boxShadow =
-                    "0 14px 34px rgba(15,23,42,0.09), inset 0 1px 0 rgba(255,255,255,0.16)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "translateY(0)";
-                  e.currentTarget.style.boxShadow =
-                    "0 10px 30px rgba(15,23,42,0.06), inset 0 1px 0 rgba(255,255,255,0.18)";
-                }}
-              >
+              <div style={styles.featureCard}>
                 <p style={styles.featureTitle}>{t("featureFastTitle")}</p>
                 <p style={styles.featureText}>{t("featureFastText")}</p>
               </div>
@@ -871,18 +893,6 @@ func _on_http_request_request_completed(result, response_code, headers, body):
                           ? { ...styles.tabButton, ...styles.tabButtonActive }
                           : styles.tabButton
                       }
-                      onMouseEnter={(e) => {
-                        if (mode !== "login") {
-                          e.currentTarget.style.background = "rgba(255,255,255,0.18)";
-                          e.currentTarget.style.color = "var(--text)";
-                        }
-                      }}
-                      onMouseLeave={(e) => {
-                        if (mode !== "login") {
-                          e.currentTarget.style.background = "transparent";
-                          e.currentTarget.style.color = "var(--text-muted)";
-                        }
-                      }}
                     >
                       {t("login")}
                     </button>
@@ -896,35 +906,12 @@ func _on_http_request_request_completed(result, response_code, headers, body):
                           ? { ...styles.tabButton, ...styles.tabButtonActive }
                           : styles.tabButton
                       }
-                      onMouseEnter={(e) => {
-                        if (mode !== "register") {
-                          e.currentTarget.style.background = "rgba(255,255,255,0.18)";
-                          e.currentTarget.style.color = "var(--text)";
-                        }
-                      }}
-                      onMouseLeave={(e) => {
-                        if (mode !== "register") {
-                          e.currentTarget.style.background = "transparent";
-                          e.currentTarget.style.color = "var(--text-muted)";
-                        }
-                      }}
                     >
                       {t("register")}
                     </button>
                   </div>
 
-                  <a
-                    href="/dashboard"
-                    style={styles.dashboardLink}
-                    onMouseEnter={(e) => {
-                      e.currentTarget.style.transform = "translateY(-1px)";
-                      e.currentTarget.style.boxShadow = "0 8px 20px rgba(15,23,42,0.06)";
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = "translateY(0)";
-                      e.currentTarget.style.boxShadow = "none";
-                    }}
-                  >
+                  <a href="/dashboard" style={styles.dashboardLink}>
                     {t("dashboard")}
                   </a>
                 </div>
@@ -990,23 +977,7 @@ func _on_http_request_request_completed(result, response_code, headers, body):
                     />
                   </div>
 
-                  <button
-                    type="submit"
-                    disabled={isSubmitting}
-                    style={styles.submitButton}
-                    onMouseEnter={(e) => {
-                      if (!isSubmitting) {
-                        e.currentTarget.style.transform = "translateY(-1px)";
-                        e.currentTarget.style.boxShadow = "0 16px 32px rgba(37,99,235,0.28)";
-                        e.currentTarget.style.filter = "brightness(1.02)";
-                      }
-                    }}
-                    onMouseLeave={(e) => {
-                      e.currentTarget.style.transform = "translateY(0)";
-                      e.currentTarget.style.boxShadow = "0 12px 28px rgba(37,99,235,0.22)";
-                      e.currentTarget.style.filter = "brightness(1)";
-                    }}
-                  >
+                  <button type="submit" disabled={isSubmitting} style={styles.submitButton}>
                     {isSubmitting
                       ? mode === "register"
                         ? t("creatingAccount")
@@ -1072,19 +1043,7 @@ func _on_http_request_request_completed(result, response_code, headers, body):
                 <p style={styles.codeHint}>{t("tutorialCodeHint")}</p>
               </div>
 
-              <button
-                type="button"
-                style={styles.copyButton}
-                onClick={copyCode}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = "translateY(-1px)";
-                  e.currentTarget.style.boxShadow = "0 8px 18px rgba(0,0,0,0.18)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = "translateY(0)";
-                  e.currentTarget.style.boxShadow = "none";
-                }}
-              >
+              <button type="button" style={styles.copyButton} onClick={copyCode}>
                 {copied ? t("copiedCode") : t("copyCode")}
               </button>
             </div>
@@ -1105,9 +1064,7 @@ func _on_http_request_request_completed(result, response_code, headers, body):
               {godotCode.split("\n").map((line, index) => (
                 <div key={index} style={styles.codeLine}>
                   <span style={styles.codeLineNumber}>{index + 1}</span>
-                  <span style={styles.codeLineText}>
-                    {renderHighlightedLine(line)}
-                  </span>
+                  <span style={styles.codeLineText}>{renderHighlightedLine(line)}</span>
                 </div>
               ))}
             </div>
