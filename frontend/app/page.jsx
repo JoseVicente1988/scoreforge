@@ -73,7 +73,7 @@ function renderHighlightedLine(line) {
 
     if (keywordPattern.test(part)) {
       return (
-        <span key={index} style={{ color: "#ff1b1b" }}>
+        <span key={index} style={{ color: "#eb7676" }}>
           {part}
         </span>
       );
@@ -81,7 +81,7 @@ function renderHighlightedLine(line) {
 
     if (boolNullPattern.test(part)) {
       return (
-        <span key={index} style={{ color: "#ff1b1b" }}>
+        <span key={index} style={{ color: "#eb7676" }}>
           {part}
         </span>
       );
