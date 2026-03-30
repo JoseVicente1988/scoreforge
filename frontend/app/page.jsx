@@ -65,7 +65,7 @@ function renderHighlightedLine(line) {
 
     if (decoratorPattern.test(part)) {
       return (
-        <span key={index} style={{ color: "#60a5fa" }}>
+        <span key={index} style={{ color: "#ffb732" }}>
           {part}
         </span>
       );
@@ -73,7 +73,7 @@ function renderHighlightedLine(line) {
 
     if (keywordPattern.test(part)) {
       return (
-        <span key={index} style={{ color: "#c084fc" }}>
+        <span key={index} style={{ color: "#ff1b1b" }}>
           {part}
         </span>
       );
@@ -81,7 +81,7 @@ function renderHighlightedLine(line) {
 
     if (boolNullPattern.test(part)) {
       return (
-        <span key={index} style={{ color: "#f59e0b" }}>
+        <span key={index} style={{ color: "#ff1b1b" }}>
           {part}
         </span>
       );
@@ -97,7 +97,7 @@ function renderHighlightedLine(line) {
 
     if (/^"[^"]*"$/.test(part)) {
       return (
-        <span key={index} style={{ color: "#86efac" }}>
+        <span key={index} style={{ color: "#e4ef86" }}>
           {part}
         </span>
       );
@@ -105,7 +105,7 @@ function renderHighlightedLine(line) {
 
     if (/^\d+$/.test(part)) {
       return (
-        <span key={index} style={{ color: "#fca5a5" }}>
+        <span key={index} style={{ color: "#a5d5fc" }}>
           {part}
         </span>
       );
