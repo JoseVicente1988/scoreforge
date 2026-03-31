@@ -153,7 +153,7 @@ export default function Page() {
   const godotCode = `extends Node
 class_name ScoreforgeClient
 
-@export var base_url: String = "https://scoreforge-phi.vercel.app"
+@export var base_url: String = "https://scoreforge-8cmh.vercel.app"
 @export var api_key: String = "YOUR_API_KEY_HERE"
 @export var project_id: int = 1
 
