@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { LanguageProvider, useLang } from "../components/LanguageProvider";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 function ThemeToggle() {
@@ -132,6 +133,7 @@ export default function RootLayout({ children }) {
         <LanguageProvider>
           <LayoutContent>{children}</LayoutContent>
         </LanguageProvider>
+        <Analytics />
       </body>
     </html>
   );
